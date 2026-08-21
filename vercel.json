@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd floradecora && npm run build",
-  "outputDirectory": "floradecora/.next",
-  "installCommand": "cd floradecora && npm install",
-  "framework": "nextjs"
-}
