@@ -39,7 +39,7 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.06] mix-blend-soft-light" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} />
         </div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
-        <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-28 pb-10 md:pt-36 md:pb-16 grid lg:grid-cols-[1.08fr_0.92fr] gap-10 items-center">
+        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl w-full px-6 md:px-10 pt-28 pb-10 md:pt-36 md:pb-16 grid lg:grid-cols-[1.08fr_0.92fr] gap-10 items-center">
           <div>
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur border border-white/15 px-3 py-1.5">
@@ -143,7 +143,7 @@ export default function Home() {
 
       {/* STATS */}
       <section className="bg-cream dark:bg-forest-dim relative -mt-px">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-8">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-8">
           <div className="grid grid-cols-3 gap-3 md:gap-4">
             {[
               { n: 20, suffix: "+", label: "Years Experience", sub: "Since 2003" },
@@ -166,7 +166,7 @@ export default function Home() {
 
       {/* ABOUT */}
       <section className="bg-cream dark:bg-forest-dim overflow-hidden border-y border-transparent dark:border-white/5">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
           <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-start">
             <div>
               <SectionHeading eyebrow="About Flora Decora" title="Two decades of shaping the UAE's public gardens." withLine />
@@ -219,7 +219,7 @@ export default function Home() {
 
       {/* GALLERY — CDN */}
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-10 md:py-14">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-10 md:py-14">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="Selected Work — Built Projects" title="Concept to bloom, all in-house." />
             <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">View all projects →</Link>
@@ -269,9 +269,43 @@ export default function Home() {
         </div>
       </section>
 
+      {/* MOCK PREVIEW — for client review */}
+      <section className="bg-cream dark:bg-forest-dim border-y border-transparent dark:border-white/5">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-12 md:py-16 2xl:px-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading eyebrow="Preview — Mock Concepts" title="Mockups for review before build." withLine />
+            <span className="rounded-full bg-ochre/10 dark:bg-ochre/20 border border-ochre/20 px-4 py-2 text-xs font-medium text-ochre-dark dark:text-ochre-light">12 mocks • Preview only</span>
+          </div>
+          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Concept renders — not built. Approve a direction → we build it real. All mocks from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 text-xs">assest/</code>.</p>
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            {[
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_00 PM.png"), label: "Mock 01" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_43 PM.png"), label: "Mock 02" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_39_48 PM.png"), label: "Mock 03" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_42_38 PM.png"), label: "Mock 04" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_43_24 PM.png"), label: "Mock 05" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_46_54 PM.png"), label: "Mock 06" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_49_03 PM.png"), label: "Mock 07" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_51_18 PM.png"), label: "Mock 08" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_52_08 PM.png"), label: "Mock 09" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_58_10 PM.png"), label: "Mock 10" },
+              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_04_31 AM.png"), label: "Mock 11" },
+              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png"), label: "Mock 12" },
+            ].map((m, i) => (
+              <Reveal key={m.src} delay={i * 0.03} className="group relative aspect-[4/3] rounded-[1.8rem] sm:rounded-3xl overflow-hidden bg-white dark:bg-white/5 border-2 border-black/[0.06] dark:border-white/10 shadow-card hover:shadow-glow hover:border-ochre/20 dark:hover:border-ochre/30 transition-all">
+                <Image src={m.src} alt={m.label} fill unoptimized className="object-cover group-hover:scale-[1.04] transition-transform duration-700" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px" />
+                <div className="absolute inset-0 ring-1 ring-black/5 dark:ring-white/5 rounded-[1.8rem] sm:rounded-3xl pointer-events-none" />
+                <span className="absolute top-3 left-3 rounded-full bg-white/90 dark:bg-forest/80 backdrop-blur border border-black/5 dark:border-white/10 px-3 py-1 text-[10px] tracking-[0.14em] uppercase font-semibold text-ink dark:text-white">{m.label}</span>
+                <span className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-ochre text-white grid place-items-center opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all">↗</span>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SERVICES */}
       <section className="bg-cream dark:bg-forest-dim border-y border-transparent dark:border-white/5">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="What we do" title="Eight disciplines, one in-house team." withLine />
             <p className="max-w-md text-ink/60 dark:text-white/60 text-sm leading-relaxed">From concept render to daily maintenance — we keep it all under one roof so the garden actually matches the drawing.</p>
@@ -279,7 +313,7 @@ export default function Home() {
           <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {SERVICES.map((s) => (
               <StaggerItem key={s.title} className="group">
-                <HoverBloom className="relative rounded-[1.6rem] bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 p-6 shadow-card hover:shadow-glow overflow-hidden h-full">
+                <HoverBloom className="relative rounded-3xl bg-white dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 p-6 sm:p-7 shadow-card hover:shadow-glow overflow-hidden h-full">
                   <div className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                   <div className="relative">
                     <div className="w-10 h-10 rounded-xl bg-ink dark:bg-white text-white dark:text-ink grid place-items-center text-sm group-hover:bg-ochre dark:group-hover:bg-ochre group-hover:text-white transition-colors group-hover:rotate-6 group-hover:scale-110 duration-500">{s.icon}</div>
@@ -302,13 +336,13 @@ export default function Home() {
 
       {/* PROCESS */}
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
           <SectionHeading eyebrow="How we work" title="From handover to steady-state — in three moves." withLine />
           <div className="mt-12 grid md:grid-cols-3 gap-6 relative">
             <div className="hidden md:block absolute top-6 left-0 right-0 h-px bg-gradient-to-r from-ochre via-sage to-forest opacity-20" />
             {PROCESS.map((step, i) => (
               <Reveal key={step.title} delay={i * 0.08}>
-                <HoverBloom className="relative rounded-[1.6rem] bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10 p-6 hover:-translate-y-1">
+                <HoverBloom className="relative rounded-3xl bg-cream dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 dark:border-white/10 p-6 hover:-translate-y-1">
                   <div className="flex items-center gap-3">
                     <span className={`w-9 h-9 rounded-full ${step.color} text-white grid place-items-center text-xs font-mono group-hover:scale-110 transition-transform`}>{String(i + 1).padStart(2, "0")}</span>
                     <span className="eyebrow text-ink/50 dark:text-white/50 !text-[0.62rem]">{step.phase}</span>
@@ -337,7 +371,7 @@ export default function Home() {
           <div className="absolute -bottom-24 -left-24 w-[520px] h-[520px] bg-sage/15 rounded-full blur-[90px]" />
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
         </div>
-        <div className="relative mx-auto max-w-content px-6 md:px-10 py-16 md:py-20">
+        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-20">
           <div className="rounded-[2rem] bg-white/[0.06] backdrop-blur border border-white/10 p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1.5 text-xs text-white/80">✦ Let&apos;s break ground</div>

@@ -19,10 +19,10 @@ export function cdnMedia(filename: string, opts?: { w?: number; q?: number }) {
   return `${base}?${params.toString()}`;
 }
 
-// Common assets map
+// Common assets map - jluAioI is primary logo per latest request
 export const CDN_ASSETS = {
-  logo: cdnMedia("StKLapP - Imgur.png"), // main logo wide
-  logoAlt: cdnMedia("jluAioI - Imgur.png"),
+  logo: cdnMedia("jluAioI - Imgur.png"), // primary logo (user request)
+  logoAlt: cdnMedia("StKLapP - Imgur.png"), // fallback/alt
   hero2: cdnMedia("Picture2-min-scaled.jpg"),
   hero3: cdnMedia("Picture3-min-scaled.jpg"),
   hero4: cdnMedia("Picture4-min.png"),

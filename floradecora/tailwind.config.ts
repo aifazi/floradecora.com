@@ -38,9 +38,14 @@ const config: Config = {
       },
       maxWidth: {
         content: "1280px",
+        "content-2xl": "1440px",
+      },
+      screens: {
+        "3xl": "1920px",
       },
       borderRadius: {
         "4xl": "2rem",
+        "5xl": "2.5rem",
       },
       boxShadow: {
         soft: "0 8px 40px rgba(0,0,0,0.08)",
