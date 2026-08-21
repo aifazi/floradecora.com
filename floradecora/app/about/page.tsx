@@ -33,7 +33,7 @@ export default function AboutPage() {
       <section className="relative min-h-[54vh] bg-forest-dim overflow-hidden flex items-end">
         <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Flora Decora public park landscape in Al Ain" fill unoptimized className="object-cover opacity-30" sizes="100vw" quality={75} priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-forest-dim/10" />
-        <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-16">
+        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-16">
           <Reveal>
             <span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">About Us — CDN</span>
           </Reveal>
@@ -46,7 +46,7 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24 grid lg:grid-cols-2 gap-10">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24 grid lg:grid-cols-2 gap-10">
           <Reveal className="space-y-6 text-ink/70 dark:text-white/70 leading-relaxed text-lg">
             <p className="text-ink dark:text-white text-xl leading-relaxed">We are Flora Decora — Al Ain, UAE. A premier landscaping studio for touristic theme gardens and public parks.</p>
             <p>With over 20 years and 300+ projects, we are one of the region&apos;s leaders in vertical gardens, theme gardens and municipal landscaping.</p>
@@ -65,12 +65,12 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
           <SectionHeading eyebrow="Our Mission" title="Cost-efficient work, reputations built on it." withLine />
           <p className="mt-6 max-w-2xl text-ink/60 dark:text-white/60 leading-relaxed">To deliver the best product and service in the most cost-efficient way possible, and to build healthy business relations in an industry that comes to know us by reputation.</p>
           <Stagger className="mt-12 grid md:grid-cols-3 gap-4">
             {VALUES.map((v) => (
-              <StaggerItem key={v.title} className="rounded-[1.6rem] bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10 p-7 hover:shadow-soft hover:-translate-y-1 transition-all">
+              <StaggerItem key={v.title} className="rounded-3xl bg-cream dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 dark:border-white/10 p-7 hover:shadow-soft hover:-translate-y-1 transition-all">
                 <div className="w-10 h-10 rounded-xl bg-ink text-white grid place-items-center">{v.icon}</div>
                 <h3 className="mt-6 font-display text-lg leading-snug dark:text-white">{v.title}</h3>
                 <p className="mt-2 text-sm text-ink/60 dark:text-white/60 leading-relaxed">{v.body}</p>
@@ -81,7 +81,7 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
           <SectionHeading eyebrow="Principles" title="How we judge our own designs." withLine />
           <p className="mt-4 max-w-2xl text-ink/60 dark:text-white/60">Every design is judged against the same principles used across the fine and applied arts.</p>
           <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -97,14 +97,14 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
           <SectionHeading eyebrow="Timeline" title="20+ years, one project at a time." withLine />
           <Timeline />
         </div>
       </section>
 
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
           <SectionHeading eyebrow="Testimonials" title="What clients say." withLine />
           <Testimonials />
           <div className="mt-8 flex flex-wrap gap-3 text-xs">
@@ -115,7 +115,7 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24 max-w-3xl">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24 max-w-3xl">
           <SectionHeading eyebrow="FAQ" title="Before you visit, a few answers." withLine />
           <FAQ />
         </div>

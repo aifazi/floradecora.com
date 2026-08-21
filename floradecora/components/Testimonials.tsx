@@ -11,7 +11,7 @@ export default function Testimonials() {
   return (
     <Stagger className="mt-8 grid md:grid-cols-3 gap-4">
       {REVIEWS.map((r) => (
-        <StaggerItem key={r.name} className="rounded-[1.6rem] bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 p-6 shadow-card">
+        <StaggerItem key={r.name} className="rounded-3xl bg-white dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 p-6 sm:p-7 shadow-card">
           <div className="flex gap-1 text-ochre">{Array.from({ length: r.rating }).map((_, i) => <span key={i}>★</span>)}</div>
           <p className="mt-3 text-sm leading-relaxed text-ink/70 dark:text-white/70">“{r.text}”</p>
           <div className="mt-4">

@@ -12,17 +12,17 @@ export default function BlogPage() {
     <>
       <section className="relative bg-forest-dim overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-forest via-forest-dim to-black" />
-        <div className="relative mx-auto max-w-content px-6 md:px-10 pt-32 pb-14 md:pt-44 md:pb-20">
+        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 pt-32 pb-14 md:pt-44 md:pb-20">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Journal</span></Reveal>
           <Reveal delay={0.06}><h1 className="mt-4 font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tightDisplay text-white max-w-3xl">What we learn in 45°C shade.</h1></Reveal>
         </div>
       </section>
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-12 md:py-16">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-12 md:py-16">
           <SectionHeading eyebrow="Latest" title="From nursery to park." withLine />
           <Stagger className="mt-8 grid md:grid-cols-3 gap-4">
             {POSTS.map((p) => (
-              <StaggerItem key={p.slug} className="rounded-[1.6rem] bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 p-6 shadow-card hover:shadow-glow transition-shadow">
+              <StaggerItem key={p.slug} className="rounded-3xl bg-white dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 p-6 sm:p-7 shadow-card hover:shadow-glow transition-shadow">
                 <div className="text-xs tracking-[0.14em] uppercase text-ochre">{p.tags.join(" • ")} • {p.read}</div>
                 <h3 className="mt-2 font-display text-lg dark:text-white">{p.title}</h3>
                 <p className="mt-2 text-sm text-ink/60 dark:text-white/60">{p.excerpt}</p>

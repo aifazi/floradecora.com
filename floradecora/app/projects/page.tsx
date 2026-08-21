@@ -21,7 +21,7 @@ export default function ProjectsPage() {
       <section className="relative min-h-[46vh] bg-forest-dim overflow-hidden flex items-end">
         <Image src={cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png")} alt="Flora Decora canopy walk garden project" fill unoptimized className="object-cover opacity-30" sizes="100vw" priority quality={75} />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
-        <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-14">
+        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-14">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Projects • {PROJECTS.length} Case Studies</span></Reveal>
           <Reveal delay={0.06}><h1 className="mt-4 font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tightDisplay text-white max-w-3xl">Gardens, parks & nurseries built to last 20 years.</h1></Reveal>
           <Reveal delay={0.1}><p className="mt-4 max-w-xl text-white/60 leading-relaxed">300+ projects for Al Ain Municipality & Abu Dhabi Parks — from butterfly houses to smart irrigation. Filter by type or view case study.</p></Reveal>
@@ -29,7 +29,7 @@ export default function ProjectsPage() {
       </section>
 
       <section className="bg-white dark:bg-forest border-b border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-8 grid grid-cols-3 gap-4">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-8 grid grid-cols-3 gap-4">
           {[
             { n: PROJECTS.length, label: "Case Studies" },
             { n: 150, label: "Clients" },
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
       </section>
 
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-12 md:py-20">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-12 md:py-20">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="Selected Work" title="From concept to bloom — all in-house." withLine />
             <div className="flex flex-col gap-3 items-end">

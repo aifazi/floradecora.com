@@ -15,14 +15,14 @@ export default function ContactPage() {
       <section className="relative min-h-[42vh] bg-forest-dim overflow-hidden flex items-end">
         <Image src={cdnMedia("Picture4-min.png")} alt="Flora Decora landscape detail" fill unoptimized className="object-cover opacity-25" sizes="100vw" quality={75} priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
-        <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-14">
+        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-14">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Contact — CDN</span></Reveal>
           <Reveal delay={0.06}><h1 className="mt-4 font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tightDisplay text-white max-w-3xl">Tell us about the ground you&apos;re working with.</h1></Reveal>
         </div>
       </section>
 
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content px-6 md:px-10 py-12 md:py-20 grid lg:grid-cols-[0.9fr_1.2fr] gap-8">
+        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-12 md:py-20 grid lg:grid-cols-[0.9fr_1.2fr] gap-8">
           <Reveal className="space-y-6">
             <div className="rounded-[1.6rem] bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 p-7 shadow-card dark:shadow-glow">
               <div className="space-y-8">
