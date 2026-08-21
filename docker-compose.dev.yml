@@ -1,0 +1,18 @@
+services:
+  floradecora-dev:
+    build:
+      context: ./floradecora
+      dockerfile: Dockerfile.dev
+    container_name: floradecora-dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./floradecora/.env.local
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./floradecora:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+    restart: unless-stopped
