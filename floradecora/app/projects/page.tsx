@@ -18,7 +18,7 @@ export default function ProjectsPage() {
   return (
     <>
       <section className="relative min-h-[46vh] bg-forest-dim overflow-hidden flex items-end">
-        <Image src={cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png")} alt="Flora Decora canopy walk garden project" fill className="object-cover opacity-30" sizes="100vw" priority quality={75} />
+        <Image src={cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png")} alt="Flora Decora canopy walk garden project" fill unoptimized className="object-cover opacity-30" sizes="100vw" priority quality={75} />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
         <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-14">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Projects • {PROJECTS.length} Case Studies</span></Reveal>

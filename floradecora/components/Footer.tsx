@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="relative mx-auto max-w-content px-6 md:px-10 pt-16 pb-8">
         <div className="flex flex-col lg:flex-row justify-between gap-12 pb-12 border-b border-white/10">
           <div className="max-w-sm">
-            <Image src={CDN_ASSETS.logo} alt="Flora Decora" width={180} height={48} className="h-8 w-auto object-contain brightness-0 invert mb-6" />
+            <Image src={CDN_ASSETS.logo} alt="Flora Decora" width={180} height={48} unoptimized className="h-8 w-auto object-contain brightness-0 invert mb-6" />
             <p className="text-white/60 leading-relaxed text-sm">
               We draw the plan, then we grow it. Designing, building and operating themed gardens and public parks across the UAE since 2003.
             </p>
