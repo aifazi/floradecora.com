@@ -17,7 +17,7 @@ const nextConfig = {
   // perf
   compress: true,
   poweredByHeader: false,
-  allowedDevOrigins: ["192.168.6.76", "10.255.254.14", "localhost"],
+  allowedDevOrigins: process.env.ALLOWED_DEV_ORIGINS ? process.env.ALLOWED_DEV_ORIGINS.split(",") : ["localhost"],
   async headers() {
     return [
       {

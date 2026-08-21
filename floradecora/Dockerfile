@@ -27,4 +27,5 @@ COPY --from=builder /app/.next/static ./.next/static
 
 USER nextjs
 EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 CMD wget -qO- http://localhost:3000/api/contact || wget -qO- http://localhost:3000/ || exit 1
 CMD ["node", "server.js"]
