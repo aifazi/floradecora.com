@@ -1,0 +1,40 @@
+﻿# dependencies
+node_modules/
+floradecora/node_modules/
+floradecora/.next/
+floradecora/out/
+.next/
+out/
+
+# production
+build/
+dist/
+
+# misc
+.DS_Store
+*.pem
+*.log
+dev.log
+dev.error.log
+
+# env
+.env
+.env*.local
+.env.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# docker
+.docker/
+
+# wsl
+.wsl/
+
+# assest large - keep but ignore duplicates if needed (we keep all)
+# Uncomment to ignore assest raw if you only want public
+# assest/
+
+# git
+.git/

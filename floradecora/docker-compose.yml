@@ -1,0 +1,15 @@
+services:
+  floradecora:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: floradecora
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      # Add your Web3Forms key here or via env file
+      # - NEXT_PUBLIC_WEB3FORMS_KEY=${NEXT_PUBLIC_WEB3FORMS_KEY}
+    restart: unless-stopped
