@@ -7,6 +7,7 @@ export default function HoverBloom({ children, className = "" }: { children: Rea
   const [pos, setPos] = useState({ x: 50, y: 50 });
 
   const onMove = (e: React.MouseEvent) => {
+    if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) return;
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -18,8 +19,8 @@ export default function HoverBloom({ children, className = "" }: { children: Rea
     <motion.div
       ref={ref}
       onMouseMove={onMove}
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 18 }}
+      whileHover={{ y: -3 }}
+      transition={{ type: "spring", stiffness: 400, damping: 22 }}
       className={`relative overflow-hidden group ${className}`}
     >
       {/* bloom glow that follows cursor */}

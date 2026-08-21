@@ -8,10 +8,11 @@ export default function LoadingScreen() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setShow(false); return; }
+    if (window.innerWidth < 768) { setShow(false); return; } // skip on mobile for speed
     const seen = sessionStorage.getItem("flora-loaded");
     if (seen) { setShow(false); return; }
-    const t1 = setTimeout(() => setPhase("done"), 650);
-    const t2 = setTimeout(() => { setShow(false); sessionStorage.setItem("flora-loaded", "1"); }, 1200);
+    const t1 = setTimeout(() => setPhase("done"), 400);
+    const t2 = setTimeout(() => { setShow(false); sessionStorage.setItem("flora-loaded", "1"); }, 800);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 

@@ -5,8 +5,8 @@ import { useRef } from "react";
 export function Reveal({
   children,
   delay = 0,
-  y = 24,
-  duration = 0.7,
+  y = 12,
+  duration = 0.4,
   className = "",
 }: {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
   return (
     <motion.div
       ref={ref}
@@ -32,7 +32,7 @@ export function Reveal({
 
 export function Stagger({
   children,
-  stagger = 0.08,
+  stagger = 0.04,
   delay = 0,
   className = "",
 }: {
@@ -42,7 +42,7 @@ export function Stagger({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
   return (
     <motion.div
       ref={ref}

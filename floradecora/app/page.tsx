@@ -32,7 +32,7 @@ export default function Home() {
       <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
-            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority quality={80} unoptimized className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
+            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority fetchPriority="high" quality={80} unoptimized className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dim via-forest-dim/80 to-forest-dim/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-transparent to-transparent" />
@@ -237,7 +237,7 @@ export default function Home() {
               <Reveal key={c.src} delay={i * 0.05}>
                 <HoverBloom className="group relative rounded-[1.6rem] overflow-hidden bg-ink aspect-[4/3] p-1.5 tilt-card">
                   <div className="relative w-full h-full rounded-[1.3rem] overflow-hidden bg-ink">
-                    <Image src={c.src} alt={c.title} fill unoptimized className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
+                    <Image src={c.src} alt={c.title} fill unoptimized loading="lazy" className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-transparent group-hover:from-black/75 transition-colors" />
                     <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase font-medium">CDN</div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-3">
@@ -262,7 +262,7 @@ export default function Home() {
               cdnMedia("Picture4-min.png"),
             ].map((src, i) => (
               <Reveal key={src} delay={0.3 + i * 0.04} className="relative aspect-square rounded-2xl overflow-hidden bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10">
-                <Image src={src} alt="Flora Decora project thumbnail" fill unoptimized className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" />
+                <Image src={src} alt="Flora Decora project thumbnail" fill unoptimized loading="lazy" className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" />
               </Reveal>
             ))}
           </div>
@@ -293,7 +293,7 @@ export default function Home() {
               { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png"), label: "Mock 12" },
             ].map((m, i) => (
               <Reveal key={m.src} delay={i * 0.03} className="group relative aspect-[4/3] rounded-[1.8rem] sm:rounded-3xl overflow-hidden bg-white dark:bg-white/5 border-2 border-black/[0.06] dark:border-white/10 shadow-card hover:shadow-glow hover:border-ochre/20 dark:hover:border-ochre/30 transition-all">
-                <Image src={m.src} alt={m.label} fill unoptimized className="object-cover group-hover:scale-[1.04] transition-transform duration-700" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px" />
+                <Image src={m.src} alt={m.label} fill unoptimized loading="lazy" className="object-cover group-hover:scale-[1.04] transition-transform duration-700" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px" />
                 <div className="absolute inset-0 ring-1 ring-black/5 dark:ring-white/5 rounded-[1.8rem] sm:rounded-3xl pointer-events-none" />
                 <span className="absolute top-3 left-3 rounded-full bg-white/90 dark:bg-forest/80 backdrop-blur border border-black/5 dark:border-white/10 px-3 py-1 text-[10px] tracking-[0.14em] uppercase font-semibold text-ink dark:text-white">{m.label}</span>
                 <span className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-ochre text-white grid place-items-center opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all">↗</span>
