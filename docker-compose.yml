@@ -3,6 +3,7 @@ services:
     build:
       context: ./floradecora
       dockerfile: Dockerfile
+      network: host
     container_name: floradecora
     ports:
       - "3001:3000"
