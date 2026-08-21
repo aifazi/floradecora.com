@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const siteUrl = "https://floradecora.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/about", "/services", "/projects", "/contact"];
+  const routes = ["", "/about", "/services", "/projects", "/contact", "/quote", "/blog"];
   const now = new Date();
   return routes.map((route) => ({
     url: `${siteUrl}${route}`,

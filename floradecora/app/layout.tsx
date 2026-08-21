@@ -7,6 +7,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import SmoothScroll from "@/components/SmoothScroll";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import JsonLd from "@/components/JsonLd";
 
 const fraunces = Fraunces({
@@ -94,9 +95,10 @@ export default function RootLayout({
             <LoadingScreen />
             <SmoothScroll />
             <Header />
-            <main id="main">{children}</main>
-            <Footer />
-          </ThemeProvider>
+          <main id="main">{children}</main>
+          <Footer />
+          <WhatsAppWidget />
+        </ThemeProvider>
         </LanguageProvider>
       </body>
     </html>
