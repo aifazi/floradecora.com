@@ -8,9 +8,15 @@ export function cdn(path: string) {
 }
 
 // Pre-encoded helpers for files with spaces/commas — use encodeURI for full path
-export function cdnMedia(filename: string) {
+export function cdnMedia(filename: string, opts?: { w?: number; q?: number }) {
   // filename is original name e.g. "ChatGPT Image Jul 29, 2026, 11_38_00 PM.png"
-  return `${CDN}/media/assest/${encodeURIComponent(filename)}`;
+  // opts.w/q reserved for Cloudflare Image Resizing (?width= & ?quality=) if enabled on cdn.aifazi.net
+  const base = `${CDN}/media/assest/${encodeURIComponent(filename)}`;
+  if (!opts?.w && !opts?.q) return base;
+  const params = new URLSearchParams();
+  if (opts.w) params.set("width", String(opts.w));
+  if (opts.q) params.set("quality", String(opts.q));
+  return `${base}?${params.toString()}`;
 }
 
 // Common assets map

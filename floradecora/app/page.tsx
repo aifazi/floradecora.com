@@ -32,7 +32,7 @@ export default function Home() {
       <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
-            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Flora Decora garden" fill priority unoptimized className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
+            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority quality={80} className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dim via-forest-dim/80 to-forest-dim/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-transparent to-transparent" />
@@ -53,7 +53,7 @@ export default function Home() {
                 We draw
                 <span className="inline-flex items-center ml-3 align-middle">
                   <span className="inline-block w-12 h-12 lg:w-16 lg:h-16 rounded-full overflow-hidden border-2 border-white/20 -rotate-6">
-                    <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="" width={80} height={80} unoptimized className="w-full h-full object-cover" />
+                    <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="Flora Decora garden detail" width={80} height={80} className="w-full h-full object-cover" quality={75} />
                   </span>
                 </span>
                 <br />
@@ -94,7 +94,7 @@ export default function Home() {
             <div className="absolute top-6 right-6 left-6 bottom-6">
               <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.35)] bg-white p-2">
                 <div className="relative w-full h-full rounded-[1.6rem] overflow-hidden">
-                  <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="Project" fill unoptimized className="object-cover" sizes="540px" />
+                  <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="Butterfly Garden Al Ain by Flora Decora" fill className="object-cover" sizes="540px" quality={75} />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <div className="glass rounded-2xl p-4 flex items-center justify-between">
                       <div>
@@ -108,7 +108,7 @@ export default function Home() {
               </div>
               <div className="absolute -left-6 bottom-10 w-[220px] rounded-2xl overflow-hidden shadow-soft bg-white p-1.5 animate-float hidden xl:block">
                 <div className="relative h-[140px] rounded-xl overflow-hidden">
-                  <Image src={cdnMedia("Picture4-min.png")} alt="Detail" fill unoptimized className="object-cover" sizes="220px" />
+                  <Image src={cdnMedia("Picture4-min.png")} alt="Irrigation system installation detail" fill className="object-cover" sizes="220px" quality={75} />
                 </div>
                 <div className="p-3">
                   <div className="text-xs font-semibold">Irrigation Systems</div>
@@ -195,7 +195,7 @@ export default function Home() {
             <Reveal className="relative lg:sticky lg:top-28">
               <HoverBloom className="relative rounded-[2rem] overflow-hidden bg-white dark:bg-white/5 p-2 shadow-soft hover:shadow-glow border border-black/5 dark:border-white/10">
                 <Parallax offset={22} className="relative aspect-[4/3.2] rounded-[1.6rem] overflow-hidden">
-                  <Image src={cdnMedia("Picture4-min.png")} alt="Nursery and landscape" fill unoptimized className="object-cover" sizes="(max-width: 1024px) 100vw, 560px" />
+                  <Image src={cdnMedia("Picture4-min.png")} alt="Flora Decora nursery and landscape operations" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 560px" quality={75} />
                   <div className="absolute top-4 left-4 glass rounded-full px-3 py-1.5 text-xs font-medium flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Live site — Al Ain
                   </div>
@@ -237,7 +237,7 @@ export default function Home() {
               <Reveal key={c.src} delay={i * 0.05}>
                 <HoverBloom className="group relative rounded-[1.6rem] overflow-hidden bg-ink aspect-[4/3] p-1.5 tilt-card">
                   <div className="relative w-full h-full rounded-[1.3rem] overflow-hidden">
-                    <Image src={c.src} alt={c.title} fill unoptimized className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
+                    <Image src={c.src} alt={c.title} fill className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-transparent group-hover:from-black/75 transition-colors" />
                     <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase font-medium">CDN</div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-3">
@@ -262,7 +262,7 @@ export default function Home() {
               cdnMedia("Picture4-min.png"),
             ].map((src, i) => (
               <Reveal key={src} delay={0.3 + i * 0.04} className="relative aspect-square rounded-2xl overflow-hidden bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10">
-                <Image src={src} alt="Assest thumb" fill unoptimized className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" />
+                <Image src={src} alt="Flora Decora project thumbnail" fill className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" quality={65} />
               </Reveal>
             ))}
           </div>

@@ -28,7 +28,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="relative min-h-[54vh] bg-forest-dim overflow-hidden flex items-end">
-        <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="" fill unoptimized className="object-cover opacity-30" sizes="100vw" />
+        <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Flora Decora public park landscape in Al Ain" fill className="object-cover opacity-30" sizes="100vw" quality={75} priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-forest-dim/10" />
         <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-16">
           <Reveal>
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <p className="text-ink dark:text-white text-xl leading-relaxed">We are Flora Decora — Al Ain, UAE. A premier landscaping studio for touristic theme gardens and public parks.</p>
             <p>With over 20 years and 300+ projects, we are one of the region&apos;s leaders in vertical gardens, theme gardens and municipal landscaping.</p>
             <div className="rounded-2xl overflow-hidden border border-black/5 dark:border-white/10">
-              <Image src={cdnMedia("ChatGPT Image Jul 29, 2026, 11_42_38 PM.png")} alt="AI garden vision" width={600} height={400} unoptimized className="w-full h-auto object-cover" />
+              <Image src={cdnMedia("ChatGPT Image Jul 29, 2026, 11_42_38 PM.png")} alt="Desert oasis garden vision by Flora Decora" width={600} height={400} className="w-full h-auto object-cover" quality={75} sizes="(max-width: 768px) 100vw, 600px" />
             </div>
           </Reveal>
           <Reveal delay={0.1} className="space-y-6 text-ink/70 dark:text-white/70 leading-relaxed text-lg">

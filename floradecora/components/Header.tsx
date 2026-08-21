@@ -75,7 +75,7 @@ export default function Header() {
                 width={182}
                 height={44}
                 priority
-                unoptimized
+               
                 className={`h-8 md:h-9 w-auto object-contain transition-all duration-500 ${logoClass}`}
               />
             </motion.div>

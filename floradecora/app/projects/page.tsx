@@ -37,7 +37,7 @@ export default function ProjectsPage() {
   return (
     <>
       <section className="relative min-h-[46vh] bg-forest-dim overflow-hidden flex items-end">
-        <Image src={cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png")} alt="" fill unoptimized className="object-cover opacity-30" sizes="100vw" />
+        <Image src={cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png")} alt="Flora Decora canopy walk garden project" fill className="object-cover opacity-30" sizes="100vw" priority quality={75} />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
         <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-32 pb-12 md:pt-44 md:pb-14">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Projects • 32 assets on CDN</span></Reveal>
@@ -69,7 +69,7 @@ export default function ProjectsPage() {
               <StaggerItem key={p.img} className="group">
                 <HoverBloom className="rounded-[1.6rem] bg-white dark:bg-white/5 p-2 shadow-card hover:shadow-glow border border-black/5 dark:border-white/10 h-full">
                   <div className="relative aspect-[4/3] rounded-[1.2rem] overflow-hidden bg-ink">
-                    <Image src={p.img} alt={p.title} fill unoptimized className="object-cover group-hover:scale-[1.06] transition-transform duration-700" sizes="380px" />
+                    <Image src={p.img} alt={p.title} fill className="object-cover group-hover:scale-[1.06] transition-transform duration-700" sizes="(max-width: 768px) 100vw, 380px" quality={70} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
                     <span className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-xs font-medium">{p.type}</span>
                     <span className="absolute bottom-3 right-3 text-white/80 text-xs tracking-wide">{p.year}</span>
