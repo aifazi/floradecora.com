@@ -1,49 +1,87 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect, useRef } from "react";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+declare global {
+  interface Window {
+    turnstile?: { render: (el: string | HTMLElement, opts: Record<string, unknown>) => string; reset: (id?: string) => void; getResponse: (id?: string) => string };
+  }
+}
+
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    if (!siteKey || !turnstileRef.current) return;
+    const id = "cf-turnstile-script";
+    if (!document.getElementById(id)) {
+      const s = document.createElement("script");
+      s.id = id;
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+  }, [siteKey]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
+    setErrorMsg("");
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
+    const fd = new FormData(form);
+    // client-side zod-lite checks
+    const name = String(fd.get("name") || "").trim();
+    const email = String(fd.get("email") || "").trim();
+    const message = String(fd.get("message") || "").trim();
+    if (name.length < 2) { setStatus("error"); setErrorMsg("Please enter your full name."); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus("error"); setErrorMsg("Please enter a valid email."); return; }
+    if (message.length < 10) { setStatus("error"); setErrorMsg("Message should be at least 10 characters."); return; }
 
-    // Web3Forms free endpoint — routes submissions straight to your inbox.
-    // Get a free access key at https://web3forms.com and set it as
-    // NEXT_PUBLIC_WEB3FORMS_KEY in your Vercel project's environment variables.
-    formData.append(
-      "access_key",
-      process.env.NEXT_PUBLIC_WEB3FORMS_KEY || ""
-    );
+    // Turnstile token if present
+    const turnstileToken = (document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement)?.value || (window.turnstile?.getResponse() ?? "");
+
+    const payload: Record<string, string> = {
+      name, email,
+      phone: String(fd.get("phone") || ""),
+      project_type: String(fd.get("project_type") || ""),
+      message,
+      botcheck: String(fd.get("botcheck") || ""),
+      turnstile: turnstileToken,
+    };
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
       });
       const result = await res.json();
-
       if (result.success) {
         setStatus("sent");
         form.reset();
+        window.turnstile?.reset();
       } else {
         setStatus("error");
+        setErrorMsg(result.error || "Something went wrong.");
       }
     } catch {
       setStatus("error");
+      setErrorMsg("Network error, please try again.");
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Honeypot field to deter simple bots */}
-      <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+      {/* Honeypot + Turnstile */}
+      <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" style={{ display: "none" }} />
+      {siteKey && <div ref={turnstileRef} className="cf-turnstile" data-sitekey={siteKey} data-theme="auto" />}
 
       <div className="grid md:grid-cols-2 gap-6">
         <Field label="Full name" name="name" required />
@@ -82,13 +120,12 @@ export default function ContactForm() {
 
       {status === "sent" && (
         <p className="text-sage-dark">
-          Thank you — your inquiry has been sent. Our team will be in touch shortly.
+          Thank you — your inquiry has been sent. Our team will reply within 4 hours.
         </p>
       )}
       {status === "error" && (
         <p className="text-ochre-dark">
-          Something went wrong sending your message. Please try again, or email
-          us directly at info@floradecora.com.
+          {errorMsg || "Something went wrong sending your message. Please try again, or email us directly at info@floradecora.com."}
         </p>
       )}
     </form>
