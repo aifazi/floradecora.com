@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import JsonLd from "@/components/JsonLd";
+import { Analytics } from "@vercel/analytics/react";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -99,6 +100,7 @@ export default function RootLayout({
           <main id="main">{children}</main>
           <Footer />
           <WhatsAppWidget />
+          <Analytics />
         </ThemeProvider>
         </LanguageProvider>
       </body>
