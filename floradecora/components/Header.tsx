@@ -6,14 +6,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
+import { useLanguage } from "@/components/LanguageProvider";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { dictionaries } from "@/lib/i18n";
 import { CDN_ASSETS } from "@/lib/cdn";
-
-const NAV = [
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
-];
 
 function SunIcon() {
   return (
@@ -38,6 +34,13 @@ export default function Header() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 20 });
   const { theme, toggle, mounted } = useTheme();
+  const { locale } = useLanguage();
+  const NAV = [
+    { href: "/about", label: dictionaries[locale].nav.about },
+    { href: "/services", label: dictionaries[locale].nav.services },
+    { href: "/projects", label: dictionaries[locale].nav.projects },
+    { href: "/contact", label: dictionaries[locale].nav.contact },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -106,6 +109,7 @@ export default function Header() {
               );
             })}
 
+            <LanguageSwitcher className={isLightScrolled ? "!bg-ink !text-white !border-ink" : ""} />
             <motion.button
               whileTap={{ scale: 0.88, rotate: 12 }}
               whileHover={{ scale: 1.06 }}
@@ -138,12 +142,13 @@ export default function Header() {
                 isLightScrolled ? "bg-ink text-white hover:bg-forest" : "bg-white text-forest-dim hover:bg-limestone"
               }`}
             >
-              Start a project
+              {dictionaries[locale].nav.start}
               <motion.span whileHover={{ rotate: 45, scale: 1.08 }} className="w-6 h-6 rounded-full bg-ochre text-white grid place-items-center text-xs">↗</motion.span>
             </Link>
           </nav>
 
           <div className="md:hidden flex items-center gap-2">
+            <LanguageSwitcher />
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={toggle}

@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
 import SmoothScroll from "@/components/SmoothScroll";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import JsonLd from "@/components/JsonLd";
 
 const fraunces = Fraunces({
@@ -67,6 +68,9 @@ const themeScript = `(() => {
     const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.classList.toggle('dark', t === 'dark');
     document.documentElement.style.colorScheme = t;
+    const l = localStorage.getItem('locale') || 'en';
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
   } catch {}
 })();`;
 
@@ -85,13 +89,15 @@ export default function RootLayout({
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:text-white focus:px-6 focus:py-3 focus:text-sm">
           Skip to content
         </a>
-        <ThemeProvider>
-          <LoadingScreen />
-          <SmoothScroll />
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            <LoadingScreen />
+            <SmoothScroll />
+            <Header />
+            <main id="main">{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
