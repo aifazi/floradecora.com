@@ -23,12 +23,12 @@ export default function SectionHeading({
       className={align === "center" ? "text-center mx-auto max-w-3xl" : "text-left max-w-3xl"}
     >
       <div className={`inline-flex items-center gap-3 mb-5 ${align === "center" ? "justify-center" : ""}`}>
-        {withLine && <span className={`h-px w-10 ${dark ? "bg-white/20" : "bg-ochre/30"}`} />}
-        <p className={`eyebrow ${dark ? "text-ochre-light" : "text-ochre-dark"}`}>{eyebrow}</p>
+        {withLine && <span className={`h-px w-10 ${dark ? "bg-white/20" : "bg-ochre/30 dark:bg-white/20"}`} />}
+        <p className={`eyebrow ${dark ? "text-ochre-light" : "text-ochre-dark dark:text-ochre-light"}`}>{eyebrow}</p>
       </div>
       <h2
         className={`font-display font-[500] leading-[0.95] tracking-tightDisplay text-balance text-4xl md:text-5xl lg:text-[3.4rem] ${
-          dark ? "text-white" : "text-ink"
+          dark ? "text-white" : "text-ink dark:text-white"
         }`}
       >
         {title}

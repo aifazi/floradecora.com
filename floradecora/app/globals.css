@@ -52,9 +52,12 @@ body {
 }
 
 /* theme transition for Tailwind utilities */
-.bg-cream, .bg-white, .bg-limestone, .bg-forest, .bg-forest-dim, .border-black\/5, .text-ink {
+.bg-cream, .bg-white, .bg-limestone, .bg-forest, .bg-forest-dim, .border-black\/5, .text-ink, .text-ink\/60, .text-ink\/50 {
   transition: background-color 0.45s cubic-bezier(0.16,1,0.3,1), border-color 0.45s ease, color 0.45s ease;
 }
+/* Improve dark card contrast */
+.dark .bg-white { background-color: rgba(255,255,255,0.06) !important; }
+.dark .bg-cream { background-color: #0F1B14 !important; }
 
 a:focus-visible,
 button:focus-visible,
@@ -72,10 +75,10 @@ textarea:focus-visible {
   border: 1px solid rgba(255,255,255,0.45);
 }
 .glass-dark {
-  background: rgba(15, 27, 20, 0.78);
+  background: rgba(15, 27, 20, 0.84);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
 }
 .dark .glass {
   background: rgba(22, 38, 28, 0.78);
@@ -103,8 +106,8 @@ textarea:focus-visible {
   box-shadow: 0 16px 48px rgba(0,0,0,0.12);
 }
 .dark .hover-bloom:hover {
-  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
-  border-color: rgba(255,255,255,0.12) !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 32px rgba(214,168,82,0.12);
+  border-color: rgba(255,255,255,0.18) !important;
 }
 
 /* Tilt hover */

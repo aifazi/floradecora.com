@@ -176,9 +176,9 @@ export default function Home() {
                   { k: "02", v: "End-to-end" },
                   { k: "03", v: "20 yrs care" },
                 ].map((f) => (
-                  <StaggerItem key={f.k} className="rounded-2xl bg-white border border-black/5 p-4">
+                  <StaggerItem key={f.k} className="rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 p-4">
                     <div className="text-ochre text-xs tracking-widest">{f.k}</div>
-                    <div className="font-medium text-sm mt-1">{f.v}</div>
+                    <div className="font-medium text-sm mt-1 dark:text-white">{f.v}</div>
                   </StaggerItem>
                 ))}
               </Stagger>
@@ -221,23 +221,23 @@ export default function Home() {
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
         <div className="mx-auto max-w-content px-6 md:px-10 py-10 md:py-14">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="Selected Work — from assest (CDN)" title="Concept to bloom, all in-house." />
-            <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">All 32 on CDN →</Link>
+            <SectionHeading eyebrow="Selected Work — Built Projects" title="Concept to bloom, all in-house." />
+            <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">View all projects →</Link>
           </div>
-          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Served from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10">https://cdn.aifazi.net/media/assest/</code> via Cloudflare R2 (bucket floradecora) — wrangler --remote</p>
+          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Built projects served from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10">cdn.aifazi.net</code> via R2 — AI concepts marked as proposal.</p>
           <div className="mt-8 grid md:grid-cols-3 gap-4">
             {[
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_00 PM.png"), title: "AI Garden Concept 01", meta: "Themed garden render" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_43 PM.png"), title: "AI Garden Concept 02", meta: "Butterfly house" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_39_48 PM.png"), title: "AI Garden Concept 03", meta: "Public park vision" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_42_38 PM.png"), title: "AI Garden Concept 04", meta: "Desert oasis" },
-              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png"), title: "AI Garden Concept 05", meta: "Vertical garden" },
-              { src: cdnMedia("6.png"), title: "Site Plan 06", meta: "Master layout" },
+              { src: cdnMedia("Picture2-min-scaled.jpg"), title: "Butterfly Garden — Al Ain", meta: "4,200 m² • Built 2023" },
+              { src: cdnMedia("Picture3-min-scaled.jpg"), title: "Municipal Nursery", meta: "12,000 m² • Built 2023" },
+              { src: cdnMedia("hero-3.jpg"), title: "Central Park Revamp", meta: "18,000 m² • Built 2022" },
+              { src: cdnMedia("hero-2.jpg"), title: "Desert Oasis — Corniche", meta: "9,500 m² • Built 2022" },
+              { src: cdnMedia("Picture4-min.png"), title: "Irrigation Master Plan", meta: "8 parks • Built 2023" },
+              { src: cdnMedia("6.png"), title: "Site Master Plan", meta: "Al Ain • Plan 2024" },
             ].map((c, i) => (
               <Reveal key={c.src} delay={i * 0.05}>
                 <HoverBloom className="group relative rounded-[1.6rem] overflow-hidden bg-ink aspect-[4/3] p-1.5 tilt-card">
-                  <div className="relative w-full h-full rounded-[1.3rem] overflow-hidden">
-                    <Image src={c.src} alt={c.title} fill className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
+                  <div className="relative w-full h-full rounded-[1.3rem] overflow-hidden bg-ink">
+                    <Image src={c.src} alt={c.title} fill unoptimized className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-transparent group-hover:from-black/75 transition-colors" />
                     <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase font-medium">CDN</div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-3">
@@ -255,14 +255,14 @@ export default function Home() {
           <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-3">
             {[
               cdnMedia("8.png"),
-              cdnMedia("ChatGPT Image Jul 29, 2026, 11_43_24 PM.png"),
-              cdnMedia("ChatGPT Image Jul 29, 2026, 11_46_54 PM.png"),
+              cdnMedia("hero-2.jpg"),
+              cdnMedia("hero-3.jpg"),
               cdnMedia("Picture2-min-scaled.jpg"),
               cdnMedia("Picture3-min-scaled.jpg"),
               cdnMedia("Picture4-min.png"),
             ].map((src, i) => (
               <Reveal key={src} delay={0.3 + i * 0.04} className="relative aspect-square rounded-2xl overflow-hidden bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10">
-                <Image src={src} alt="Flora Decora project thumbnail" fill className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" quality={65} />
+                <Image src={src} alt="Flora Decora project thumbnail" fill unoptimized className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" />
               </Reveal>
             ))}
           </div>
@@ -274,7 +274,7 @@ export default function Home() {
         <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="What we do" title="Eight disciplines, one in-house team." withLine />
-            <p className="max-w-md text-ink/60 text-sm leading-relaxed">From concept render to daily maintenance — we keep it all under one roof so the garden actually matches the drawing.</p>
+            <p className="max-w-md text-ink/60 dark:text-white/60 text-sm leading-relaxed">From concept render to daily maintenance — we keep it all under one roof so the garden actually matches the drawing.</p>
           </div>
           <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {SERVICES.map((s) => (
