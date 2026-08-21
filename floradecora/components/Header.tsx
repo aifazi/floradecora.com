@@ -39,6 +39,7 @@ export default function Header() {
     { href: "/about", label: dictionaries[locale].nav.about },
     { href: "/services", label: dictionaries[locale].nav.services },
     { href: "/projects", label: dictionaries[locale].nav.projects },
+    { href: "/quote", label: "Quote" },
     { href: "/contact", label: dictionaries[locale].nav.contact },
   ];
 
