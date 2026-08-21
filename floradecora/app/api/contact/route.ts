@@ -28,8 +28,17 @@ const schema = z.object({
   turnstile: z.string().optional(),
 });
 
+function getClientIp(req: NextRequest): string {
+  const xf = req.headers.get("x-forwarded-for");
+  if (xf) {
+    const first = xf.split(",")[0]?.trim();
+    if (first && /^[0-9a-f.:]+$/i.test(first) && first !== "unknown") return first;
+  }
+  return req.headers.get("x-real-ip")?.trim() || req.headers.get("cf-connecting-ip")?.trim() || "unknown";
+}
+
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
+  const ip = getClientIp(req);
   if (!rateLimit(ip)) {
     return NextResponse.json({ success: false, error: "Too many requests, try again later." }, { status: 429 });
   }
@@ -53,18 +62,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Invalid input", issues: parsed.error.flatten() }, { status: 400 });
   }
 
-  // Turnstile verify if configured
+  // Turnstile verify — required if secret is set
   const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
-  if (turnstileSecret && parsed.data.turnstile) {
+  if (turnstileSecret) {
+    const token = parsed.data.turnstile?.trim();
+    if (!token) return NextResponse.json({ success: false, error: "Human verification required" }, { status: 400 });
     try {
       const verify = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ secret: turnstileSecret, response: parsed.data.turnstile, remoteip: ip }),
+        body: JSON.stringify({ secret: turnstileSecret, response: token, remoteip: ip }),
       });
       const out = await verify.json();
       if (!out.success) return NextResponse.json({ success: false, error: "Human verification failed" }, { status: 400 });
-    } catch {}
+    } catch {
+      return NextResponse.json({ success: false, error: "Verification error" }, { status: 400 });
+    }
   }
 
   const web3Key = process.env.WEB3FORMS_KEY || process.env.NEXT_PUBLIC_WEB3FORMS_KEY;

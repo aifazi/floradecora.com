@@ -79,9 +79,12 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-      {/* Honeypot + Turnstile */}
-      <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" style={{ display: "none" }} />
-      {siteKey && <div ref={turnstileRef} className="cf-turnstile" data-sitekey={siteKey} data-theme="auto" />}
+      {/* Honeypot — text field off-screen, not checkbox; bots fill it, humans don't */}
+      <div className="absolute left-[-9999px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
+        <label htmlFor="botcheck" className="sr-only">Leave this field empty</label>
+        <input type="text" id="botcheck" name="botcheck" tabIndex={-1} autoComplete="off" className="h-px w-px" />
+      </div>
+      {siteKey && <div ref={turnstileRef} className="cf-turnstile" data-sitekey={siteKey} data-theme="auto" data-size="normal" />}
 
       <div className="grid md:grid-cols-2 gap-6">
         <Field label="Full name" name="name" required />
