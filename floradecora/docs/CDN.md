@@ -1,7 +1,20 @@
 # CDN — cdn.aifazi.net (Cloudflare R2 bucket floradecora)
 
 All media served from `https://cdn.aifazi.net/media/assest/` via R2.
-Images use `unoptimized` (original quality) — upload high-res JPG 2400px, already compressed.
+Images use `unoptimized` (original quality) by default — upload high-res JPG 2400px.
+
+## Cloudflare optimization (Option C — now ready)
+
+Enable auto-WebP/AVIF without touching code:
+1. Cloudflare Dashboard → Zone `aifazi.net` → Speed → Optimization → **Polish: Lossless + WebP**, **Mirage: On**
+2. Or enable **Image Resizing** on the `cdn.aifazi.net` zone → then uncomment in `next.config.mjs`:
+   ```js
+   loader: "custom", loaderFile: "./lib/imageLoader.ts",
+   ```
+   and `lib/imageLoader.ts` will serve `/cdn-cgi/image/width=800,quality=75,format=auto/...`
+3. Purge cache: `curl -X POST https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache -d '{"purge_everything":true}'`
+
+Loader fallback appends `?width=&quality=&format=auto` — works with custom Worker if enabled.
 
 ## Upload real photography
 
