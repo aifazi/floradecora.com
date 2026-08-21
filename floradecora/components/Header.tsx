@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
+import { CDN_ASSETS } from "@/lib/cdn";
 
 const NAV = [
   { href: "/about", label: "About" },
@@ -69,11 +70,12 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-3 group shrink-0" onClick={() => setOpen(false)}>
             <motion.div whileHover={{ scale: 1.02, rotate: 0.6 }} transition={{ type: "spring", stiffness: 400 }}>
               <Image
-                src="/logo-alt.png"
+                src={CDN_ASSETS.logo}
                 alt="Flora Decora"
                 width={182}
                 height={44}
                 priority
+                unoptimized
                 className={`h-8 md:h-9 w-auto object-contain transition-all duration-500 ${logoClass}`}
               />
             </motion.div>

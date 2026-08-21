@@ -6,6 +6,7 @@ import Counter from "@/components/Counter";
 import { MagneticButton } from "@/components/MagneticButton";
 import { Parallax } from "@/components/Parallax";
 import HoverBloom from "@/components/HoverBloom";
+import { cdnMedia } from "@/lib/cdn";
 
 const SERVICES = [
   { title: "Themed & Butterfly Gardens", note: "Design, build, operate", icon: "🦋", accent: "from-amber-400/20 to-orange-500/20" },
@@ -27,22 +28,18 @@ const PROCESS = [
 export default function Home() {
   return (
     <>
-      {/* HERO — modern split + parallax + ken burns + glass */}
+      {/* HERO — CND via cdn.aifazi.net */}
       <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
-            <Image src="/images/hero-2.jpg" alt="Flora Decora garden" fill priority className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
+            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Flora Decora garden" fill priority unoptimized className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dim via-forest-dim/80 to-forest-dim/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-transparent to-transparent" />
           <div className="absolute inset-0 opacity-[0.06] mix-blend-soft-light" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} />
         </div>
-
-        {/* top veil */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
-
         <div className="relative mx-auto max-w-content w-full px-6 md:px-10 pt-28 pb-10 md:pt-36 md:pb-16 grid lg:grid-cols-[1.08fr_0.92fr] gap-10 items-center">
-          {/* left */}
           <div>
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur border border-white/15 px-3 py-1.5">
@@ -51,13 +48,12 @@ export default function Home() {
                 <span className="hidden sm:inline-flex ml-2 rounded-full bg-white text-forest-dim px-2.5 py-1 text-[0.62rem] tracking-wide font-semibold">20+ Years</span>
               </div>
             </Reveal>
-
             <Reveal delay={0.08}>
               <h1 className="mt-6 font-display font-[550] leading-[0.9] tracking-tightDisplay text-white text-balance text-5xl sm:text-6xl lg:text-[5.2rem]">
                 We draw
                 <span className="inline-flex items-center ml-3 align-middle">
                   <span className="inline-block w-12 h-12 lg:w-16 lg:h-16 rounded-full overflow-hidden border-2 border-white/20 -rotate-6">
-                    <Image src="/images/hero-3.jpg" alt="" width={80} height={80} className="w-full h-full object-cover" />
+                    <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="" width={80} height={80} unoptimized className="w-full h-full object-cover" />
                   </span>
                 </span>
                 <br />
@@ -66,13 +62,11 @@ export default function Home() {
                 then we grow it.
               </h1>
             </Reveal>
-
             <Reveal delay={0.14}>
               <p className="mt-6 max-w-xl text-white/70 text-lg leading-relaxed text-balance">
                 Flora Decora designs, builds and operates <span className="text-white">themed gardens, public parks</span> and tourist attractions across the UAE — from the first line on a site plan to twenty years of maintenance after.
               </p>
             </Reveal>
-
             <Reveal delay={0.2}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <MagneticButton href="/contact">Start a project</MagneticButton>
@@ -84,7 +78,6 @@ export default function Home() {
                 </span>
               </div>
             </Reveal>
-
             <Reveal delay={0.26} className="mt-10 flex items-center gap-4">
               <div className="flex -space-x-2">
                 {[1, 2, 3].map((i) => (
@@ -97,14 +90,11 @@ export default function Home() {
               </div>
             </Reveal>
           </div>
-
-          {/* right — floating stack */}
           <Reveal delay={0.18} className="relative hidden lg:block h-[560px]">
             <div className="absolute top-6 right-6 left-6 bottom-6">
-              {/* main card */}
               <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.35)] bg-white p-2">
                 <div className="relative w-full h-full rounded-[1.6rem] overflow-hidden">
-                  <Image src="/images/hero-3.jpg" alt="Project" fill className="object-cover" sizes="540px" />
+                  <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="Project" fill unoptimized className="object-cover" sizes="540px" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <div className="glass rounded-2xl p-4 flex items-center justify-between">
                       <div>
@@ -116,17 +106,15 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              {/* floating mini */}
               <div className="absolute -left-6 bottom-10 w-[220px] rounded-2xl overflow-hidden shadow-soft bg-white p-1.5 animate-float hidden xl:block">
                 <div className="relative h-[140px] rounded-xl overflow-hidden">
-                  <Image src="/images/hero-4.png" alt="Detail" fill className="object-cover" sizes="220px" />
+                  <Image src={cdnMedia("Picture4-min.png")} alt="Detail" fill unoptimized className="object-cover" sizes="220px" />
                 </div>
                 <div className="p-3">
                   <div className="text-xs font-semibold">Irrigation Systems</div>
                   <div className="text-[11px] text-ink/60">Design & installation</div>
                 </div>
               </div>
-              {/* metric pill */}
               <div className="absolute -right-2 top-14 glass-dark rounded-full px-4 py-3 flex items-center gap-3 shadow-soft">
                 <span className="w-10 h-10 rounded-full bg-ochre grid place-items-center text-white">✓</span>
                 <div className="pr-2">
@@ -137,8 +125,6 @@ export default function Home() {
             </div>
           </Reveal>
         </div>
-
-        {/* bottom marquee */}
         <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-forest-dim/60 backdrop-blur">
           <div className="overflow-hidden">
             <div className="flex animate-marquee whitespace-nowrap py-3">
@@ -155,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS — bento glass + hover bloom */}
+      {/* STATS */}
       <section className="bg-cream dark:bg-forest-dim relative -mt-px">
         <div className="mx-auto max-w-content px-6 md:px-10 py-8">
           <div className="grid grid-cols-3 gap-3 md:gap-4">
@@ -178,7 +164,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ABOUT — editorial + bento */}
+      {/* ABOUT */}
       <section className="bg-cream dark:bg-forest-dim overflow-hidden border-y border-transparent dark:border-white/5">
         <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
           <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-start">
@@ -197,14 +183,8 @@ export default function Home() {
                 ))}
               </Stagger>
               <Reveal delay={0.12} className="mt-8 space-y-4 text-ink/70 leading-relaxed">
-                <p>
-                  We are a premier landscaping and gardening company specializing in designing, constructing and operating touristic theme
-                  gardens and public parks throughout the United Arab Emirates.
-                </p>
-                <p>
-                  Design, consultancy, planning, nurseries, hard and soft landscape, irrigation and ongoing operation are all managed
-                  in-house — by the same teams from first sketch to final hedge trim.
-                </p>
+                <p>We are a premier landscaping and gardening company specializing in designing, constructing and operating touristic theme gardens and public parks throughout the United Arab Emirates.</p>
+                <p>Design, consultancy, planning, nurseries, hard and soft landscape, irrigation and ongoing operation are all managed in-house — by the same teams from first sketch to final hedge trim.</p>
               </Reveal>
               <Reveal delay={0.18} className="mt-8">
                 <Link href="/about" className="inline-flex items-center gap-2 rounded-full bg-ink text-white px-6 py-3 text-sm hover:bg-forest transition-colors">
@@ -212,11 +192,10 @@ export default function Home() {
                 </Link>
               </Reveal>
             </div>
-
             <Reveal className="relative lg:sticky lg:top-28">
               <HoverBloom className="relative rounded-[2rem] overflow-hidden bg-white dark:bg-white/5 p-2 shadow-soft hover:shadow-glow border border-black/5 dark:border-white/10">
                 <Parallax offset={22} className="relative aspect-[4/3.2] rounded-[1.6rem] overflow-hidden">
-                  <Image src="/images/hero-4.png" alt="Nursery and landscape" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 560px" />
+                  <Image src={cdnMedia("Picture4-min.png")} alt="Nursery and landscape" fill unoptimized className="object-cover" sizes="(max-width: 1024px) 100vw, 560px" />
                   <div className="absolute top-4 left-4 glass rounded-full px-3 py-1.5 text-xs font-medium flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Live site — Al Ain
                   </div>
@@ -238,29 +217,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALLERY — all assest images showcase */}
+      {/* GALLERY — CDN */}
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
         <div className="mx-auto max-w-content px-6 md:px-10 py-10 md:py-14">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="Selected Work — from assest" title="Concept to bloom, all in-house." />
-            <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">All 19 assets →</Link>
+            <SectionHeading eyebrow="Selected Work — from assest (CDN)" title="Concept to bloom, all in-house." />
+            <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">All 32 on CDN →</Link>
           </div>
-          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">All images from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10">C:\FAZI\floradecora.com\assest</code> — logos + 3 original photos + 14 AI concepts + 6.png/8.png</p>
+          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Served from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10">https://cdn.aifazi.net/media/assest/</code> via Cloudflare R2 (bucket floradecora) — wrangler --remote</p>
           <div className="mt-8 grid md:grid-cols-3 gap-4">
             {[
-              { src: "/images/chatgpt-image-jul-29-2026-11_38_00-pm.png", title: "AI Garden Concept 01", meta: "Themed garden render" },
-              { src: "/images/chatgpt-image-jul-29-2026-11_38_43-pm.png", title: "AI Garden Concept 02", meta: "Butterfly house" },
-              { src: "/images/chatgpt-image-jul-29-2026-11_39_48-pm.png", title: "AI Garden Concept 03", meta: "Public park vision" },
-              { src: "/images/chatgpt-image-jul-29-2026-11_42_38-pm.png", title: "AI Garden Concept 04", meta: "Desert oasis" },
-              { src: "/images/chatgpt-image-jul-30-2026-12_15_15-am.png", title: "AI Garden Concept 05", meta: "Vertical garden" },
-              { src: "/images/6.png", title: "Site Plan 06", meta: "Master layout" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_00 PM.png"), title: "AI Garden Concept 01", meta: "Themed garden render" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_43 PM.png"), title: "AI Garden Concept 02", meta: "Butterfly house" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_39_48 PM.png"), title: "AI Garden Concept 03", meta: "Public park vision" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_42_38 PM.png"), title: "AI Garden Concept 04", meta: "Desert oasis" },
+              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png"), title: "AI Garden Concept 05", meta: "Vertical garden" },
+              { src: cdnMedia("6.png"), title: "Site Plan 06", meta: "Master layout" },
             ].map((c, i) => (
               <Reveal key={c.src} delay={i * 0.05}>
                 <HoverBloom className="group relative rounded-[1.6rem] overflow-hidden bg-ink aspect-[4/3] p-1.5 tilt-card">
                   <div className="relative w-full h-full rounded-[1.3rem] overflow-hidden">
-                    <Image src={c.src} alt={c.title} fill className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
+                    <Image src={c.src} alt={c.title} fill unoptimized className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-transparent group-hover:from-black/75 transition-colors" />
-                    <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase font-medium">ASS EST</div>
+                    <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase font-medium">CDN</div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-3">
                       <div>
                         <div className="text-white font-medium text-sm group-hover:translate-y-[-2px] transition-transform">{c.title}</div>
@@ -275,29 +254,28 @@ export default function Home() {
           </div>
           <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-3">
             {[
-              "/images/8.png",
-              "/images/chatgpt-image-jul-29-2026-11_43_24-pm.png",
-              "/images/chatgpt-image-jul-29-2026-11_46_54-pm.png",
-              "/images/picture2-min-scaled.jpg",
-              "/images/picture3-min-scaled.jpg",
-              "/images/picture4-min.png",
+              cdnMedia("8.png"),
+              cdnMedia("ChatGPT Image Jul 29, 2026, 11_43_24 PM.png"),
+              cdnMedia("ChatGPT Image Jul 29, 2026, 11_46_54 PM.png"),
+              cdnMedia("Picture2-min-scaled.jpg"),
+              cdnMedia("Picture3-min-scaled.jpg"),
+              cdnMedia("Picture4-min.png"),
             ].map((src, i) => (
               <Reveal key={src} delay={0.3 + i * 0.04} className="relative aspect-square rounded-2xl overflow-hidden bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10">
-                <Image src={src} alt="Assest thumb" fill className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" />
+                <Image src={src} alt="Assest thumb" fill unoptimized className="object-cover hover:scale-[1.06] transition-transform duration-700" sizes="200px" />
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SERVICES — bento modern */}
+      {/* SERVICES */}
       <section className="bg-cream dark:bg-forest-dim border-y border-transparent dark:border-white/5">
         <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="What we do" title="Eight disciplines, one in-house team." withLine />
             <p className="max-w-md text-ink/60 text-sm leading-relaxed">From concept render to daily maintenance — we keep it all under one roof so the garden actually matches the drawing.</p>
           </div>
-
           <Stagger className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {SERVICES.map((s) => (
               <StaggerItem key={s.title} className="group">
@@ -316,14 +294,13 @@ export default function Home() {
               </StaggerItem>
             ))}
           </Stagger>
-
           <Reveal className="mt-8 flex justify-center">
             <Link href="/services" className="rounded-full bg-ink text-white px-8 py-3.5 text-sm hover:bg-forest transition-colors">View all services →</Link>
           </Reveal>
         </div>
       </section>
 
-      {/* PROCESS — timeline */}
+      {/* PROCESS */}
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
         <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
           <SectionHeading eyebrow="How we work" title="From handover to steady-state — in three moves." withLine />
@@ -352,7 +329,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA — modern gradient with glass */}
+      {/* CTA */}
       <section className="relative overflow-hidden bg-forest-dim">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-forest via-forest-dim to-black" />
