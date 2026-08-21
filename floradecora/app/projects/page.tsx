@@ -13,6 +13,7 @@ import SearchBar from "@/components/SearchBar";
 export const metadata: Metadata = {
   title: "Projects | Flora Decora",
   description: "300+ landscaping projects across the UAE — butterfly gardens, public parks, nurseries and irrigation. View case studies from Al Ain Municipality and Abu Dhabi Parks.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {

@@ -6,6 +6,7 @@ import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Services | Flora Decora",
   description: "Landscaping design, themed gardens, development, nurseries, irrigation, pest control and maintenance.",
+  alternates: { canonical: "/services" },
 };
 
 const SERVICES = [

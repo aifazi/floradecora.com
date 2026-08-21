@@ -6,12 +6,14 @@ import { Reveal } from "@/components/Reveal";
 
 export function generateStaticParams() { return POSTS.map((p) => ({ slug: p.slug })); }
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const p = getPost(params.slug); if (!p) return {}; return { title: `${p.title} | Flora Decora`, description: p.excerpt };
+  const p = getPost(params.slug); if (!p) return {}; return { title: `${p.title} | Flora Decora`, description: p.excerpt, alternates: { canonical: `/blog/${p.slug}` } };
 }
 export default function PostPage({ params }: { params: { slug: string } }) {
   const p = getPost(params.slug); if (!p) notFound();
+  const jsonLd = { "@context": "https://schema.org", "@type": "BlogPosting", headline: p.title, description: p.excerpt, datePublished: p.date, author: { "@type": "Organization", name: "Flora Decora" }, publisher: { "@type": "Organization", name: "Flora Decora", logo: { "@type": "ImageObject", url: "https://cdn.aifazi.net/media/assest/jluAioI%20-%20Imgur.png" } } };
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="bg-cream dark:bg-forest-dim">
         <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 pt-32 pb-8 md:pt-44">
           <Reveal><Link href="/blog" className="text-xs tracking-[0.14em] uppercase text-ochre">← Back to journal</Link></Reveal>

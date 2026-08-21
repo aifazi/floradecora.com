@@ -7,6 +7,7 @@ import { cdnMedia } from "@/lib/cdn";
 export const metadata: Metadata = {
   title: "Contact | Flora Decora",
   description: "Get in touch with Flora Decora for landscaping and themed garden projects across the UAE.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

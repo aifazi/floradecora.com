@@ -6,6 +6,7 @@ import { Reveal } from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Quote Estimator | Flora Decora",
   description: "Instant estimate for landscaping, themed gardens, irrigation and maintenance across the UAE. Get a firm price within 72h.",
+  alternates: { canonical: "/quote" },
 };
 
 export default function QuotePage() {

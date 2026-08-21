@@ -16,6 +16,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return {
     title: `${p.title} | Flora Decora`,
     description: p.description,
+    alternates: { canonical: `/projects/${p.slug}` },
     openGraph: { images: [{ url: p.img }] },
   };
 }

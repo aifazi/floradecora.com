@@ -10,6 +10,7 @@ import { cdnMedia } from "@/lib/cdn";
 export const metadata: Metadata = {
   title: "About Us | Flora Decora",
   description: "Flora Decora is a premier UAE landscaping company with over 20 years of experience.",
+  alternates: { canonical: "/about" },
 };
 
 const VALUES = [

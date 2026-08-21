@@ -5,7 +5,7 @@ import SectionHeading from "@/components/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
 import Newsletter from "@/components/Newsletter";
 
-export const metadata: Metadata = { title: "Blog | Flora Decora", description: "Gardening insights, irrigation and park operations from Al Ain, UAE." };
+export const metadata: Metadata = { title: "Blog | Flora Decora", description: "Gardening insights, irrigation and park operations from Al Ain, UAE.", alternates: { canonical: "/blog" } };
 
 export default function BlogPage() {
   return (
