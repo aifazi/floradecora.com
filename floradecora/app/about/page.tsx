@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
+import Timeline from "@/components/Timeline";
+import FAQ from "@/components/FAQ";
+import Testimonials from "@/components/Testimonials";
 import { cdnMedia } from "@/lib/cdn";
 
 export const metadata: Metadata = {
@@ -90,6 +93,31 @@ export default function AboutPage() {
               </StaggerItem>
             ))}
           </Stagger>
+        </div>
+      </section>
+
+      <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
+        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+          <SectionHeading eyebrow="Timeline" title="20+ years, one project at a time." withLine />
+          <Timeline />
+        </div>
+      </section>
+
+      <section className="bg-cream dark:bg-forest-dim">
+        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24">
+          <SectionHeading eyebrow="Testimonials" title="What clients say." withLine />
+          <Testimonials />
+          <div className="mt-8 flex flex-wrap gap-3 text-xs">
+            <span className="rounded-full border border-black/10 dark:border-white/10 px-4 py-2">Trusted by 150+ clients</span>
+            <span className="rounded-full bg-ink text-white px-4 py-2">Avg. 4.9/5 satisfaction</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
+        <div className="mx-auto max-w-content px-6 md:px-10 py-16 md:py-24 max-w-3xl">
+          <SectionHeading eyebrow="FAQ" title="Before you visit, a few answers." withLine />
+          <FAQ />
         </div>
       </section>
     </>
