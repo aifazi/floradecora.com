@@ -49,7 +49,7 @@ export default function ProjectsPage() {
             <SectionHeading eyebrow="Selected Work" title="From concept to bloom — all in-house." withLine />
             <div className="flex flex-col gap-3 items-end">
               <SearchBar />
-              <p className="max-w-md text-ink/60 dark:text-white/60 text-sm leading-relaxed text-right">Served from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10">cdn.aifazi.net</code> via R2. Click for full case study.</p>
+              <p className="max-w-md text-ink/60 dark:text-white/60 text-sm leading-relaxed text-right">Tap a card for the full case study.</p>
             </div>
           </div>
           <ProjectFilter projects={PROJECTS} />

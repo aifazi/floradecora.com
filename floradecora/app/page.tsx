@@ -28,7 +28,7 @@ const PROCESS = [
 export default function Home() {
   return (
     <>
-      {/* HERO — CND via cdn.aifazi.net */}
+      {/* HERO */}
       <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
@@ -224,13 +224,13 @@ export default function Home() {
             <SectionHeading eyebrow="Selected Work — Built Projects" title="Concept to bloom, all in-house." />
             <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">View all projects →</Link>
           </div>
-          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Built projects served from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10">cdn.aifazi.net</code> via R2 — AI concepts marked as proposal.</p>
+          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">A selection of built work from Al Ain and Abu Dhabi — concepts available on request.</p>
           <div className="mt-8 grid md:grid-cols-3 gap-4">
             {[
               { src: cdnMedia("Picture2-min-scaled.jpg"), title: "Butterfly Garden — Al Ain", meta: "4,200 m² • Built 2023" },
               { src: cdnMedia("Picture3-min-scaled.jpg"), title: "Municipal Nursery", meta: "12,000 m² • Built 2023" },
-              { src: cdnMedia("hero-3.jpg"), title: "Central Park Revamp", meta: "18,000 m² • Built 2022" },
-              { src: cdnMedia("hero-2.jpg"), title: "Desert Oasis — Corniche", meta: "9,500 m² • Built 2022" },
+              { src: cdnMedia("01_1 - Photo.jpg.jpeg"), title: "Central Park — Al Ain", meta: "18,000 m² • Built 2022" },
+              { src: cdnMedia("05.jpg.jpeg"), title: "Desert Oasis — Abu Dhabi", meta: "9,500 m² • Built 2022" },
               { src: cdnMedia("Picture4-min.png"), title: "Irrigation Master Plan", meta: "8 parks • Built 2023" },
               { src: cdnMedia("6.png"), title: "Site Master Plan", meta: "Al Ain • Plan 2024" },
             ].map((c, i) => (
@@ -255,8 +255,8 @@ export default function Home() {
           <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-3">
             {[
               cdnMedia("8.png"),
-              cdnMedia("hero-2.jpg"),
-              cdnMedia("hero-3.jpg"),
+              cdnMedia("01_1 - Photo.jpg.jpeg"),
+              cdnMedia("05.jpg.jpeg"),
               cdnMedia("Picture2-min-scaled.jpg"),
               cdnMedia("Picture3-min-scaled.jpg"),
               cdnMedia("Picture4-min.png"),
@@ -276,7 +276,7 @@ export default function Home() {
             <SectionHeading eyebrow="Preview — Mock Concepts" title="Mockups for review before build." withLine />
             <span className="rounded-full bg-ochre/10 dark:bg-ochre/20 border border-ochre/20 px-4 py-2 text-xs font-medium text-ochre-dark dark:text-ochre-light">12 mocks • Preview only</span>
           </div>
-          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Concept renders — not built. Approve a direction → we build it real. All mocks from <code className="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 text-xs">assest/</code>.</p>
+          <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Concepts for preview — not built. Approve a direction and we’ll build it for real.</p>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             {[
               { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_00 PM.png"), label: "Mock 01" },
@@ -314,7 +314,7 @@ export default function Home() {
             {SERVICES.map((s) => (
               <StaggerItem key={s.title} className="group">
                 <HoverBloom className="relative rounded-3xl bg-white dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 p-6 sm:p-7 shadow-card hover:shadow-glow overflow-hidden h-full">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`} />
                   <div className="relative">
                     <div className="w-10 h-10 rounded-xl bg-ink dark:bg-white text-white dark:text-ink grid place-items-center text-sm group-hover:bg-ochre dark:group-hover:bg-ochre group-hover:text-white transition-colors group-hover:rotate-6 group-hover:scale-110 duration-500">{s.icon}</div>
                     <h3 className="mt-6 font-display text-[1.05rem] leading-tight font-medium text-ink dark:text-white">{s.title}</h3>
