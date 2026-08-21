@@ -82,11 +82,14 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className={`${fraunces.variable} ${workSans.variable} ${plexMono.variable} font-body`}>
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:text-white focus:px-6 focus:py-3 focus:text-sm">
+          Skip to content
+        </a>
         <ThemeProvider>
           <LoadingScreen />
           <SmoothScroll />
           <Header />
-          {children}
+          <main id="main">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

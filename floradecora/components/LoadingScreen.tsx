@@ -7,21 +7,12 @@ export default function LoadingScreen() {
   const [phase, setPhase] = useState<"bloom" | "done">("bloom");
 
   useEffect(() => {
-    // Only show once per session — comment out if you want every refresh
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setShow(false); return; }
     const seen = sessionStorage.getItem("flora-loaded");
-    if (seen) {
-      setShow(false);
-      return;
-    }
-    const t1 = setTimeout(() => setPhase("done"), 1900);
-    const t2 = setTimeout(() => {
-      setShow(false);
-      sessionStorage.setItem("flora-loaded", "1");
-    }, 2600);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
+    if (seen) { setShow(false); return; }
+    const t1 = setTimeout(() => setPhase("done"), 650);
+    const t2 = setTimeout(() => { setShow(false); sessionStorage.setItem("flora-loaded", "1"); }, 1200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
   return (
@@ -159,10 +150,11 @@ export default function LoadingScreen() {
             </motion.div>
           </div>
 
-          {/* skip */}
+          {/* skip - a11y */}
           <button
             onClick={() => setShow(false)}
-            className="absolute bottom-8 right-8 text-xs tracking-[0.14em] uppercase text-ink/40 dark:text-white/40 hover:text-ink dark:hover:text-white transition-colors"
+            aria-label="Skip loading animation"
+            className="absolute bottom-8 right-8 text-xs tracking-[0.14em] uppercase text-ink/40 dark:text-white/40 hover:text-ink dark:hover:text-white transition-colors focus-visible:outline-2 focus-visible:outline-ochre"
           >
             Skip →
           </button>
