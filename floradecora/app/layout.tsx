@@ -43,10 +43,11 @@ export const metadata: Metadata = {
   creator: "Flora Decora",
   publisher: "Flora Decora",
   formatDetection: { email: false, address: false, telephone: false },
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", languages: { "en-AE": "/", "ar-AE": "/?lang=ar" } },
   openGraph: {
     type: "website",
     locale: "en_AE",
+    alternateLocale: ["ar_AE"],
     url: siteUrl,
     siteName: "Flora Decora",
     title: "Flora Decora | Landscaping, Themed Gardens & Tourist Attractions",
