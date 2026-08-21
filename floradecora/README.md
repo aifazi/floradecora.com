@@ -73,3 +73,6 @@ components/
   SectionHeading.tsx
   ContactForm.tsx        Web3Forms-powered inquiry form
 ```
+
+## Vercel Root Directory
+This repo keeps the Next.js app in `floradecora/`. In Vercel: Project → Settings → General → Root Directory = `floradecora` (already configured for this repo). Alternatively `vercel.json` at the repo root handles `cd floradecora && npm run build` if Root Directory is left blank.
