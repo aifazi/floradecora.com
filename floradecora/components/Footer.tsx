@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-ochre/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-sage/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 pt-16 pb-8">
+      <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-16 pb-8">
         <div className="flex flex-col lg:flex-row justify-between gap-12 pb-12 border-b border-white/10">
           <div className="max-w-sm">
             <Image src={CDN_ASSETS.logo} alt="Flora Decora" width={180} height={48} unoptimized className="h-8 sm:h-9 w-auto max-w-[160px] object-contain brightness-0 invert mb-6" />

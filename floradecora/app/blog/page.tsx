@@ -12,13 +12,13 @@ export default function BlogPage() {
     <>
       <section className="relative bg-forest-dim overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-forest via-forest-dim to-black" />
-        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 pt-32 pb-14 md:pt-44 md:pb-20">
+        <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-32 pb-14 md:pt-44 md:pb-20">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Journal</span></Reveal>
           <Reveal delay={0.06}><h1 className="mt-4 font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tightDisplay text-white max-w-3xl">What we learn in 45°C shade.</h1></Reveal>
         </div>
       </section>
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-12 md:py-16">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-12 md:py-16">
           <SectionHeading eyebrow="Latest" title="From nursery to park." withLine />
           <Stagger className="mt-8 grid md:grid-cols-3 gap-4">
             {POSTS.map((p) => (

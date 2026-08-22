@@ -72,7 +72,7 @@ export default function Header() {
     <>
       <motion.div className="fixed top-0 left-0 right-0 h-[2px] bg-ochre origin-left z-[60]" style={{ scaleX }} />
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerClass}`}>
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 flex items-center justify-between gap-3">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 flex items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-3 group shrink-0" onClick={() => setOpen(false)}>
             <motion.div whileHover={{ scale: 1.02, rotate: 0.6 }} transition={{ type: "spring", stiffness: 400 }}>
               <Image

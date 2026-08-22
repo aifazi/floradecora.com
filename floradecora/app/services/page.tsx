@@ -27,7 +27,7 @@ export default function ServicesPage() {
       <section className="relative bg-forest-dim overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-forest via-forest-dim to-black" />
         <div className="absolute -top-24 -right-24 w-[520px] h-[520px] bg-ochre/15 rounded-full blur-[80px]" />
-        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 pt-32 pb-14 md:pt-44 md:pb-20">
+        <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-32 pb-14 md:pt-44 md:pb-20">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Services</span></Reveal>
           <Reveal delay={0.06}><h1 className="mt-4 font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tightDisplay text-white max-w-3xl">Nine disciplines, one in-house team.</h1></Reveal>
           <Reveal delay={0.1}><p className="mt-4 max-w-xl text-white/60 leading-relaxed">Every stage of a landscape&apos;s life — design, build, plant, irrigate, protect and maintain — handled by our own technicians.</p></Reveal>
@@ -35,7 +35,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="bg-cream dark:bg-forest-dim">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-12 md:py-16">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-12 md:py-16">
           <Stagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {SERVICES.map((s, i) => (
               <StaggerItem key={s.title} className="group rounded-[1.6rem] bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 p-7 shadow-card hover:shadow-glow hover:-translate-y-1 transition-all">
@@ -52,7 +52,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-14 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-14 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-display text-2xl dark:text-white">Not sure where to start?</h3>
             <p className="text-ink/60 dark:text-white/60 mt-1">Tell us what you&apos;re building — we&apos;ll scope it in 24h.</p>

@@ -28,8 +28,8 @@ const PROCESS = [
 export default function Home() {
   return (
     <>
-      {/* HERO — fitted to border */}
-      <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center p-3 sm:p-4 md:p-6">
+      {/* HERO — wide to screen border */}
+      <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
             <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority fetchPriority="high" quality={80} unoptimized className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
@@ -39,7 +39,7 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.06] mix-blend-soft-light" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} />
         </div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
-        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl w-full rounded-[2.2rem] sm:rounded-[2.5rem] border border-white/15 overflow-hidden bg-forest-dim/20 backdrop-blur-sm px-5 sm:px-6 md:px-8 lg:px-10 pt-24 sm:pt-28 pb-8 sm:pb-10 md:pt-32 md:pb-12 grid lg:grid-cols-[1.08fr_0.92fr] gap-8 md:gap-10 items-center">
+        <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-28 pb-10 md:pt-36 md:pb-16 grid lg:grid-cols-[1.08fr_0.92fr] gap-8 md:gap-10 items-center">
           <div>
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur border border-white/15 px-3 py-1.5">
@@ -143,7 +143,7 @@ export default function Home() {
 
       {/* STATS */}
       <section className="bg-cream dark:bg-forest-dim relative -mt-px">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-8">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-8">
           <div className="grid grid-cols-3 gap-3 md:gap-4">
             {[
               { n: 20, suffix: "+", label: "Years Experience", sub: "Since 2003" },
@@ -166,7 +166,7 @@ export default function Home() {
 
       {/* ABOUT */}
       <section className="bg-cream dark:bg-forest-dim overflow-hidden border-y border-transparent dark:border-white/5">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-16 md:py-24">
           <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-start">
             <div>
               <SectionHeading eyebrow="About Flora Decora" title="Two decades of shaping the UAE's public gardens." withLine />
@@ -219,7 +219,7 @@ export default function Home() {
 
       {/* GALLERY — CDN */}
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-10 md:py-14">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-10 md:py-14">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="Selected Work — Built Projects" title="Concept to bloom, all in-house." />
             <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">View all projects →</Link>
@@ -271,7 +271,7 @@ export default function Home() {
 
       {/* MOCK PREVIEW — for client review */}
       <section className="bg-cream dark:bg-forest-dim border-y border-transparent dark:border-white/5">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-12 md:py-16 2xl:px-6">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-12 md:py-16 2xl:px-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading eyebrow="Preview — Mock Concepts" title="Mockups for review before build." withLine />
             <span className="rounded-full bg-ochre/10 dark:bg-ochre/20 border border-ochre/20 px-4 py-2 text-xs font-medium text-ochre-dark dark:text-ochre-light">12 mocks • Preview only</span>
@@ -305,7 +305,7 @@ export default function Home() {
 
       {/* SERVICES */}
       <section className="bg-cream dark:bg-forest-dim border-y border-transparent dark:border-white/5">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-16 md:py-24">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="What we do" title="Eight disciplines, one in-house team." withLine />
             <p className="max-w-md text-ink/60 dark:text-white/60 text-sm leading-relaxed">From concept render to daily maintenance — we keep it all under one roof so the garden actually matches the drawing.</p>
@@ -336,7 +336,7 @@ export default function Home() {
 
       {/* PROCESS */}
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-24">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-16 md:py-24">
           <SectionHeading eyebrow="How we work" title="From handover to steady-state — in three moves." withLine />
           <div className="mt-12 grid md:grid-cols-3 gap-6 relative">
             <div className="hidden md:block absolute top-6 left-0 right-0 h-px bg-gradient-to-r from-ochre via-sage to-forest opacity-20" />
@@ -371,7 +371,7 @@ export default function Home() {
           <div className="absolute -bottom-24 -left-24 w-[520px] h-[520px] bg-sage/15 rounded-full blur-[90px]" />
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
         </div>
-        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl px-4 sm:px-6 md:px-10 lg:px-12 xl:px-10 2xl:px-8 py-16 md:py-20">
+        <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-16 md:py-20">
           <div className="rounded-[2rem] bg-white/[0.06] backdrop-blur border border-white/10 p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1.5 text-xs text-white/80">✦ Let&apos;s break ground</div>
