@@ -182,7 +182,7 @@ export default function Home() {
                   </StaggerItem>
                 ))}
               </Stagger>
-              <Reveal delay={0.12} className="mt-8 space-y-4 text-ink/70 leading-relaxed">
+              <Reveal delay={0.12} className="mt-8 space-y-4 text-ink/70 dark:text-white/70 leading-relaxed">
                 <p>We are a premier landscaping and gardening company specializing in designing, constructing and operating touristic theme gardens and public parks throughout the United Arab Emirates.</p>
                 <p>Design, consultancy, planning, nurseries, hard and soft landscape, irrigation and ongoing operation are all managed in-house — by the same teams from first sketch to final hedge trim.</p>
               </Reveal>
@@ -239,7 +239,7 @@ export default function Home() {
                   <div className="relative w-full h-full rounded-[1.3rem] overflow-hidden bg-ink">
                     <Image src={c.src} alt={c.title} fill unoptimized loading="lazy" className="object-cover group-hover:scale-[1.08] transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]" sizes="400px" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-transparent group-hover:from-black/75 transition-colors" />
-                    <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase font-medium">CDN</div>
+                    <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase font-medium">Built</div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-3">
                       <div>
                         <div className="text-white font-medium text-sm group-hover:translate-y-[-2px] transition-transform">{c.title}</div>
