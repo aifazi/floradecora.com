@@ -28,8 +28,8 @@ const PROCESS = [
 export default function Home() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
+      {/* HERO — fitted to border */}
+      <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center p-3 sm:p-4 md:p-6">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
             <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority fetchPriority="high" quality={80} unoptimized className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
@@ -39,7 +39,7 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.06] mix-blend-soft-light" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} />
         </div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
-        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl w-full px-6 md:px-10 pt-28 pb-10 md:pt-36 md:pb-16 grid lg:grid-cols-[1.08fr_0.92fr] gap-10 items-center">
+        <div className="relative mx-auto max-w-content 2xl:max-w-content-2xl w-full rounded-[2.2rem] sm:rounded-[2.5rem] border border-white/15 overflow-hidden bg-forest-dim/20 backdrop-blur-sm px-5 sm:px-6 md:px-8 lg:px-10 pt-24 sm:pt-28 pb-8 sm:pb-10 md:pt-32 md:pb-12 grid lg:grid-cols-[1.08fr_0.92fr] gap-8 md:gap-10 items-center">
           <div>
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur border border-white/15 px-3 py-1.5">
@@ -90,7 +90,7 @@ export default function Home() {
               </div>
             </Reveal>
           </div>
-          <Reveal delay={0.18} className="relative hidden lg:block h-[560px]">
+          <Reveal delay={0.18} className="relative hidden md:block h-[420px] md:h-[480px] lg:h-[560px]">
             <div className="absolute top-6 right-6 left-6 bottom-6">
               <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.35)] bg-white p-2">
                 <div className="relative w-full h-full rounded-[1.6rem] overflow-hidden">
