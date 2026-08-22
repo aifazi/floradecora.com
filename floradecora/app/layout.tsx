@@ -100,7 +100,7 @@ export default function RootLayout({
           <main id="main">{children}</main>
           <Footer />
           <WhatsAppWidget />
-          <Analytics />
+          {process.env.VERCEL === "1" && <Analytics />}
         </ThemeProvider>
         </LanguageProvider>
       </body>
