@@ -28,8 +28,8 @@ const config: Config = {
         cream: "#FFF9ED",
       },
       fontFamily: {
-        display: ["var(--font-fraunces)", "serif"],
-        body: ["var(--font-work-sans)", "sans-serif"],
+        display: ["var(--font-fraunces)", '"Noto Naskh Arabic"', '"Sakkal Majalla"', '"Traditional Arabic"', "serif"],
+        body: ["var(--font-work-sans)", '"IBM Plex Sans Arabic"', '"Segoe UI"', "sans-serif"],
         mono: ["var(--font-plex-mono)", "monospace"],
       },
       letterSpacing: {

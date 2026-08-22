@@ -10,6 +10,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { dictionaries } from "@/lib/i18n";
 import { CDN_ASSETS } from "@/lib/cdn";
+import Button from "@/components/Button";
 
 function SunIcon() {
   return (
@@ -96,6 +97,7 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={pathname === item.href ? "page" : undefined}
                   className={`relative px-4 py-2 rounded-full text-[0.72rem] tracking-[0.16em] uppercase font-medium transition-colors ${navText}`}
                 >
                   {active && (
@@ -137,15 +139,15 @@ export default function Header() {
               </AnimatePresence>
             </motion.button>
 
-            <Link
+            <Button
               href="/contact"
-              className={`ml-2 inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[0.72rem] tracking-[0.14em] uppercase font-semibold transition-all hover:shadow-glow ${
-                isLightScrolled ? "bg-ink text-white hover:bg-forest" : "bg-white text-forest-dim hover:bg-limestone"
-              }`}
+              variant={isLightScrolled ? "secondary" : "primary"}
+              size="sm"
+              className="ml-2"
             >
               {dictionaries[locale].nav.start}
               <motion.span whileHover={{ rotate: 45, scale: 1.08 }} className="w-6 h-6 rounded-full bg-ochre text-white grid place-items-center text-xs">↗</motion.span>
-            </Link>
+            </Button>
           </nav>
 
           <div className="md:hidden flex items-center gap-2">

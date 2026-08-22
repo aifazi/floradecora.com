@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent, useEffect, useRef } from "react";
+import Button from "@/components/Button";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -112,14 +113,16 @@ export default function ContactForm() {
 
       <input type="hidden" name="subject" value="New inquiry from floradecora.com" />
 
-      <button
+      <Button
         type="submit"
+        variant="secondary"
+        size="md"
         disabled={status === "sending"}
-        className="group inline-flex items-center gap-2 rounded-full bg-ink text-white px-8 py-4 text-sm font-medium disabled:opacity-60 hover:bg-forest transition-colors"
+        className="group"
       >
         {status === "sending" ? "Sending..." : "Send inquiry"}
         <span className="w-7 h-7 rounded-full bg-ochre grid place-items-center group-hover:translate-x-0.5 transition-transform">→</span>
-      </button>
+      </Button>
 
       {status === "sent" && (
         <p className="text-sage-dark">

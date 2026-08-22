@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/Reveal";
 import { PROJECTS, getProject } from "@/lib/projects";
 import { cdnMedia } from "@/lib/cdn";
+import Button from "@/components/Button";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -29,7 +30,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
   return (
     <>
       <section className="relative min-h-[54vh] bg-forest-dim overflow-hidden flex items-end">
-        <Image src={p.img} alt={p.title} fill className="object-cover opacity-40" sizes="100vw" priority quality={80} />
+        <Image src={p.img} alt={p.title} fill className="object-cover opacity-40" sizes="100vw" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
         <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-32 pb-12 md:pt-44 md:pb-16">
           <Reveal>
@@ -75,7 +76,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                 <div className="flex flex-wrap gap-2">{p.services.map((s) => <span key={s} className="rounded-full bg-cream dark:bg-white/10 px-3 py-1 text-xs">{s}</span>)}</div>
               </div>
             </div>
-            <Link href="/contact" className="flex items-center justify-center gap-2 rounded-full bg-ink text-white py-4 text-sm font-medium hover:bg-forest transition-colors dark:bg-white dark:text-ink">Start a similar project →</Link>
+            <Button href="/contact" variant="secondary" size="md">
+              Start a similar project →
+            </Button>
           </Reveal>
         </div>
       </section>

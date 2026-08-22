@@ -6,6 +6,7 @@ import Counter from "@/components/Counter";
 import { MagneticButton } from "@/components/MagneticButton";
 import { Parallax } from "@/components/Parallax";
 import HoverBloom from "@/components/HoverBloom";
+import Button from "@/components/Button";
 import { cdnMedia } from "@/lib/cdn";
 
 const SERVICES = [
@@ -32,7 +33,7 @@ export default function Home() {
       <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
-            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority fetchPriority="high" quality={80} unoptimized className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
+            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dim via-forest-dim/80 to-forest-dim/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-transparent to-transparent" />
@@ -70,9 +71,9 @@ export default function Home() {
             <Reveal delay={0.2}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <MagneticButton href="/contact">Start a project</MagneticButton>
-                <Link href="/projects" className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur border border-white/15 text-white px-7 py-4 text-[0.72rem] tracking-[0.16em] uppercase font-medium hover:bg-white hover:text-forest-dim transition-colors">
+                <Button href="/projects" variant="ghost" size="md">
                   View projects
-                </Link>
+                </Button>
                 <span className="hidden md:inline-flex items-center gap-2 text-white/50 text-xs ml-2">
                   <span className="w-8 h-px bg-white/20" /> Trusted by 150+ clients
                 </span>
@@ -187,9 +188,9 @@ export default function Home() {
                 <p>Design, consultancy, planning, nurseries, hard and soft landscape, irrigation and ongoing operation are all managed in-house — by the same teams from first sketch to final hedge trim.</p>
               </Reveal>
               <Reveal delay={0.18} className="mt-8">
-                <Link href="/about" className="inline-flex items-center gap-2 rounded-full bg-ink text-white px-6 py-3 text-sm hover:bg-forest transition-colors">
+                <Button href="/about" variant="secondary" size="sm">
                   More about our studio <span>→</span>
-                </Link>
+                </Button>
               </Reveal>
             </div>
             <Reveal className="relative lg:sticky lg:top-28">
@@ -222,7 +223,9 @@ export default function Home() {
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-10 md:py-14">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="Selected Work — Built Projects" title="Concept to bloom, all in-house." />
-            <Link href="/projects" className="hidden md:inline-flex rounded-full border border-black/10 dark:border-white/15 px-6 py-3 text-sm hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-colors">View all projects →</Link>
+            <Button href="/projects" variant="outline" size="sm" className="hidden md:inline-flex">
+              View all projects →
+            </Button>
           </div>
           <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">A selection of built work from Al Ain and Abu Dhabi — concepts available on request.</p>
           <div className="mt-8 grid md:grid-cols-3 gap-4">
@@ -271,26 +274,26 @@ export default function Home() {
 
       {/* MOCK PREVIEW — for client review */}
       <section className="bg-cream dark:bg-forest-dim border-y border-transparent dark:border-white/5">
-        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-12 md:py-16 2xl:px-6">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-12 md:py-16">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading eyebrow="Preview — Mock Concepts" title="Mockups for review before build." withLine />
-            <span className="rounded-full bg-ochre/10 dark:bg-ochre/20 border border-ochre/20 px-4 py-2 text-xs font-medium text-ochre-dark dark:text-ochre-light">12 mocks • Preview only</span>
+             <SectionHeading eyebrow="Preview — AI Concepts" title="Design proposals before build." withLine />
+             <span className="rounded-full bg-ochre/10 dark:bg-ochre/20 border border-ochre/20 px-4 py-2 text-xs font-medium text-ochre-dark dark:text-ochre-light">12 AI renders • Not yet built</span>
           </div>
           <p className="mt-3 text-sm text-ink/60 dark:text-white/60 max-w-2xl">Concepts for preview — not built. Approve a direction and we’ll build it for real.</p>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             {[
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_00 PM.png"), label: "Mock 01" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_43 PM.png"), label: "Mock 02" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_39_48 PM.png"), label: "Mock 03" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_42_38 PM.png"), label: "Mock 04" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_43_24 PM.png"), label: "Mock 05" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_46_54 PM.png"), label: "Mock 06" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_49_03 PM.png"), label: "Mock 07" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_51_18 PM.png"), label: "Mock 08" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_52_08 PM.png"), label: "Mock 09" },
-              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_58_10 PM.png"), label: "Mock 10" },
-              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_04_31 AM.png"), label: "Mock 11" },
-              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png"), label: "Mock 12" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_00 PM.png"), label: "Concept 01" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_38_43 PM.png"), label: "Concept 02" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_39_48 PM.png"), label: "Concept 03" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_42_38 PM.png"), label: "Concept 04" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_43_24 PM.png"), label: "Concept 05" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_46_54 PM.png"), label: "Concept 06" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_49_03 PM.png"), label: "Concept 07" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_51_18 PM.png"), label: "Concept 08" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_52_08 PM.png"), label: "Concept 09" },
+              { src: cdnMedia("ChatGPT Image Jul 29, 2026, 11_58_10 PM.png"), label: "Concept 10" },
+              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_04_31 AM.png"), label: "Concept 11" },
+              { src: cdnMedia("ChatGPT Image Jul 30, 2026, 12_15_15 AM.png"), label: "Concept 12" },
             ].map((m, i) => (
               <Reveal key={m.src} delay={i * 0.03} className="group relative aspect-[4/3] rounded-[1.8rem] sm:rounded-3xl overflow-hidden bg-white dark:bg-white/5 border-2 border-black/[0.06] dark:border-white/10 shadow-card hover:shadow-glow hover:border-ochre/20 dark:hover:border-ochre/30 transition-all">
                 <Image src={m.src} alt={m.label} fill unoptimized loading="lazy" className="object-cover group-hover:scale-[1.04] transition-transform duration-700" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px" />
@@ -329,7 +332,9 @@ export default function Home() {
             ))}
           </Stagger>
           <Reveal className="mt-8 flex justify-center">
-            <Link href="/services" className="rounded-full bg-ink text-white px-8 py-3.5 text-sm hover:bg-forest transition-colors">View all services →</Link>
+            <Button href="/services" variant="secondary" size="md">
+              View all services →
+            </Button>
           </Reveal>
         </div>
       </section>
@@ -379,8 +384,12 @@ export default function Home() {
               <p className="mt-3 text-white/60">Tell us the site, the budget and the timeline — we&apos;ll bring the plan and the plants.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <Link href="/contact" className="rounded-full bg-ochre text-white px-8 py-4 text-sm font-semibold hover:bg-ochre-light transition-colors text-center">Send an inquiry</Link>
-              <a href="tel:+97137344243" className="rounded-full bg-white text-ink px-8 py-4 text-sm font-semibold hover:bg-limestone transition-colors text-center">Call +971 3 734 4243</a>
+              <Button href="/contact" variant="primary" size="lg">
+                Send an inquiry
+              </Button>
+              <Button href="tel:+97137344243" variant="outline" size="lg">
+                Call +971 3 734 4243
+              </Button>
             </div>
           </div>
           <div className="mt-6 flex flex-wrap gap-2 text-xs text-white/40">
@@ -394,11 +403,4 @@ export default function Home() {
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div>
-      <p className="font-display text-3xl md:text-4xl text-ochre-light">{value}</p>
-      <p className="eyebrow text-limestone/50 mt-2">{label}</p>
-    </div>
-  );
-}
+

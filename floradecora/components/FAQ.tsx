@@ -15,7 +15,7 @@ export default function FAQ() {
     <div className="mt-8 space-y-3">
       {FAQS.map((f, i) => (
         <div key={f.q} className="rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 overflow-hidden">
-          <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex items-center justify-between p-5 text-left">
+          <button onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i} className="w-full flex items-center justify-between p-5 text-left">
             <span className="font-medium dark:text-white">{f.q}</span>
             <span className={`w-8 h-8 rounded-full grid place-items-center border transition-all ${open === i ? "bg-ink text-white rotate-45" : "bg-cream dark:bg-white/10"}`}>+</span>
           </button>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import SectionHeading from "@/components/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
+import Button from "@/components/Button";
 
 export const metadata: Metadata = {
   title: "Services | Flora Decora",
@@ -57,7 +57,9 @@ export default function ServicesPage() {
             <h3 className="font-display text-2xl dark:text-white">Not sure where to start?</h3>
             <p className="text-ink/60 dark:text-white/60 mt-1">Tell us what you&apos;re building — we&apos;ll scope it in 24h.</p>
           </div>
-          <Link href="/contact" className="rounded-full bg-ink dark:bg-white text-white dark:text-ink px-8 py-4 text-sm font-medium hover:bg-forest dark:hover:bg-cream transition-colors shrink-0">Send an inquiry →</Link>
+          <Button href="/contact" variant="secondary" size="md">
+            Send an inquiry →
+          </Button>
         </div>
       </section>
     </>

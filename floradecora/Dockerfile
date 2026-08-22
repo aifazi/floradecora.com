@@ -10,7 +10,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+# Skip build if .next already exists (pre-built on host)
+RUN if [ ! -d ".next/standalone" ]; then npm run build; else echo "Using pre-built .next"; fi
 
 FROM node:20-alpine AS runner
 WORKDIR /app

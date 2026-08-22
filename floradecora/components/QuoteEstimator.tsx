@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 const SERVICES = [
   { id: "themed", label: "Themed / Butterfly Garden", rate: 180 },
@@ -53,7 +54,9 @@ export default function QuoteEstimator() {
           <div className="font-display text-3xl mt-1">AED {estimate.low.toLocaleString()} — {estimate.high.toLocaleString()}</div>
           <div className="text-xs opacity-60 mt-1">~ AED {estimate.perM2}/m² × {area.toLocaleString()} m² ({complexity}) — indicative only</div>
         </div>
-        <Link href={`/contact?quote=${encodeURIComponent(`${service} ${area}m²`)}`} className="rounded-full bg-ochre text-white px-8 py-3 text-sm font-semibold hover:bg-ochre-light transition-colors">Request exact quote →</Link>
+        <Button href={`/contact?quote=${encodeURIComponent(`${service} ${area}m²`)}`} variant="primary" size="md">
+          Request exact quote →
+        </Button>
       </div>
       <p className="mt-3 text-xs text-ink/40 dark:text-white/40">Estimates exclude VAT, soil works & imported specimens. Site visit within 72h for firm price.</p>
     </div>
