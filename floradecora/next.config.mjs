@@ -13,7 +13,6 @@ const nextConfig = {
     // Optional: use Cloudflare loader for cdn.aifazi.net (enable Image Resizing on zone first)
     // loader: "custom", loaderFile: "./lib/imageLoader.ts",
   },
-  output: "standalone",
   // perf
   compress: true,
   poweredByHeader: false,
