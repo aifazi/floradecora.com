@@ -37,7 +37,6 @@ export default function Home() {
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dim via-forest-dim/80 to-forest-dim/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-transparent to-transparent" />
-          <div className="absolute inset-0 opacity-[0.06] mix-blend-soft-light" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} />
         </div>
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
         <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-28 pb-10 md:pt-36 md:pb-16 grid lg:grid-cols-[1.08fr_0.92fr] gap-8 md:gap-10 items-center">
@@ -124,7 +123,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="absolute -left-6 bottom-10 w-[220px] rounded-2xl overflow-hidden shadow-soft bg-white p-1.5 animate-float hidden xl:block">
+              <div className="absolute -left-6 bottom-10 w-[220px] rounded-2xl overflow-hidden shadow-soft bg-white p-1.5 hidden xl:block">
                 <div className="relative h-[140px] rounded-xl overflow-hidden">
                   <Image src={cdnMedia("Picture4-min.png")} alt="Irrigation system installation detail" fill unoptimized className="object-cover" sizes="220px" quality={75} />
                 </div>

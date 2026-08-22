@@ -80,11 +80,11 @@ const config: Config = {
         },
       },
       animation: {
-        kenburns: "kenburns 18s ease-in-out infinite alternate",
+        kenburns: "kenburns 24s ease-in-out infinite alternate",
         shimmer: "shimmer 2s linear infinite",
-        float: "float 6s ease-in-out infinite",
-        marquee: "marquee 30s linear infinite",
-        bloom: "bloom 0.9s cubic-bezier(0.16,1,0.3,1) forwards",
+        float: "float 4s ease-in-out infinite",
+        marquee: "marquee 40s linear infinite",
+        bloom: "bloom 0.9s ease forwards",
         petalFloat: "petalFloat 3s ease-in-out infinite",
       },
       backdropBlur: {

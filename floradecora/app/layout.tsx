@@ -95,7 +95,6 @@ export default function RootLayout({
         <LanguageProvider>
           <ThemeProvider>
             <LoadingScreen />
-            <SmoothScroll />
             <Header />
           <main id="main">{children}</main>
           <Footer />
