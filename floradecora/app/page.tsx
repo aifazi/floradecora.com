@@ -7,7 +7,7 @@ import { MagneticButton } from "@/components/MagneticButton";
 import { Parallax } from "@/components/Parallax";
 import HoverBloom from "@/components/HoverBloom";
 import Button from "@/components/Button";
-import { cdnMedia } from "@/lib/cdn";
+import { cdnMedia, BLUR_DATAURL } from "@/lib/cdn";
 
 const SERVICES = [
   { title: "Themed & Butterfly Gardens", note: "Design, build, operate", icon: "🦋", accent: "from-amber-400/20 to-orange-500/20" },
@@ -33,7 +33,7 @@ export default function Home() {
       <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
-            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
+            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority placeholder="blur" blurDataURL={BLUR_DATAURL} className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dim via-forest-dim/80 to-forest-dim/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-transparent to-transparent" />
@@ -50,7 +50,7 @@ export default function Home() {
               </div>
             </Reveal>
             <Reveal delay={0.08}>
-              <h1 className="mt-6 font-display font-[550] leading-[0.9] tracking-tightDisplay text-white text-balance text-5xl sm:text-6xl lg:text-[5.2rem]">
+               <h1 className="mt-6 font-display font-medium leading-[0.9] tracking-tightDisplay text-white text-balance text-5xl sm:text-6xl lg:text-[5.2rem]">
                 We draw
                 <span className="inline-flex items-center ml-3 align-middle">
                   <span className="inline-block w-12 h-12 lg:w-16 lg:h-16 rounded-full overflow-hidden border-2 border-white/20 -rotate-6">
@@ -89,9 +89,26 @@ export default function Home() {
                 <div className="text-white font-medium">Rated 4.9/5 by municipal clients</div>
                 <div className="text-white/50">Al Ain Municipality • Abu Dhabi Parks</div>
               </div>
-            </Reveal>
-          </div>
-          <Reveal delay={0.18} className="relative hidden md:block h-[420px] md:h-[480px] lg:h-[560px]">
+             </Reveal>
+           </div>
+           {/* Mobile feature card — visible only on small screens */}
+           <Reveal delay={0.2} className="mt-8 md:hidden">
+             <div className="rounded-2xl overflow-hidden shadow-soft bg-white p-1.5">
+               <div className="relative h-[180px] rounded-xl overflow-hidden">
+                 <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="Butterfly Garden Al Ain" fill placeholder="blur" blurDataURL={BLUR_DATAURL} className="object-cover" sizes="(max-width: 768px) 100vw, 540px" quality={70} />
+                 <div className="absolute bottom-0 left-0 right-0 p-3">
+                   <div className="glass rounded-xl p-3 flex items-center justify-between">
+                     <div>
+                       <div className="text-[10px] tracking-[0.14em] uppercase text-ink/60">Featured</div>
+                       <div className="font-display text-sm leading-none mt-1">Butterfly Garden — Al Ain</div>
+                     </div>
+                     <span className="w-8 h-8 rounded-full bg-forest text-white grid place-items-center text-sm">↗</span>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </Reveal>
+           <Reveal delay={0.18} className="relative hidden md:block h-[420px] md:h-[480px] lg:h-[560px]">
             <div className="absolute top-6 right-6 left-6 bottom-6">
               <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.35)] bg-white p-2">
                 <div className="relative w-full h-full rounded-[1.6rem] overflow-hidden">

@@ -1,5 +1,9 @@
 export const CDN = "https://cdn.aifazi.net";
 
+// Tiny base64 blur placeholder for smooth image loading
+export const BLUR_DATAURL =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='b'%3E%3CfeGaussianBlur stdDeviation='8'/%3E%3C/filter%3E%3Crect width='100' height='100' fill='%2316261C' filter='url(%23b)' opacity='0.4'/%3E%3C/svg%3E";
+
 export function cdn(path: string) {
   // path should be like "media/assest/6.png" or "media/assest/Picture2-min-scaled.jpg"
   // Ensure no leading slash double

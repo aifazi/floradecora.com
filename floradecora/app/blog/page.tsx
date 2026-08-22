@@ -30,9 +30,19 @@ export default function BlogPage() {
               </StaggerItem>
             ))}
           </Stagger>
-          <Reveal className="mt-12 rounded-[1.6rem] bg-forest text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div><div className="font-display text-xl">Get monthly garden notes</div><div className="text-sm opacity-60 mt-1">Irrigation tips, plant palettes, project before/afters.</div></div>
-            <Newsletter />
+          <Reveal className="mt-12 rounded-2xl bg-gradient-to-br from-forest via-forest-dim to-forest-light text-white p-6 md:p-10 relative overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-[300px] h-[300px] bg-ochre/15 rounded-full blur-[60px] pointer-events-none" />
+            <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-3 py-1 text-xs text-white/80 mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Monthly newsletter
+                </div>
+                <div className="font-display text-2xl md:text-3xl">Get monthly garden notes</div>
+                <div className="text-sm opacity-60 mt-1">Irrigation tips, plant palettes, project before/afters. No spam — unsubscribe anytime.</div>
+              </div>
+              <Newsletter />
+            </div>
           </Reveal>
         </div>
       </section>
