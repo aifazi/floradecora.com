@@ -58,7 +58,9 @@ export default function ContactForm() {
     };
 
     try {
-      const res = await fetch("/api/contact", {
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
+      const url = apiBase ? `${apiBase.replace(/\/$/, "")}/contact` : "/api/contact";
+      const res = await fetch(url, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),

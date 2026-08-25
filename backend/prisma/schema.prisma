@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Contact {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  projectType String?  @map("project_type")
+  message     String   @db.Text
+  ip          String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  status      String   @default("new") // new, contacted, won, lost
+  @@map("contacts")
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  ip        String?
+  createdAt DateTime @default(now()) @map("created_at")
+  @@map("newsletters")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  type        String
+  year        String
+  location    String
+  area        String
+  client      String
+  img         String
+  gallery     String[] // array of URLs
+  description String   @db.Text
+  services    String[]
+  featured    Boolean  @default(false)
+  built       Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  @@map("projects")
+}

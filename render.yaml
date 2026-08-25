@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: floradecora-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm ci && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && node dist/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: floradecora-db
+          property: connectionString
+      - key: DIRECT_URL
+        fromDatabase:
+          name: floradecora-db
+          property: connectionString
+      - key: CORS_ORIGIN
+        value: https://floradecora.com,https://www.floradecora.com
+    healthCheckPath: /api
+
+databases:
+  - name: floradecora-db
+    plan: starter
