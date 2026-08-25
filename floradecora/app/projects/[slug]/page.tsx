@@ -30,7 +30,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
   return (
     <>
       <section className="relative min-h-[54vh] bg-forest-dim overflow-hidden flex items-end">
-        <Image src={p.img} alt={p.title} fill className="object-cover opacity-40" sizes="100vw" priority />
+        <Image src={p.img} alt={p.title} fill unoptimized className="object-cover opacity-40" sizes="100vw" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
         <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-32 pb-12 md:pt-44 md:pb-16">
           <Reveal>
@@ -57,7 +57,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <div className="mt-8 grid grid-cols-3 gap-3">
               {p.gallery.map((src) => (
                 <div key={src} className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10">
-                  <Image src={src} alt={p.title} fill className="object-cover" sizes="300px" quality={70} />
+                  <Image src={src} alt={p.title} fill unoptimized className="object-cover" sizes="300px" />
                 </div>
               ))}
             </div>
@@ -89,9 +89,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <h3 className="font-display text-xl dark:text-white">Related projects</h3>
             <div className="mt-6 grid sm:grid-cols-3 gap-4">
               {related.map((r) => (
-                <Link key={r.slug} href={`/projects/${r.slug}`} className="group rounded-[1.6rem] bg-cream dark:bg-white/5 p-2 border border-black/5 dark:border-white/10">
-                  <div className="relative aspect-[4/3] rounded-[1.2rem] overflow-hidden">
-                    <Image src={r.img} alt={r.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="380px" />
+                <Link key={r.slug} href={`/projects/${r.slug}`} className="group rounded-3xl bg-cream dark:bg-white/5 p-2 border-2 border-black/[0.06] dark:border-white/10 overflow-hidden">
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-ink">
+                    <Image src={r.img} alt={r.title} fill unoptimized className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="380px" />
                   </div>
                   <div className="px-3 py-3 font-display text-sm dark:text-white">{r.title}</div>
                 </Link>
