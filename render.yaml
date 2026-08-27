@@ -1,3 +1,17 @@
+# Render deployment config — BACKEND ONLY.
+#
+# Database: Supabase (managed Postgres). Set DATABASE_URL / DIRECT_URL in the
+# Render dashboard for `floradecora-backend` to the Supabase connection strings.
+# Do NOT add Render's `databases:` block here — the data lives in Supabase, not
+# Render. This file is the source of truth for IaC; keep DB creds out of it.
+#
+# Frontend deploys to Vercel (see scripts/sync-vercel-env.ps1). Do NOT add a
+# frontend service here — there should be no `floradecora-frontend` on Render.
+# If one exists, delete it from the Render dashboard.
+#
+# All secrets (ADMIN_API_KEY, JWT_SECRET, R2_*, TURNSTILE_*, WEB3FORMS_KEY) are
+# `sync: false` — set them manually in the Render dashboard with values
+# generated via `openssl rand -base64 48`. Never commit secrets to this file.
 services:
   - type: web
     name: floradecora-backend
@@ -10,13 +24,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: floradecora-db
-          property: connectionString
+        sync: false
       - key: DIRECT_URL
-        fromDatabase:
-          name: floradecora-db
-          property: connectionString
+        sync: false
       - key: CORS_ORIGIN
         value: https://floradecora.com,https://www.floradecora.com
       - key: ADMIN_API_KEY
@@ -38,31 +48,3 @@ services:
       - key: WEB3FORMS_KEY
         sync: false
     healthCheckPath: /api/health
-
-  - type: web
-    name: floradecora-frontend
-    plan: free
-    env: node
-    rootDir: floradecora
-    buildCommand: npm ci --include=dev && npm run build
-    startCommand: npm start
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: BACKEND_URL
-        fromService:
-          name: floradecora-backend
-          type: web
-          property: host
-      - key: JWT_SECRET
-        sync: false
-      - key: TURNSTILE_SECRET_KEY
-        sync: false
-      - key: NEXT_PUBLIC_TURNSTILE_SITE_KEY
-        sync: false
-    healthCheckPath: /
-
-databases:
-  - name: floradecora-db
-    # use 'free' for dev, or 'basic_256mb' / 'basic_1gb' for prod (requires payment)
-    plan: free

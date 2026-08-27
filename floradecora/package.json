@@ -11,7 +11,9 @@
     "optimize-images": "node scripts/optimize-images.mjs",
     "format": "prettier --write \"app/**/*.{ts,tsx}\" \"components/**/*.{ts,tsx}\" \"lib/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"app/**/*.{ts,tsx}\" \"components/**/*.{ts,tsx}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "audit": "npm audit --omit=dev",
+    "audit:fix": "npm audit fix"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
