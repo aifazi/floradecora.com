@@ -30,10 +30,15 @@ export class EmailTemplatesService {
     return this.prisma.emailTemplate.delete({ where: { id } });
   }
 
+  private escapeHtml(s: string): string {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   render(body: string, vars: Record<string, string>): string {
     let out = body;
     for (const [k, v] of Object.entries(vars)) {
-      out = out.replaceAll(`{{${k}}}`, v).replaceAll(`{{ ${k} }}`, v);
+      const esc = this.escapeHtml(v);
+      out = out.replaceAll(`{{${k}}}`, esc).replaceAll(`{{ ${k} }}`, esc);
     }
     return out;
   }

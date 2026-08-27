@@ -22,9 +22,14 @@ export class JwtOrApiKeyGuard implements CanActivate {
           secret: process.env.JWT_SECRET,
           algorithms: ['HS256'],
         });
+        // Enforce admin role — a valid JWT alone is not sufficient for admin endpoints.
+        if ((payload as { role?: string }).role !== 'admin') {
+          throw new UnauthorizedException('Admin role required');
+        }
         (req as unknown as Record<string, unknown>).user = payload;
         return true;
-      } catch {
+      } catch (err) {
+        if (err instanceof UnauthorizedException) throw err;
         // fall through to api key
       }
     }
@@ -34,12 +39,6 @@ export class JwtOrApiKeyGuard implements CanActivate {
     if (apiKey) {
       const provided = (req.headers['x-api-key'] as string) || auth?.replace(/^Bearer\s+/i, '');
       if (provided && provided === apiKey) return true;
-    }
-
-    // In non-production allow if no JWT_SECRET/ADMIN_API_KEY configured (dev convenience)
-    if (!process.env.JWT_SECRET && !process.env.ADMIN_API_KEY && process.env.NODE_ENV !== 'production') {
-      console.warn('[JwtOrApiKeyGuard] No JWT_SECRET/ADMIN_API_KEY — allowing in dev');
-      return true;
     }
 
     throw new UnauthorizedException('Invalid or missing authentication');

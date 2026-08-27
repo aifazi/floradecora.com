@@ -1,7 +1,9 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+# Upgrade npm and robust install (fixes WSL Docker "Exit handler never called" on node:20-alpine)
+RUN npm install -g npm@11 && npm config set fetch-retries 5 && npm config set fetch-retry-mintimeout 20000 && npm config set fetch-retry-maxtimeout 120000 && \
+    npm ci --audit=false --prefer-offline || (sleep 5 && npm ci --audit=false --prefer-offline)
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build

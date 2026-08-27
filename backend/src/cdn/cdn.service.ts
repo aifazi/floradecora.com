@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { assertSafeUrl } from '../common/util/url';
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { v2 as cloudinary } from 'cloudinary';
 import axios from 'axios';
@@ -27,6 +28,7 @@ export class CdnService {
     if (p === 'r2') {
       const endpoint = cfg.endpoint || process.env.R2_ENDPOINT;
       if (endpoint) {
+        assertSafeUrl(endpoint);
         const s3 = new S3Client({ region: 'auto', endpoint, credentials: { accessKeyId: cfg.accessKeyId || process.env.R2_ACCESS_KEY_ID || '', secretAccessKey: cfg.secretAccessKey || process.env.R2_SECRET_ACCESS_KEY || '' } });
         const bucket = cfg.bucket || process.env.R2_BUCKET || 'floradecora';
         await s3.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: buffer, ContentType: mime }));
@@ -60,9 +62,12 @@ export class CdnService {
         return host;
       }
     }
-    // local fallback — still return CDN URL for DB, but not actually stored
+    // local fallback
     const cdn = process.env.CDN_URL || 'https://cdn.aifazi.net';
-    this.logger.warn(`CDN provider ${p} not fully configured, returning ${cdn}/${key} without upload`);
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(`CDN provider ${p} not configured — set R2_ENDPOINT/CLOUDINARY_URL/BUNNY_STORAGE_ZONE. Refusing silent fallback in production.`);
+    }
+    this.logger.warn(`CDN provider ${p} not fully configured, returning ${cdn}/${key} without upload (dev only)`);
     return `${cdn.replace(/\/$/, '')}/${key}`;
   }
 
@@ -72,6 +77,7 @@ export class CdnService {
     const cfg = (provider as { config: Record<string, string> }).config || {};
     try {
       if (p === 'r2' && cfg.endpoint) {
+        assertSafeUrl(cfg.endpoint);
         const s3 = new S3Client({ region: 'auto', endpoint: cfg.endpoint, credentials: { accessKeyId: cfg.accessKeyId || '', secretAccessKey: cfg.secretAccessKey || '' } });
         await s3.send(new DeleteObjectCommand({ Bucket: cfg.bucket || 'floradecora', Key: key }));
       } else if (p === 'cloudinary') {

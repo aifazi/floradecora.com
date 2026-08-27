@@ -60,15 +60,15 @@ export class AuthController {
     return this.authService.me(userId);
   }
 
-  // seed endpoint - protected by ADMIN_API_KEY for initial setup, disable in prod after first admin created
+  // seed endpoint - ALWAYS requires ADMIN_API_KEY. Used to bootstrap the first admin.
+  // No longer unauthenticated when the users table is empty (prevents public admin takeover).
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('seed')
   async seed(@Body() body: unknown, @Req() req: Request) {
-    // allow if ADMIN_API_KEY matches or no users exist
     const apiKey = process.env.ADMIN_API_KEY;
     const provided = (req.headers['x-api-key'] as string) || (req.headers['authorization'] as string)?.replace(/^Bearer\s+/i, '');
-    const count = await (this.authService as unknown as { prisma: { user: { count: () => Promise<number> } } }).prisma.user.count();
-    if (count > 0 && (!apiKey || provided !== apiKey)) {
-      throw new HttpException('Seed disabled - admin exists', HttpStatus.FORBIDDEN);
+    if (!apiKey || provided !== apiKey) {
+      throw new HttpException('Seed requires admin API key', HttpStatus.FORBIDDEN);
     }
     const parsed = loginSchema.safeParse(body);
     if (!parsed.success) throw new HttpException({ error: 'Invalid input', issues: parsed.error.flatten() }, HttpStatus.BAD_REQUEST);

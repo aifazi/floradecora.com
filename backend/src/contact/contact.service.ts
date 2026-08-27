@@ -3,6 +3,10 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateContactDto } from './contact.dto';
 import { EmailService } from '../email/email.service';
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 @Injectable()
 export class ContactService {
   constructor(
@@ -22,13 +26,13 @@ export class ContactService {
         ip,
       },
     });
-    // Queue email via configured provider (SMTP/Resend/Brevo) — replaces Web3Forms hardcode
+    // Queue email via configured provider — escape HTML to prevent stored XSS
     const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_TO || 'info@floradecora.com';
     try {
       await this.emailService.enqueue({
         to: adminEmail,
-        subject: `New inquiry from ${dto.name} — floradecora.com`,
-        body: `<p><strong>Name:</strong> ${dto.name}</p><p><strong>Email:</strong> ${dto.email}</p><p><strong>Phone:</strong> ${dto.phone || '-'}</p><p><strong>Project:</strong> ${dto.projectType || '-'}</p><p><strong>Message:</strong><br/>${dto.message}</p><p><strong>IP:</strong> ${ip}</p>`,
+        subject: `New inquiry from ${escapeHtml(dto.name)} — floradecora.com`,
+        body: `<p><strong>Name:</strong> ${escapeHtml(dto.name)}</p><p><strong>Email:</strong> ${escapeHtml(dto.email)}</p><p><strong>Phone:</strong> ${escapeHtml(dto.phone || '-')}</p><p><strong>Project:</strong> ${escapeHtml(dto.projectType || '-')}</p><p><strong>Message:</strong><br/>${escapeHtml(dto.message).replace(/\n/g, '<br/>')}</p><p><strong>IP:</strong> ${escapeHtml(ip || 'unknown')}</p>`,
         template: 'contact',
         payload: dto as never,
       });

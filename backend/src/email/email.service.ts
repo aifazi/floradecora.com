@@ -1,5 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { assertSafeUrl } from '../common/util/url';
 import * as nodemailer from 'nodemailer';
 import { Resend } from 'resend';
 
@@ -50,13 +51,15 @@ export class EmailService implements OnModuleInit {
   async sendDirect(opts: SendOpts): Promise<{ messageId?: string }> {
     const provider = await this.getActiveProvider();
     if (!provider) {
-      this.logger.warn('No email provider configured, logging only');
+      if (process.env.NODE_ENV === 'production') throw new Error('No email provider configured — add RESEND_API_KEY/SMTP_HOST or via admin /emails');
+      this.logger.warn('No email provider configured, logging only (dev)');
       return {};
     }
     const p = provider.provider as string;
     const cfg = provider.config as Record<string, string>;
 
     if (p === 'smtp') {
+      if (cfg.host) assertSafeUrl(cfg.host);
       const transporter = nodemailer.createTransport({
         host: cfg.host,
         port: parseInt(cfg.port || '587'),

@@ -11,8 +11,8 @@ const nextConfig = {
       { protocol: "https", hostname: "*.r2.cloudflarestorage.com" },
     ],
     minimumCacheTTL: 60 * 60 * 24 * 30,
-    // Optional: use Cloudflare loader for cdn.aifazi.net (enable Image Resizing on zone first)
-    // loader: "custom", loaderFile: "./lib/imageLoader.ts",
+    loader: "custom",
+    loaderFile: "./lib/imageLoader.ts",
   },
   // perf
   compress: true,
@@ -43,14 +43,16 @@ const nextConfig = {
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-              "frame-ancestors 'self'",
+              "frame-ancestors 'self'", // overrides X-Frame-Options for modern browsers; keep header for legacy
               "upgrade-insecure-requests",
               "img-src 'self' https://cdn.aifazi.net https://images.unsplash.com data: blob:",
               "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
-              "connect-src 'self' https://cdn.aifazi.net https://api.web3forms.com https://challenges.cloudflare.com",
+              // connect-src: allow self + CDN + backend (via env) + Turnstile/Web3Forms
+              "connect-src 'self' https://cdn.aifazi.net https://api.web3forms.com https://challenges.cloudflare.com https://floradecora.com https://www.floradecora.com",
               "frame-src https://challenges.cloudflare.com",
+              "worker-src 'self' blob:",
             ].join("; "),
           },
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },

@@ -1,22 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-// simple in-memory rate limit (per IP)
-const rateMap = new Map<string, { count: number; reset: number }>();
-const WINDOW_MS = 60 * 60 * 1000; // 1h
-const MAX_REQ = 5;
-
-function rateLimit(ip: string): boolean {
-  const now = Date.now();
-  const rec = rateMap.get(ip);
-  if (!rec || now > rec.reset) {
-    rateMap.set(ip, { count: 1, reset: now + WINDOW_MS });
-    return true;
-  }
-  if (rec.count >= MAX_REQ) return false;
-  rec.count++;
-  return true;
-}
+// Rate limiting is handled by backend Throttler (5 req/min per IP) —
+// frontend intentionally has no in-memory Map (not horizontally scalable).
+// Cloudflare or backend returns 429; we propagate it.
 
 const schema = z.object({
   name: z.string().min(2).max(80),
@@ -48,9 +35,6 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
-  if (!rateLimit(ip)) {
-    return NextResponse.json({ success: false, error: "Too many requests, try again later." }, { status: 429 });
-  }
 
   let data: Record<string, string> = {};
   const ct = req.headers.get("content-type") || "";
@@ -89,10 +73,10 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Save to backend DB (always, even if Web3Forms fails)
+  // Save to backend DB (always, even if Web3Forms fails) — propagate 429
   const backendUrl = process.env.BACKEND_URL || "http://localhost:3002";
   try {
-    await fetch(`${backendUrl.replace(/\/$/, "")}/api/contact`, {
+    const backendRes = await fetch(`${backendUrl.replace(/\/$/, "")}/api/contact`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-forwarded-for": ip },
       body: JSON.stringify({
@@ -103,7 +87,16 @@ export async function POST(req: NextRequest) {
         message: parsed.data.message,
       }),
     });
-  } catch {}
+    if (backendRes.status === 429) {
+      return NextResponse.json({ success: false, error: "Too many requests, try again later." }, { status: 429 });
+    }
+    if (!backendRes.ok) {
+      const err = await backendRes.json().catch(() => ({}));
+      console.warn("Backend contact save failed", backendRes.status, err);
+    }
+  } catch (e) {
+    console.warn("Backend contact network error", e);
+  }
 
   const web3Key = process.env.WEB3FORMS_KEY;
   if (web3Key) {

@@ -21,8 +21,10 @@ export class MediaService {
     return url;
   }
 
-  findAll() {
-    return this.prisma.media.findMany({ orderBy: { createdAt: 'desc' } });
+  findAll(query?: { take?: number; skip?: number }) {
+    const take = Math.min(Math.max(query?.take || 50, 1), 100);
+    const skip = Math.max(query?.skip || 0, 0);
+    return this.prisma.media.findMany({ orderBy: { createdAt: 'desc' }, take, skip });
   }
 
   async remove(id: string) {

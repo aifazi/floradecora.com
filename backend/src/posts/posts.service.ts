@@ -6,10 +6,14 @@ import { CreatePostDto, UpdatePostDto } from './posts.dto';
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  findAll(publishedOnly = true) {
+  findAll(publishedOnly = true, query?: { take?: number; skip?: number }) {
+    const take = query?.take ? Math.min(Math.max(query.take, 1), 100) : undefined;
+    const skip = query?.skip ? Math.max(query.skip, 0) : undefined;
     return this.prisma.post.findMany({
       where: publishedOnly ? { published: true } : undefined,
       orderBy: { createdAt: 'desc' },
+      take,
+      skip,
     });
   }
 

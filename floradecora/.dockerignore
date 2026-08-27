@@ -1,4 +1,5 @@
 node_modules
+.next
 .git
 .gitignore
 README.md
@@ -9,3 +10,6 @@ dev.error.log
 npm-debug.log*
 Dockerfile
 .dockerignore
+out
+coverage
+.next/cache

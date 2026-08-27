@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, UseInterceptors, UploadedFile, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Query, UseInterceptors, UploadedFile, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MediaService } from './media.service';
 import { JwtOrApiKeyGuard } from '../auth/guards/jwt-or-apikey.guard';
@@ -9,8 +9,8 @@ export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
 
   @Get()
-  findAll() {
-    return this.mediaService.findAll();
+  findAll(@Query('take') take?: string, @Query('skip') skip?: string) {
+    return this.mediaService.findAll({ take: take ? parseInt(take, 10) : undefined, skip: skip ? parseInt(skip, 10) : undefined });
   }
 
   @UseGuards(JwtOrApiKeyGuard)

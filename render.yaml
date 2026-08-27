@@ -52,6 +52,8 @@ services:
           name: floradecora-backend
           type: web
           property: host
+      - key: JWT_SECRET
+        sync: false
       - key: TURNSTILE_SECRET_KEY
         sync: false
       - key: NEXT_PUBLIC_TURNSTILE_SITE_KEY

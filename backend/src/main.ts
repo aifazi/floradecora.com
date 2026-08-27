@@ -1,20 +1,23 @@
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import * as helmetModule from 'helmet';
 import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const helmet = (helmetModule as unknown as { default?: typeof helmetModule }).default || helmetModule;
-  app.use((helmet as unknown as () => unknown)());
-  app.use(cookieParser());
-  // ValidationPipe requires class-validator; keep permissive for now to avoid crash if not installed
-  try {
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
-  } catch {
-    console.warn('ValidationPipe not enabled - class-validator missing');
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+    throw new Error('JWT_SECRET is required and must be >=32 chars (generate: openssl rand -base64 32)');
   }
+  if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is required');
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const helmet = ((helmetModule as unknown as { default?: (opts?: Record<string, unknown>) => unknown }).default) || (helmetModule as unknown as (opts?: Record<string, unknown>) => unknown);
+  // CSP is handled by Next.js (next.config.mjs headers) for the frontend; disable here to avoid double CSP that breaks inline scripts.
+  // COEP disabled because R2/CDN images are cross-origin without CORP headers.
+  app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }) as never);
+  app.use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
+  app.set('trust proxy', 1);
   const corsOrigin = process.env.CORS_ORIGIN?.split(',').map((s) => s.trim()) || [
     'https://floradecora.com',
     'https://www.floradecora.com',

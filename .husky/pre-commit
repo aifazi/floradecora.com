@@ -1,3 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 cd floradecora && npx lint-staged
+# also check backend types + audit (non-blocking warn)
+cd ../backend && npx tsc --noEmit --skipLibCheck || echo "[husky] backend typecheck failed"
+npm audit --audit-level=high || echo "[husky] backend audit: high vulns found"

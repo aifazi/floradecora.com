@@ -32,11 +32,7 @@ next-env.d.ts
 # wsl
 .wsl/
 
-# assest raw - served from R2 CDN https://cdn.aifazi.net/media/assest/ — use CDN only, not git
-# assest/ is kept in history but ignored for new files; run `git rm -r --cached assest` to stop tracking if repo too large
-# For local optimized copies, webp is preferred (6.7MB vs 46MB). Keep both png + webp for fallback.
-# fully untrack 446MB assest folder
+# assest raw — served from R2 CDN https://cdn.aifazi.net/media/assest/
+# Untracked via `git rm -r --cached assest` (446 MB) — keep local files but do not commit.
+# To fully purge history, run: git filter-repo --path assest --invert-paths
 assest/
-
-# git
-.git/

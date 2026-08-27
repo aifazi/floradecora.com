@@ -1,10 +1,22 @@
 import type { MetadataRoute } from "next";
-import { PROJECTS } from "@/lib/projects";
-import { POSTS } from "@/lib/blog";
+import { PROJECTS as STATIC_PROJECTS } from "@/lib/projects";
+import { POSTS as STATIC_POSTS } from "@/lib/blog";
 
 const siteUrl = "https://floradecora.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Try to fetch live data from backend (CMS), fallback to static lib for build
+  let PROJECTS = STATIC_PROJECTS;
+  let POSTS = STATIC_POSTS;
+  try {
+    const backend = process.env.BACKEND_URL || "http://localhost:3002";
+    const [projRes, postRes] = await Promise.all([
+      fetch(`${backend.replace(/\/$/, "")}/api/projects`, { next: { revalidate: 3600 } }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch(`${backend.replace(/\/$/, "")}/api/posts`, { next: { revalidate: 3600 } }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]);
+    if (Array.isArray(projRes) && projRes.length) PROJECTS = projRes;
+    if (Array.isArray(postRes) && postRes.length) POSTS = postRes;
+  } catch {}
   const now = new Date();
   const staticRoutes = ["", "/about", "/services", "/projects", "/contact", "/blog"];
 

@@ -3,6 +3,7 @@ services:
     build:
       context: ./floradecora
       dockerfile: Dockerfile
+      network: host
     container_name: floradecora
     ports:
       - "3001:3000"
@@ -17,6 +18,7 @@ services:
       - TURNSTILE_SECRET_KEY=${TURNSTILE_SECRET_KEY:-}
       - NEXT_PUBLIC_TURNSTILE_SITE_KEY=${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
       - BACKEND_URL=http://backend:3002
+      - JWT_SECRET=${JWT_SECRET:-}
       - NEXT_PUBLIC_API_URL=
     depends_on:
       backend:
@@ -32,6 +34,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      network: host
     container_name: floradecora-backend
     ports:
       - "127.0.0.1:3002:3002"
@@ -42,9 +45,11 @@ services:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL:?set DATABASE_URL}
       - DIRECT_URL=${DIRECT_URL:-${DATABASE_URL:?set DIRECT_URL}}
+      # CORS_ORIGIN — prod override: https://floradecora.com,https://www.floradecora.com
       - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3001,http://localhost:3000}
       - ADMIN_API_KEY=${ADMIN_API_KEY:-}
       - JWT_SECRET=${JWT_SECRET:?set JWT_SECRET}
+      # COOKIE_SECURE must be true in prod (https); false for local http only
       - COOKIE_SECURE=${COOKIE_SECURE:-false}
       - R2_ENDPOINT=${R2_ENDPOINT:-}
       - R2_ACCESS_KEY_ID=${R2_ACCESS_KEY_ID:-}

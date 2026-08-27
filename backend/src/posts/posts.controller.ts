@@ -9,9 +9,12 @@ export class PostsController {
   constructor(private readonly service: PostsService) {}
 
   @Get()
-  async findAll(@Query('all') all?: string) {
+  async findAll(@Query('all') all?: string, @Query('take') take?: string, @Query('skip') skip?: string) {
     const publishedOnly = all !== 'true';
-    return this.service.findAll(publishedOnly);
+    return this.service.findAll(publishedOnly, {
+      take: take ? parseInt(take, 10) : undefined,
+      skip: skip ? parseInt(skip, 10) : undefined,
+    });
   }
 
   @Get(':slug')

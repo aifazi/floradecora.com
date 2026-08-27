@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 # WSL Docker preview for Flora Decora
-# Usage: bash scripts/wsl-preview.sh  (run from /mnt/e/floradecora.com inside WSL)
-# Or from Windows: wsl -d Ubuntu-26.04 -- bash /mnt/e/floradecora.com/scripts/wsl-preview.sh
+# Usage: bash scripts/wsl-preview.sh  (run from /mnt/c/aifazi/floradecora.com inside WSL)
+# Or from Windows: wsl -d Ubuntu-26.04 -- bash -c "cd /mnt/c/aifazi/floradecora.com && bash scripts/wsl-preview.sh"
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_ROOT"

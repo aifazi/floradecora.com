@@ -5,7 +5,12 @@ import { CreateProjectDto } from './project.dto';
 @Injectable()
 export class ProjectService {
   constructor(private prisma: PrismaService) {}
-  findAll() { return this.prisma.project.findMany({ orderBy: { createdAt: 'desc' } }); }
+  findAll(query?: { take?: number; skip?: number; featured?: boolean }) {
+    const take = query?.take ? Math.min(Math.max(query.take, 1), 100) : undefined;
+    const skip = query?.skip ? Math.max(query.skip, 0) : undefined;
+    const where = query?.featured !== undefined ? { featured: query.featured } : undefined;
+    return this.prisma.project.findMany({ where, orderBy: { createdAt: 'desc' }, take, skip });
+  }
   findOne(slug: string) { return this.prisma.project.findUnique({ where: { slug } }); }
   findById(id: string) { return this.prisma.project.findUnique({ where: { id } }); }
   create(data: CreateProjectDto) {
