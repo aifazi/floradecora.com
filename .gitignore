@@ -36,3 +36,5 @@ next-env.d.ts
 # Untracked via `git rm -r --cached assest` (446 MB) — keep local files but do not commit.
 # To fully purge history, run: git filter-repo --path assest --invert-paths
 assest/
+.vercel
+.env*

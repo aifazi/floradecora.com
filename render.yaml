@@ -1,6 +1,7 @@
 services:
   - type: web
     name: floradecora-backend
+    plan: free
     env: node
     rootDir: backend
     buildCommand: npm ci && npx prisma generate && npm run build
@@ -40,6 +41,7 @@ services:
 
   - type: web
     name: floradecora-frontend
+    plan: free
     env: node
     rootDir: floradecora
     buildCommand: npm ci && npm run build
@@ -62,4 +64,5 @@ services:
 
 databases:
   - name: floradecora-db
-    plan: starter
+    # use 'free' for dev, or 'basic_256mb' / 'basic_1gb' for prod (requires payment)
+    plan: free
