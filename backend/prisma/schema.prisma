@@ -8,43 +8,222 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum ContactStatus {
+  new
+  contacted
+  won
+  lost
+}
+
 model Contact {
-  id          String   @id @default(cuid())
-  name        String
-  email       String
-  phone       String?
-  projectType String?  @map("project_type")
-  message     String   @db.Text
-  ip          String?
-  createdAt   DateTime @default(now()) @map("created_at")
-  status      String   @default("new") // new, contacted, won, lost
+  id          String        @id @default(cuid())
+  name        String        @db.VarChar(80)
+  email       String        @db.VarChar(120)
+  phone       String?       @db.VarChar(30)
+  projectType String?       @map("project_type") @db.VarChar(80)
+  message     String        @db.Text
+  ip          String?       @db.VarChar(45)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  status      ContactStatus @default(new)
+
+  @@index([status, createdAt])
+  @@index([email])
+  @@index([createdAt])
   @@map("contacts")
 }
 
 model Newsletter {
   id        String   @id @default(cuid())
-  email     String   @unique
-  ip        String?
+  email     String   @unique @db.VarChar(120)
+  ip        String?  @db.VarChar(45)
   createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
   @@map("newsletters")
 }
 
 model Project {
   id          String   @id @default(cuid())
-  slug        String   @unique
-  title       String
-  type        String
-  year        String
-  location    String
-  area        String
-  client      String
-  img         String
-  gallery     String[] // array of URLs
+  slug        String   @unique @db.VarChar(80)
+  title       String   @db.VarChar(120)
+  type        String   @db.VarChar(80)
+  year        String   @db.VarChar(20)
+  location    String   @db.VarChar(120)
+  area        String   @db.VarChar(80)
+  client      String   @db.VarChar(120)
+  img         String   @db.VarChar(500)
+  gallery     String[] @db.Text
   description String   @db.Text
-  services    String[]
+  services    String[] @db.Text
   featured    Boolean  @default(false)
   built       Boolean  @default(true)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([featured, built])
+  @@index([createdAt])
   @@map("projects")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique @db.VarChar(120)
+  password  String   @db.VarChar(255)
+  role      String   @default("admin") @db.VarChar(20)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  jti       String   @unique
+  tokenHash String   @map("token_hash")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime @map("expires_at")
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  slug      String   @unique @db.VarChar(80)
+  title     String   @db.VarChar(200)
+  excerpt   String   @db.VarChar(300)
+  content   String[] @db.Text
+  date      String   @db.VarChar(20)
+  read      String   @db.VarChar(20)
+  tags      String[] @db.Text
+  cover     String?  @db.VarChar(500)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([published, createdAt])
+  @@index([slug])
+  @@map("posts")
+}
+
+model Service {
+  id        String   @id @default(cuid())
+  slug      String   @unique @db.VarChar(80)
+  title     String   @db.VarChar(120)
+  body      String   @db.Text
+  icon      String   @db.VarChar(20)
+  accent    String?  @db.VarChar(100)
+  order     Int      @default(0)
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([enabled, order])
+  @@map("services")
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique @db.VarChar(80)
+  value     Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("site_settings")
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  key       String   @unique @db.VarChar(500)
+  url       String   @db.VarChar(500)
+  mime      String   @db.VarChar(100)
+  size      Int
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@map("media")
+}
+
+model EmailProvider {
+  id        String   @id @default(cuid())
+  provider  String   @unique @db.VarChar(20) // smtp | resend | brevo | ses | mailgun
+  active    Boolean  @default(false)
+  config    Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("email_providers")
+}
+
+model CdnProvider {
+  id        String   @id @default(cuid())
+  provider  String   @unique @db.VarChar(20) // r2 | cloudinary | bunny | local
+  active    Boolean  @default(false)
+  config    Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("cdn_providers")
+}
+
+enum EmailStatus {
+  queued
+  sent
+  failed
+  retry
+}
+
+model EmailLog {
+  id        String      @id @default(cuid())
+  to        String      @db.VarChar(320)
+  subject   String      @db.VarChar(300)
+  provider  String      @db.VarChar(20)
+  template  String?     @db.VarChar(100)
+  status    EmailStatus @default(queued)
+  payload   Json?
+  error     String?     @db.Text
+  attempts  Int         @default(0)
+  messageId String?     @db.VarChar(200)
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  @@index([status, createdAt])
+  @@index([to])
+  @@index([provider])
+  @@map("email_logs")
+}
+
+model EmailQueue {
+  id        String      @id @default(cuid())
+  to        String      @db.VarChar(320)
+  subject   String      @db.VarChar(300)
+  body      String      @db.Text
+  provider  String      @db.VarChar(20)
+  status    EmailStatus @default(queued)
+  attempts  Int         @default(0)
+  nextRetry DateTime?   @map("next_retry")
+  error     String?     @db.Text
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  @@index([status, nextRetry])
+  @@index([createdAt])
+  @@map("email_queue")
+}
+
+model EmailTemplate {
+  id        String   @id @default(cuid())
+  key       String   @unique @db.VarChar(80) // e.g. inquiry_reply, welcome
+  name      String   @db.VarChar(120)
+  subject   String   @db.VarChar(300)
+  body      String   @db.Text // html with {{name}}, {{email}}, {{message}}, {{custom}}
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("email_templates")
 }

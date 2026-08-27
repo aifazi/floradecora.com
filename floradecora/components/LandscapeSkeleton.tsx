@@ -108,7 +108,6 @@ export function ImageWithLandscapeSkeleton({
         alt={alt}
         fill
         priority={priority}
-        unoptimized
         sizes="(max-width: 768px) 100vw, 400px"
         className={`object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
         onLoad={() => setLoaded(true)}

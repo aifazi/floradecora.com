@@ -1,23 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { PrismaService } from '../prisma/prisma.service';
+import { CdnService } from '../cdn/cdn.service';
 
 @Injectable()
 export class MediaService {
-  private s3: S3Client;
-  constructor() {
-    this.s3 = new S3Client({
-      region: 'auto',
-      endpoint: process.env.R2_ENDPOINT,
-      credentials: {
-        accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
-      },
-    });
-  }
+  constructor(
+    private prisma: PrismaService,
+    private cdnService: CdnService,
+  ) {}
+
   async upload(key: string, buffer: Buffer, contentType: string) {
-    const bucket = process.env.R2_BUCKET || 'floradecora';
-    await this.s3.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: buffer, ContentType: contentType }));
-    const cdn = process.env.CDN_URL || 'https://cdn.aifazi.net';
-    return `${cdn}/${key}`;
+    const url = await this.cdnService.upload(key, buffer, contentType);
+    try {
+      await this.prisma.media.upsert({
+        where: { key },
+        create: { key, url, mime: contentType, size: buffer.length },
+        update: { url, mime: contentType, size: buffer.length },
+      });
+    } catch {}
+    return url;
+  }
+
+  findAll() {
+    return this.prisma.media.findMany({ orderBy: { createdAt: 'desc' } });
+  }
+
+  async remove(id: string) {
+    const media = await this.prisma.media.findUnique({ where: { id } });
+    if (!media) throw new Error('Media not found');
+    await this.cdnService.delete(media.key);
+    return this.prisma.media.delete({ where: { id } });
   }
 }

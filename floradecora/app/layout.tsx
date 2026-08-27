@@ -10,6 +10,7 @@ import { LanguageProvider } from "@/components/LanguageProvider";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import JsonLd from "@/components/JsonLd";
 import { Analytics } from "@vercel/analytics/react";
+import { cookies, headers } from "next/headers";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -82,26 +83,40 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const cookieLocale = cookies().get("locale")?.value as "en" | "ar" | undefined;
+  const headerLocale = headers().get("x-locale") as "en" | "ar" | null;
+  const locale = cookieLocale && ["en", "ar"].includes(cookieLocale) ? cookieLocale : headerLocale && ["en", "ar"].includes(headerLocale) ? headerLocale : "en";
+  const dir = locale === "ar" ? "rtl" : "ltr";
+  const pathname = headers().get("x-pathname") || "";
+  const isAdmin = pathname.startsWith("/admin");
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <JsonLd />
       </head>
       <body className={`${fraunces.variable} ${workSans.variable} ${plexMono.variable} font-body`}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:text-white focus:px-6 focus:py-3 focus:text-sm">
-          Skip to content
-        </a>
-        <LanguageProvider>
-          <ThemeProvider>
-            <LoadingScreen />
-            <Header />
-          <main id="main">{children}</main>
-          <Footer />
-          <WhatsAppWidget />
-          {process.env.VERCEL === "1" && <Analytics />}
-        </ThemeProvider>
-        </LanguageProvider>
+        {isAdmin ? (
+          <LanguageProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </LanguageProvider>
+        ) : (
+          <>
+            <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:text-white focus:px-6 focus:py-3 focus:text-sm">
+              Skip to content
+            </a>
+            <LanguageProvider>
+              <ThemeProvider>
+                <LoadingScreen />
+                <Header />
+                <main id="main">{children}</main>
+                <Footer />
+                <WhatsAppWidget />
+                {process.env.VERCEL === "1" && <Analytics />}
+              </ThemeProvider>
+            </LanguageProvider>
+          </>
+        )}
       </body>
     </html>
   );

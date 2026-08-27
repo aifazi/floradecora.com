@@ -14,7 +14,7 @@ export default function ContactPage() {
   return (
     <>
       <section className="relative min-h-[42vh] bg-forest-dim overflow-hidden flex items-end">
-        <Image src={cdnMedia("Picture4-min.png")} alt="Flora Decora landscape detail" fill unoptimized className="object-cover opacity-25" sizes="100vw" quality={75} priority />
+        <Image src={cdnMedia("Picture4-min.png")} alt="Flora Decora landscape detail" fill className="object-cover opacity-25" sizes="100vw" quality={75} priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
         <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-32 pb-12 md:pt-44 md:pb-14">
           <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Contact — CDN</span></Reveal>
@@ -55,7 +55,7 @@ export default function ContactPage() {
               </div>
             </div>
             <div className="rounded-[1.6rem] overflow-hidden h-[220px] relative bg-ink">
-              <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Flora Decora office location Al Ain" fill unoptimized className="object-cover opacity-60" sizes="400px" quality={70} />
+              <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Flora Decora office location Al Ain" fill className="object-cover opacity-60" sizes="400px" quality={70} />
               <div className="absolute inset-0 grid place-items-center">
                 <span className="rounded-full bg-white px-4 py-2 text-xs font-medium shadow">📍 Al Ain, UAE — via CDN</span>
               </div>

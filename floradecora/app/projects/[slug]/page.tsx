@@ -3,16 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "@/components/Reveal";
-import { PROJECTS, getProject } from "@/lib/projects";
-import { cdnMedia } from "@/lib/cdn";
+import { getProjects, getProject } from "@/lib/api";
 import Button from "@/components/Button";
 
-export function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const projects = await getProjects();
+  return projects.map((p: { slug: string }) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const p = getProject(params.slug);
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const p = await getProject(params.slug);
   if (!p) return {};
   return {
     title: `${p.title} | Flora Decora`,
@@ -22,15 +22,16 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const p = getProject(params.slug);
+export default async function ProjectPage({ params }: { params: { slug: string } }) {
+  const p = await getProject(params.slug);
   if (!p) notFound();
-  const related = PROJECTS.filter((x) => x.slug !== p.slug && x.type === p.type).slice(0, 3);
+  const all = await getProjects();
+  const related = all.filter((x: { slug: string; type: string }) => x.slug !== p.slug && x.type === p.type).slice(0, 3);
 
   return (
     <>
       <section className="relative min-h-[54vh] bg-forest-dim overflow-hidden flex items-end">
-        <Image src={p.img} alt={p.title} fill unoptimized className="object-cover opacity-40" sizes="100vw" priority />
+        <Image src={p.img} alt={p.title} fill className="object-cover opacity-40" sizes="100vw" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-forest-dim/60 to-transparent" />
         <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-32 pb-12 md:pt-44 md:pb-16">
           <Reveal>
@@ -55,9 +56,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <Reveal>
             <p className="text-lg leading-relaxed text-ink/70 dark:text-white/70">{p.description}</p>
             <div className="mt-8 grid grid-cols-3 gap-3">
-              {p.gallery.map((src) => (
+              {p.gallery.map((src: string) => (
                 <div key={src} className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-cream dark:bg-white/5 border border-black/5 dark:border-white/10">
-                  <Image src={src} alt={p.title} fill unoptimized className="object-cover" sizes="300px" />
+                  <Image src={src} alt={p.title} fill className="object-cover" sizes="300px" />
                 </div>
               ))}
             </div>
@@ -73,7 +74,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               </dl>
               <div className="mt-6 pt-6 border-t border-black/5 dark:border-white/10">
                 <div className="eyebrow text-ink/40 dark:text-white/40 mb-2">Services</div>
-                <div className="flex flex-wrap gap-2">{p.services.map((s) => <span key={s} className="rounded-full bg-cream dark:bg-white/10 px-3 py-1 text-xs">{s}</span>)}</div>
+                <div className="flex flex-wrap gap-2">{p.services.map((s: string) => <span key={s} className="rounded-full bg-cream dark:bg-white/10 px-3 py-1 text-xs">{s}</span>)}</div>
               </div>
             </div>
             <Button href="/contact" variant="secondary" size="md">
@@ -91,7 +92,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               {related.map((r) => (
                 <Link key={r.slug} href={`/projects/${r.slug}`} className="group rounded-3xl bg-cream dark:bg-white/5 p-2 border-2 border-black/[0.06] dark:border-white/10 overflow-hidden">
                   <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-ink">
-                    <Image src={r.img} alt={r.title} fill unoptimized className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="380px" />
+                    <Image src={r.img} alt={r.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="380px" />
                   </div>
                   <div className="px-3 py-3 font-display text-sm dark:text-white">{r.title}</div>
                 </Link>

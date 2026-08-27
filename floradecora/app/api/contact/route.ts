@@ -37,6 +37,15 @@ function getClientIp(req: NextRequest): string {
   return req.headers.get("x-real-ip")?.trim() || req.headers.get("cf-connecting-ip")?.trim() || "unknown";
 }
 
+export async function GET(req: NextRequest) {
+  const cookie = req.headers.get("cookie") || "";
+  const auth = req.headers.get("authorization") || "";
+  const backend = process.env.BACKEND_URL || "http://localhost:3002";
+  const res = await fetch(`${backend}/api/contact`, { headers: { cookie, authorization: auth }, cache: "no-store" });
+  const data = await res.json().catch(() => []);
+  return NextResponse.json(data, { status: res.status });
+}
+
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
   if (!rateLimit(ip)) {
@@ -80,28 +89,42 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const web3Key = process.env.WEB3FORMS_KEY || process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-  if (!web3Key) {
-    return NextResponse.json({ success: false, error: "Server not configured (WEB3FORMS_KEY)" }, { status: 500 });
-  }
-
-  // forward to Web3Forms server-side (key not exposed)
-  const forward = new FormData();
-  forward.append("access_key", web3Key);
-  forward.append("name", parsed.data.name);
-  forward.append("email", parsed.data.email);
-  if (parsed.data.phone) forward.append("phone", parsed.data.phone);
-  if (parsed.data.project_type) forward.append("project_type", parsed.data.project_type);
-  forward.append("message", parsed.data.message);
-  forward.append("subject", "New inquiry from floradecora.com");
-  forward.append("from_name", "Flora Decora Website");
-
+  // Save to backend DB (always, even if Web3Forms fails)
+  const backendUrl = process.env.BACKEND_URL || "http://localhost:3002";
   try {
-    const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: forward });
-    const result = await res.json();
-    if (result.success) return NextResponse.json({ success: true });
-    return NextResponse.json({ success: false, error: "Upstream failed" }, { status: 502 });
-  } catch (e) {
-    return NextResponse.json({ success: false, error: "Network error" }, { status: 502 });
+    await fetch(`${backendUrl.replace(/\/$/, "")}/api/contact`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-forwarded-for": ip },
+      body: JSON.stringify({
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone,
+        projectType: parsed.data.project_type,
+        message: parsed.data.message,
+      }),
+    });
+  } catch {}
+
+  const web3Key = process.env.WEB3FORMS_KEY;
+  if (web3Key) {
+    // forward to Web3Forms server-side (key not exposed)
+    const forward = new FormData();
+    forward.append("access_key", web3Key);
+    forward.append("name", parsed.data.name);
+    forward.append("email", parsed.data.email);
+    if (parsed.data.phone) forward.append("phone", parsed.data.phone);
+    if (parsed.data.project_type) forward.append("project_type", parsed.data.project_type);
+    forward.append("message", parsed.data.message);
+    forward.append("subject", "New inquiry from floradecora.com");
+    forward.append("from_name", "Flora Decora Website");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: forward });
+      const result = await res.json();
+      if (!result.success) console.warn("Web3Forms failed", result);
+    } catch (e) {
+      console.warn("Web3Forms network error", e);
+    }
   }
+
+  return NextResponse.json({ success: true });
 }

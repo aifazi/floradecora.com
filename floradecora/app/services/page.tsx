@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SectionHeading from "@/components/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
 import Button from "@/components/Button";
+import { getServices } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Services | Flora Decora",
@@ -9,19 +10,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
-const SERVICES = [
-  { title: "Themed & Butterfly Gardens", body: "End-to-end delivery of touristic theme gardens and butterfly houses, from concept through construction and long-term operation.", icon: "🦋" },
-  { title: "Landscaping Design", body: "Concept-to-construction design for public parks, municipal landscapes and private developments.", icon: "✎" },
-  { title: "Development", body: "Hard and soft landscape construction delivered by in-house crews, coordinated with design and irrigation.", icon: "⬢" },
-  { title: "Commercial Nurseries", body: "Planning, planting and ongoing management of nurseries that supply and support our projects.", icon: "🌿" },
-  { title: "Outdoor Sports Facilities", body: "Design and build of outdoor sports surfaces integrated with the surrounding landscape.", icon: "◎" },
-  { title: "Pest Control", body: "Licensed pest control protecting both planted landscapes and public health.", icon: "◐" },
-  { title: "Operation & Maintenance", body: "Scheduled operations, weekly inspections and monthly consumable planning to keep every site performing.", icon: "⚙" },
-  { title: "Irrigation Systems", body: "Efficient irrigation designed for the UAE climate, sized to each site's planting and water needs.", icon: "💧" },
-  { title: "Steel Fabrication", body: "In-house fabrication for structures, shade elements and hardscape features.", icon: "◆" },
-];
-
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const SERVICES = await getServices();
   return (
     <>
       <section className="relative bg-forest-dim overflow-hidden">

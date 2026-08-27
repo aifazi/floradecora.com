@@ -17,6 +17,8 @@ export function Reveal({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const prefersReduced = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced) return <div ref={ref} className={className}>{children}</div>;
   return (
     <motion.div
       ref={ref}

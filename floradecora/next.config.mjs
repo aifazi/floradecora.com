@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -16,7 +17,15 @@ const nextConfig = {
   // perf
   compress: true,
   poweredByHeader: false,
-  allowedDevOrigins: process.env.ALLOWED_DEV_ORIGINS ? process.env.ALLOWED_DEV_ORIGINS.split(",") : ["localhost"],
+  allowedDevOrigins: process.env.ALLOWED_DEV_ORIGINS
+    ? process.env.ALLOWED_DEV_ORIGINS.split(",").map((s) => s.trim())
+    : ["http://localhost:3000", "http://localhost:3001"],
+  experimental: {
+    optimizePackageImports: ["framer-motion"],
+  },
+  async redirects() {
+    return [{ source: "/quote", destination: "/contact", permanent: true }];
+  },
   async headers() {
     return [
       {
@@ -27,7 +36,23 @@ const nextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-          { key: "Content-Security-Policy", value: "default-src 'self'; img-src 'self' https://cdn.aifazi.net https://images.unsplash.com data: blob:; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://api.web3forms.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com" },
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'self'",
+              "upgrade-insecure-requests",
+              "img-src 'self' https://cdn.aifazi.net https://images.unsplash.com data: blob:",
+              "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com data:",
+              "connect-src 'self' https://cdn.aifazi.net https://api.web3forms.com https://challenges.cloudflare.com",
+              "frame-src https://challenges.cloudflare.com",
+            ].join("; "),
+          },
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
         ],
       },

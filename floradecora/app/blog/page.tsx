@@ -1,13 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { POSTS } from "@/lib/blog";
+import { getPosts } from "@/lib/api";
 import SectionHeading from "@/components/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
 import Newsletter from "@/components/Newsletter";
 
 export const metadata: Metadata = { title: "Blog | Flora Decora", description: "Gardening insights, irrigation and park operations from Al Ain, UAE.", alternates: { canonical: "/blog" } };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const POSTS = await getPosts();
   return (
     <>
       <section className="relative bg-forest-dim overflow-hidden">

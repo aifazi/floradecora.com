@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateContactDto } from './contact.dto';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class ContactService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private emailService: EmailService,
+  ) {}
 
   async create(dto: CreateContactDto, ip?: string) {
     if (dto.botcheck) return { success: true }; // honeypot
@@ -18,15 +22,29 @@ export class ContactService {
         ip,
       },
     });
-    // Optionally forward to Web3Forms if WEB3FORMS_KEY set
+    // Queue email via configured provider (SMTP/Resend/Brevo) — replaces Web3Forms hardcode
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_TO || 'info@floradecora.com';
+    try {
+      await this.emailService.enqueue({
+        to: adminEmail,
+        subject: `New inquiry from ${dto.name} — floradecora.com`,
+        body: `<p><strong>Name:</strong> ${dto.name}</p><p><strong>Email:</strong> ${dto.email}</p><p><strong>Phone:</strong> ${dto.phone || '-'}</p><p><strong>Project:</strong> ${dto.projectType || '-'}</p><p><strong>Message:</strong><br/>${dto.message}</p><p><strong>IP:</strong> ${ip}</p>`,
+        template: 'contact',
+        payload: dto as never,
+      });
+    } catch {}
+    // Keep Web3Forms as optional fallback if still configured and no email provider active
     if (process.env.WEB3FORMS_KEY) {
       try {
-        const fd = new FormData();
-        fd.append('access_key', process.env.WEB3FORMS_KEY);
-        fd.append('name', dto.name);
-        fd.append('email', dto.email);
-        fd.append('message', dto.message);
-        await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+        const hasProvider = await this.emailService.getActiveProvider();
+        if (!hasProvider) {
+          const fd = new FormData();
+          fd.append('access_key', process.env.WEB3FORMS_KEY);
+          fd.append('name', dto.name);
+          fd.append('email', dto.email);
+          fd.append('message', dto.message);
+          await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+        }
       } catch {}
     }
     return contact;
@@ -34,5 +52,17 @@ export class ContactService {
 
   findAll() {
     return this.prisma.contact.findMany({ orderBy: { createdAt: 'desc' } });
+  }
+
+  findById(id: string) {
+    return this.prisma.contact.findUnique({ where: { id } });
+  }
+
+  updateStatus(id: string, status: string) {
+    return this.prisma.contact.update({ where: { id }, data: { status: status as never } });
+  }
+
+  remove(id: string) {
+    return this.prisma.contact.delete({ where: { id } });
   }
 }

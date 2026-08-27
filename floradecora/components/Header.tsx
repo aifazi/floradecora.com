@@ -40,7 +40,7 @@ export default function Header() {
     { href: "/about", label: dictionaries[locale].nav.about },
     { href: "/services", label: dictionaries[locale].nav.services },
     { href: "/projects", label: dictionaries[locale].nav.projects },
-    { href: "/quote", label: "Quote" },
+    { href: "/blog", label: "Blog" },
     { href: "/contact", label: dictionaries[locale].nav.contact },
   ];
 
@@ -82,7 +82,6 @@ export default function Header() {
                 width={182}
                 height={44}
                 priority
-                unoptimized
                 className={`h-7 sm:h-8 md:h-9 lg:h-10 w-auto max-w-[150px] sm:max-w-[180px] object-contain transition-all duration-500 ${logoClass}`}
               />
             </motion.div>

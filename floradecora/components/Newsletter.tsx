@@ -9,9 +9,7 @@ export default function Newsletter() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus("error"); return; }
     setStatus("loading");
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
-      const url = apiBase ? `${apiBase.replace(/\/$/, "")}/newsletter` : "/api/newsletter";
-      const res = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email }) });
+      const res = await fetch("/api/newsletter", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email }) });
       const j = await res.json();
       setStatus(j.success ? "done" : "error");
       if (j.success) setEmail("");
