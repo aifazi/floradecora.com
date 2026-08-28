@@ -1,4 +1,4 @@
-﻿# dependencies
+# dependencies
 node_modules/
 floradecora/node_modules/
 floradecora/.next/
@@ -17,10 +17,14 @@ dist/
 dev.log
 dev.error.log
 
-# env
+# env - keep secrets ignored but allow examples
 .env
 .env*.local
 .env.local
+!.env.example
+!.env.coolify.example
+!floradecora/.env.local.example
+!backend/.env.example
 
 # typescript
 *.tsbuildinfo
@@ -37,4 +41,3 @@ next-env.d.ts
 # To fully purge history, run: git filter-repo --path assest --invert-paths
 assest/
 .vercel
-.env*

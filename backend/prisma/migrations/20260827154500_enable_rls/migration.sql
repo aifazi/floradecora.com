@@ -22,6 +22,6 @@ ALTER TABLE public.media              ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.email_providers    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cdn_providers      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.email_logs         ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.email_queues       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.email_queue       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.email_templates    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.refresh_tokens     ENABLE ROW LEVEL SECURITY;
