@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import { EditModeProvider } from "@/components/editor/EditModeContext";
 import EditBar from "@/components/editor/EditBar";
 import EditableText from "@/components/editor/EditableText";
+import EditableImage from "@/components/editor/EditableImage";
 import { cdnMedia, BLUR_DATAURL } from "@/lib/cdn";
 import { ImageWithLandscapeSkeleton } from "@/components/LandscapeSkeleton";
 import { getServices } from "@/lib/api";
@@ -40,7 +41,7 @@ export default async function Home() {
       <section className="relative min-h-[100svh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
-            <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority placeholder="blur" blurDataURL={BLUR_DATAURL} className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
+            <EditableImage field="hero.bgImage" src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dim via-forest-dim/80 to-forest-dim/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dim via-transparent to-transparent" />
@@ -60,13 +61,13 @@ export default async function Home() {
                 We draw
                 <span className="inline-flex items-center ml-3 align-middle">
                   <span className="inline-block w-12 h-12 lg:w-16 lg:h-16 rounded-full overflow-hidden border-2 border-white/20 -rotate-6">
-                    <Image src={cdnMedia("Picture3-min-scaled.jpg")} alt="Flora Decora garden detail" width={80} height={80} className="w-full h-full object-cover" quality={75} />
+                    <EditableImage field="hero.circleImage" src={cdnMedia("Picture3-min-scaled.jpg")} alt="Flora Decora garden detail" width={80} height={80} className="w-full h-full object-cover" />
                   </span>
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-ochre-light to-amber-200 bg-clip-text text-transparent">the plan,</span>
+                <EditableText field="hero.titleLine2" as="span" className="bg-gradient-to-r from-ochre-light to-amber-200 bg-clip-text text-transparent">the plan,</EditableText>
                 <br />
-                then we grow it.
+                <EditableText field="hero.titleLine3" as="span">then we grow it.</EditableText>
               </h1>
             </Reveal>
             <Reveal delay={0.14}>

@@ -7,6 +7,7 @@ import AdminLogout from "@/components/AdminLogout";
 const nav = [
   { href: "/admin", label: "Dashboard", icon: "▦", exact: true },
   { href: "/admin/projects", label: "Projects", icon: "◈" },
+  { href: "/admin/pages", label: "Pages", icon: "▤" },
   { href: "/admin/blog", label: "Blog", icon: "✎" },
   { href: "/admin/services", label: "Services", icon: "⬢" },
   { href: "/admin/contacts", label: "Inquiries", icon: "✉" },
@@ -71,7 +72,7 @@ export default function AdminShell({ children, user }: { children: React.ReactNo
           <div className="flex-1 flex items-center gap-3">
             <div className="hidden lg:block">
               <div className="text-xs tracking-[0.14em] uppercase text-ink/40 dark:text-white/40">FloraDecora CMS • Pro</div>
-              <div className="font-display font-medium -mt-1 text-sm">All content editable — projects, blog, services, media, emails, cdn</div>
+              <div className="font-display font-medium -mt-1 text-sm">All content editable — projects, blog, pages, services, media, emails, cdn</div>
             </div>
             <div className="hidden md:flex items-center gap-2 ml-4 flex-1 max-w-md">
               <div className="relative flex-1">

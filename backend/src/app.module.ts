@@ -17,6 +17,7 @@ import { SettingsModule } from './settings/settings.module';
 import { EmailModule } from './email/email.module';
 import { CdnModule } from './cdn/cdn.module';
 import { EmailTemplatesModule } from './email-templates/email-templates.module';
+import { PagesModule } from './pages/pages.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { EmailTemplatesModule } from './email-templates/email-templates.module';
     SettingsModule,
     EmailModule,
     EmailTemplatesModule,
+    PagesModule,
     CdnModule,
     MediaModule,
     HealthModule,
