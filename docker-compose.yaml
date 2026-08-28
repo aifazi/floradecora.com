@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-floradecora}
     volumes:
       - db-data:/var/lib/postgresql/data
@@ -36,7 +36,7 @@ services:
       HOSTNAME: 0.0.0.0
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@flora-db:5432/${POSTGRES_DB:-floradecora}
       DIRECT_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@flora-db:5432/${POSTGRES_DB:-floradecora}
-      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in env}
+      JWT_SECRET: ${JWT_SECRET:-}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}
       ALLOW_LOCAL_CORS: ${ALLOW_LOCAL_CORS:-true}
