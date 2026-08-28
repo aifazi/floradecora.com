@@ -11,8 +11,8 @@ export default function LoadingScreen() {
     if (window.innerWidth < 768) { setShow(false); return; }
     const seen = sessionStorage.getItem("flora-loaded");
     if (seen) { setShow(false); return; }
-    const t1 = setTimeout(() => setPhase("done"), 250);
-    const t2 = setTimeout(() => { setShow(false); sessionStorage.setItem("flora-loaded", "1"); }, 500);
+    const DURATION = Math.max(800, parseInt(process.env.NEXT_PUBLIC_LOADING_MS || "2600", 10)); const t1 = setTimeout(() => setPhase("done"), Math.max(300, DURATION - 1200));
+    const t2 = setTimeout(() => { setShow(false); sessionStorage.setItem("flora-loaded", "1"); }, DURATION);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
@@ -136,7 +136,7 @@ export default function LoadingScreen() {
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: 1.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 2.3, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                   className="h-full bg-ochre origin-left"
                 />
               </div>

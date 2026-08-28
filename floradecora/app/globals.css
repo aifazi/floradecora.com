@@ -146,3 +146,19 @@ textarea:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .animate-kenburns { animation: none !important; }
 }
+.glass {
+  background: rgba(255, 249, 237, 0.88);
+  border: 1px solid rgba(255,255,255,0.5);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+.glass-dark {
+  background: rgba(15, 27, 20, 0.86);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+.dark .glass {
+  background: rgba(22, 38, 28, 0.88);
+  border-color: rgba(255,255,255,0.07);
+}

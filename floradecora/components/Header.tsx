@@ -63,8 +63,8 @@ export default function Header() {
   const isLightScrolled = scrolled && theme === "light";
   const headerClass = scrolled || open
     ? isLightScrolled
-      ? "glass shadow-soft py-3 text-ink"
-      : "glass-dark shadow-soft py-3 text-white"
+      ? "glass shadow-soft backdrop-blur-xl supports-[backdrop-filter]:backdrop-blur-xl py-3 text-ink border-b border-black/5"
+      : "glass-dark shadow-soft backdrop-blur-xl supports-[backdrop-filter]:backdrop-blur-xl py-3 text-white border-b border-white/10"
     : "bg-transparent py-5 text-white";
 
   const logoClass = scrolled && isLightScrolled ? "brightness-0" : "brightness-0 invert";

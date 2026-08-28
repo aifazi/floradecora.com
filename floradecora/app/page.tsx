@@ -32,7 +32,7 @@ export default async function Home() {
   return (
     <>
       {/* HERO — wide to screen border */}
-      <section className="relative min-h-[92vh] bg-forest-dim overflow-hidden flex items-center">
+      <section className="relative min-h-[100svh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <Parallax offset={40} className="absolute inset-0">
             <Image src={cdnMedia("Picture2-min-scaled.jpg")} alt="Lush themed garden by Flora Decora in Al Ain, UAE" fill priority placeholder="blur" blurDataURL={BLUR_DATAURL} className="object-cover object-center animate-kenburns scale-[1.08]" sizes="100vw" />
@@ -335,7 +335,7 @@ export default async function Home() {
             {SERVICES.map((s) => (
               <StaggerItem key={s.title} className="group">
                 <HoverBloom className="relative rounded-3xl bg-white dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 p-6 sm:p-7 shadow-card hover:shadow-glow overflow-hidden h-full">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl`} />
                   <div className="relative">
                     <div className="w-10 h-10 rounded-xl bg-ink dark:bg-white text-white dark:text-ink grid place-items-center text-sm group-hover:bg-ochre dark:group-hover:bg-ochre group-hover:text-white transition-colors group-hover:rotate-6 group-hover:scale-110 duration-500">{s.icon}</div>
                     <h3 className="mt-6 font-display text-[1.05rem] leading-tight font-medium text-ink dark:text-white">{s.title}</h3>
@@ -362,7 +362,7 @@ export default async function Home() {
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-16 md:py-24">
           <SectionHeading eyebrow="How we work" title="From handover to steady-state — in three moves." withLine />
           <div className="mt-12 grid md:grid-cols-3 gap-6 relative">
-            <div className="hidden md:block absolute top-6 left-0 right-0 h-px bg-gradient-to-r from-ochre via-sage to-forest opacity-20" />
+            <div className="hidden md:block absolute top-6 left-0 right-0 h-[1.5px] bg-gradient-to-r from-ochre via-sage to-forest opacity-30" />
             {PROCESS.map((step, i) => (
               <Reveal key={step.title} delay={i * 0.08}>
                 <HoverBloom className="relative rounded-3xl bg-cream dark:bg-white/[0.06] border-2 border-black/[0.06] dark:border-white/10 dark:border-white/10 p-6 hover:-translate-y-1">
