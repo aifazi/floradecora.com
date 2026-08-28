@@ -7,6 +7,9 @@ import { MagneticButton } from "@/components/MagneticButton";
 import { Parallax } from "@/components/Parallax";
 import HoverBloom from "@/components/HoverBloom";
 import Button from "@/components/Button";
+import { EditModeProvider } from "@/components/editor/EditModeContext";
+import EditBar from "@/components/editor/EditBar";
+import EditableText from "@/components/editor/EditableText";
 import { cdnMedia, BLUR_DATAURL } from "@/lib/cdn";
 import { ImageWithLandscapeSkeleton } from "@/components/LandscapeSkeleton";
 import { getServices } from "@/lib/api";
@@ -30,7 +33,9 @@ export default async function Home() {
     { title: "Irrigation Systems", note: "Design & installation", icon: "💧", accent: "from-cyan-400/20 to-blue-500/20" },
   ];
   return (
-    <>
+    <EditModeProvider pageKey="page_home">
+      <EditBar />
+      <>
       {/* HERO — wide to screen border */}
       <section className="relative min-h-[100svh] bg-forest-dim overflow-hidden flex items-center">
         <div className="absolute inset-0">
@@ -65,9 +70,9 @@ export default async function Home() {
               </h1>
             </Reveal>
             <Reveal delay={0.14}>
-              <p className="mt-6 max-w-xl text-white/70 text-lg leading-relaxed text-balance">
-                Flora Decora designs, builds and operates <span className="text-white">themed gardens, public parks</span> and tourist attractions across the UAE — from the first line on a site plan to twenty years of maintenance after.
-              </p>
+              <EditableText field="hero.subtitle" as="p" className="mt-6 max-w-xl text-white/70 text-lg leading-relaxed text-balance">
+                Flora Decora designs, builds and operates themed gardens, public parks and tourist attractions across the UAE — from the first line on a site plan to twenty years of maintenance after.
+              </EditableText>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -418,6 +423,7 @@ export default async function Home() {
         </div>
       </section>
     </>
+      </EditModeProvider>
   );
 }
 
