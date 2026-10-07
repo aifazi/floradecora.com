@@ -87,6 +87,24 @@ Published application: `flora.aifazi.net` → `http://localhost:80`
 5. Rollback: restart old containers; tunnel rollout = repoint `flora.aifazi.net`
    route to `:3001` temporarily (old stack bypassed traefik)
 
+## 6. Deployed state (7 Oct 2026 — both apps healthy)
+- Project `floradecora` (`oqixnm4tchpnfi5bpdgdfrnm`) → env `production` (`o0neylctu1wxksc6fnobxciy`)
+- Server `localhost` (`dyacauysahepmkjihdivlkd9`), destination `coolify` (`2dcbbjpagr3xx5cbrtpgmszf`)
+- Backend app: `k3abmgouaemh2jhikohagvjh` — internal only, HC `{"status":"ok","db":"up"}`
+- Frontend app: `zqsqa25vdpmcojaeyefz31ql` — domain https://flora.aifazi.net (http scheme)
+- Deploy key: Coolify private key `floradecora-deploy` (`1dzcrtoxrfrqmasobnog1kle`),
+  GitHub deploy key id 165703754 (read-only)
+- App-to-app: backend carries `custom_network_aliases=floradecora-backend`;
+  frontend `BACKEND_URL=http://floradecora-backend:3002`.
+  **App containers have NO stable UUID hostname** (alias is `<uuid>-<timestamp>` — changes
+  every deploy). Bare-UUID hosts fall through to upstream DNS (search-domain expansion,
+  timeouts) — always use `custom_network_aliases`.
+- Build gotchas fixed: `base_directory=/backend` (resp. `/floradecora`) +
+  `dockerfile_location=/Dockerfile.coolify` (Coolify concatenates the two); `NODE_ENV`
+  must be **runtime-only** (build-time production strips devDependencies → tsc/nest missing).
+- Still pending: tunnel public hostname (see section 4) — requires Zero Trust dashboard
+  (tunnel token is admin-only, not readable for API use).
+
 ## Never do
 - Do NOT stop the old stack before the new one is verified
 - Do NOT rotate JWT_SECRET (logs out all sessions)
