@@ -6,72 +6,91 @@ single-level subdomain, Cloudflare Tunnel, old stack untouched until cutover.
 ## Decisions
 - Frontend public: `flora.aifazi.net` (single-level, free Universal SSL)
 - Backend: INTERNAL ONLY, no domain, no tunnel route
-- Database: new Coolify Postgres 17 + data-only dump/restore from old `flora-db`
-- Secrets: REUSED from existing `.env` files (no rotation)
+- Database: **Supabase Cloud** project `floradecora` (ref `ysqkydiuejnjvuugklbi`, region ap-northeast-2)
+  — NOT a Coolify Postgres. Data migrated + verified 7 Oct 2026.
+- Secrets: REUSED from existing `.env` files (no rotation). DB password = new, generated.
 
 ## 0. Repo prep (done)
 - Branch `main`, remote `aifazi/floradecora.com`, in sync. Push any local work first.
 
-## 1. Deploy key (one-time, UI)
+## 1. Supabase connection topology (IMPORTANT — discovered 7 Oct)
+- `db.ysqkydiuejnjvuugklbi.supabase.co` resolves **AAAA-only (IPv6)** — unreachable
+  from this machine (no IPv6 route) and likely from Coolify containers. Do NOT use it.
+- Use the **session-mode pooler** instead (IPv4, transparent to Prisma/psql — no
+  `pgbouncer=true` flag, `prisma migrate deploy` works through it):
+
+```
+postgresql://postgres.ysqkydiuejnjvuugklbi:<DB_PASSWORD>@aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
+```
+
+- Username MUST be `postgres.ysqkydiuejnjvuugklbi` (tenant/external_id).
+  Plain `postgres` only works with SNI tricks — avoid.
+- `<DB_PASSWORD>`: stored at `C:\Users\aafaqit\.local\share\flora-supabase-db.pw`
+  (set via `PATCH /v1/projects/{ref}/database/password` on the Management API).
+- Pooler port map: **5432 = session mode (use this)**, 6543 = transaction mode.
+
+## 2. Data migration status: DONE (7 Oct 2026)
+- Full dump of old `flora-db` (WSL, pg_dump 17.11 -Fc) restored into Supabase via
+  session pooler. All 15 public tables, row counts verified identical old↔new
+  (5 `_prisma_migrations`, 4 cdn_providers, 1 contacts, 3 email_logs, 3 email_providers,
+  3 email_queue, 3 email_templates, 0 media, 0 newsletters, 3 posts, 3 projects,
+  15 refresh_tokens, 9 services, 7 site_settings, 1 users).
+- Because `_prisma_migrations` came across, the backend's boot-time
+  `prisma migrate deploy` will no-op.
+- **Re-sync before cutover** (old stack keeps writing until stopped) — re-run:
+  1. `C:\Users\aafaqit\AppData\Local\Temp\opencode\flora-dump.sh` (WSL) — fresh dump of old flora-db
+  2. `C:\Users\aafaqit\AppData\Local\Temp\opencode\flora-restore2.sh` (WSL) — restore into Supabase + count verify
+  - Data-only risk: none, restore is idempotent for same schema; if old schema drifted,
+    run `pg_restore` without `--data-only` (dump is full schema+data).
+
+## 3. Coolify resources (new project `floradecora` → environment `production`)
+
+Paste-ready env files (secrets, outside the repo):
+- Backend: `C:\Users\aafaqit\.local\share\flora-coolify-backend.env` (18 keys — Supabase DATABASE_URL/DIRECT_URL, reused JWT_SECRET, CORS_ORIGIN=https://flora.aifazi.net, COOKIE_SECURE=true, ALLOW_* flags false)
+- Frontend: `C:\Users\aafaqit\.local\share\flora-coolify-frontend.env` (5 keys — replace `<BACKEND_APP_UUID>` with the backend app UUID from its Coolify page)
+
+### 3a. Deploy key (one-time, UI)
 1. Coolify → new private key → copy PUBLIC key
 2. GitHub `aifazi/floradecora.com` → Settings → Deploy keys → Add (read-only)
    (separate key from the globalgarden repo key — deploy keys are repo-scoped)
 
-## 2. Coolify resources (new project `floradecora` → environment `production`)
+### 3b. Backend (NestJS)
+- Private Git repo, branch `main`, build pack Dockerfile,
+  location `backend/Dockerfile.coolify`, port `3002`, **NO domain** (internal).
+- Clear any template junk (custom docker options, php/laravel hooks).
+- Env: paste `flora-coolify-backend.env`.
+- NOTE: do NOT add a Coolify PostgreSQL database — DB is Supabase.
+- The image CMD runs `check-env` → `prisma migrate deploy` → server;
+  `check-env` fails hard in production if COOKIE_SECURE!=true or CORS_ORIGIN has localhost.
+- Deploy. Verify internal health from the backend container:
+  `wget -qO- http://127.0.0.1:3002/api/health`
 
-### 2a. Database
-+ New → Database → PostgreSQL, image `postgres:17-alpine`
-- Name: `flora-db`, user `postgres`, database `floradecora`
-- Password: COPY from existing root `.env` `POSTGRES_PASSWORD` (same value keeps all connection strings identical)
-- No public port. Deploy. Note the internal hostname from the DB page.
-
-### 2b. Backend (NestJS)
-+ New → Application → Private Git Repository (deploy key)
-- Repo `git@github.com:aifazi/floradecora.com.git`, branch `main`
-- Build pack Dockerfile, location `backend/Dockerfile.coolify`, port `3002`
-- NO domain (internal). Clear any template junk (custom docker options, php/laravel hooks).
-- Env (copy secrets from existing files, do NOT invent new ones):
-  - `NODE_ENV=production`, `PORT=3002`
-  - `DATABASE_URL` / `DIRECT_URL` = `postgresql://postgres:<same-pw>@<coolify-db-host>:5432/floradecora`
-  - `JWT_SECRET` = existing value (frontend + backend MUST match)
-  - `CORS_ORIGIN=https://flora.aifazi.net` (note https, not localhost)
-  - `COOKIE_SECURE=true`, `ALLOW_INSECURE_COOKIE=false` (https via tunnel now)
-  - `R2_*`, `CDN_URL`, `ADMIN_API_KEY` = copy existing values
-- Deploy. Backend runs `prisma migrate deploy` on boot (empty schema OK).
-- Verify internally: `docker exec <backend> wget -qO- http://127.0.0.1:3002/api/health`
-
-### 2c. Data restore (WSL, after backend first boot migrated the schema)
-```bash
-docker exec flora-db pg_dump -U postgres -d floradecora --data-only --column-inserts > /tmp/flora-data.sql
-NEWDB=$(docker ps --format '{{.Names}}' | grep -i -m1 'flora.*db' | grep -v '^flora-db$')
-docker cp /tmp/flora-data.sql $NEWDB:/tmp/flora-data.sql
-docker exec $NEWDB psql -U postgres -d floradecora -f /tmp/flora-data.sql
-```
-(data-only because the schema already migrated; dump includes sequence setvals)
-
-### 2d. Frontend (Next.js)
-+ New → Application → Private Git Repository (same key)
-- Dockerfile location `floradecora/Dockerfile.coolify`, port `3000`
+### 3c. Frontend (Next.js)
+- Same deploy key, Dockerfile location `floradecora/Dockerfile.coolify`, port `3000`
 - Domain: `flora.aifazi.net`, scheme http, port 3000, redirects OFF
-- Env:
-  - `NODE_ENV=production`, `PORT=3000`
-  - `BACKEND_URL=http://<backend-internal-hostname>:3002` (from backend app page)
-  - `JWT_SECRET` = same value as backend
-  - `NEXT_PUBLIC_LOADING_MS=2600` (build-time; set before first build)
-  - Turnstile/Web3Forms keys = copy existing if set
+- Env: paste `flora-coolify-frontend.env` after substituting `<BACKEND_APP_UUID>`.
+- **Do NOT set `NEXT_PUBLIC_API_URL`** — all browser traffic goes through the
+  frontend's own `/api/*` proxy routes + SSR using `BACKEND_URL` (server-only).
+  Setting it would inline an internal URL into client bundles.
 - Deploy.
 
-## 3. Tunnel route (Cloudflare Zero Trust)
+## 4. Tunnel route (Cloudflare Zero Trust)
 Published application: `flora.aifazi.net` → `http://localhost:80`
 (CNAME auto-created; Universal SSL covers single-level subdomain.)
 
-## 4. Verify then cutover
-1. `https://flora.aifazi.net` loads, login works (cookie secure path), images via CDN
-2. Compare against old stack (`:3001`) side by side
-3. Cutover: `docker stop floradecora floradecora-backend` (leave `flora-db` running 1 week as rollback), then `docker rm` + compose down when confident
-4. Rollback: restart old containers; tunnel route unchanged (points at :80/traefik — old stack bypassed traefik, so rollback = repoint tunnel to `:3001` temporarily)
+## 5. Verify then cutover
+1. Re-sync data (section 2) right before deploying backend
+2. `https://flora.aifazi.net` loads, login works (secure cookie path), images via CDN
+3. Compare against old stack (`:3001`) side by side
+4. Cutover: `docker stop floradecora floradecora-backend` (leave `flora-db` running
+   1 week as rollback), then `docker rm` + compose down when confident
+5. Rollback: restart old containers; tunnel rollout = repoint `flora.aifazi.net`
+   route to `:3001` temporarily (old stack bypassed traefik)
 
 ## Never do
 - Do NOT stop the old stack before the new one is verified
-- Do NOT rotate JWT_SECRET (logs out all sessions) or change the DB password mid-migration
+- Do NOT rotate JWT_SECRET (logs out all sessions)
+- Do NOT use `db.ysqkydiuejnjvuugklbi.supabase.co` (IPv6-only) from anywhere — pooler only
+- Do NOT set `NEXT_PUBLIC_API_URL` on the frontend
 - Do NOT add apex or multi-level (`*.x.aifazi.net`) hostnames
+- Do NOT commit the env/pw files (they live under `~\.local\share\`, outside the repo)
