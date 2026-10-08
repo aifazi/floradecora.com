@@ -150,4 +150,4 @@ export async function middleware(req: NextRequest) {
   return res;
 }
 
-export const config = { matcher: ["/((?!api|_next|.*\\..*).*)"] };
+export const config = { matcher: ["/((?!api|_next|webhooks|login|.*\\..*).*)"] };
