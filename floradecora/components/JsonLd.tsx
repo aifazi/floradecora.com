@@ -1,25 +1,26 @@
-export default function JsonLd() {
+import { SITE_CONTACT, SITE_JSONLD } from "@/lib/content-defaults";
+
+export default function JsonLd({ contact = SITE_CONTACT, jsonld = SITE_JSONLD }: { contact?: typeof SITE_CONTACT; jsonld?: typeof SITE_JSONLD }) {
   const data = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Flora Decora",
-    description:
-      "Premier UAE landscaping company specializing in themed gardens, butterfly gardens, public parks and municipal landscaping since 2003.",
+    name: jsonld.name,
+    description: jsonld.description,
     url: "https://floradecora.com",
-    logo: "https://cdn.aifazi.net/media/assest/StKLapP%20-%20Imgur.png",
-    image: "https://cdn.aifazi.net/media/assest/Picture2-min-scaled.jpg",
-    telephone: "+97137344243",
-    email: "info@floradecora.com",
+    logo: jsonld.logo,
+    image: jsonld.image,
+    telephone: contact.phoneDial,
+    email: contact.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Office 106, Al Reef Building, Asharij",
-      addressLocality: "Al Ain",
-      addressRegion: "Abu Dhabi",
-      addressCountry: "AE",
+      streetAddress: jsonld.streetAddress,
+      addressLocality: jsonld.locality,
+      addressRegion: jsonld.region,
+      addressCountry: jsonld.country,
     },
     areaServed: [{ "@type": "City", name: "Al Ain" }, { "@type": "City", name: "Abu Dhabi" }, { "@type": "Country", name: "United Arab Emirates" }],
-    foundingDate: "2003",
-    priceRange: "$$",
+    foundingDate: jsonld.foundingDate,
+    priceRange: jsonld.priceRange,
     sameAs: [],
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;

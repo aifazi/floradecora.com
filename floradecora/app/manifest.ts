@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
+import { getContent } from "@/lib/content";
+import { SITE_MANIFEST } from "@/lib/content-defaults";
 
-export default function manifest(): MetadataRoute.Manifest {
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const m = await getContent("site_manifest", SITE_MANIFEST);
   return {
-    name: "Flora Decora — Landscaping & Themed Gardens",
-    short_name: "Flora Decora",
-    description: "Premier UAE landscaping — themed gardens, public parks, irrigation since 2003. Al Ain, UAE.",
+    name: m.name,
+    short_name: m.short_name,
+    description: m.description,
     start_url: "/",
     display: "standalone",
     background_color: "#0F1B14",

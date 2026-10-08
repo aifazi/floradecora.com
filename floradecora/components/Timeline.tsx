@@ -1,21 +1,15 @@
 "use client";
 import { Reveal, Stagger, StaggerItem } from "./Reveal";
+import { PAGE_ABOUT } from "@/lib/content-defaults";
 
-const EVENTS = [
-  { year: "2003", title: "Founded in Al Ain", desc: "Started with municipal maintenance and private villas." },
-  { year: "2009", title: "First Themed Garden", desc: "Butterfly garden prototype — later scaled to 4,200 m²." },
-  { year: "2015", title: "Nursery & Steel Hub", desc: "12,000 m² nursery + in-house fabrication for shade structures." },
-  { year: "2019", title: "100+ Projects", desc: "Coverage Al Ain → Abu Dhabi, 150+ skilled horticulturists." },
-  { year: "2023", title: "Smart Irrigation", desc: "Retrofit 8 parks, -22% water use with sensor-driven drip." },
-  { year: "2026", title: "300+ and Growing", desc: "Vertical gardens, sports fields and tourist attractions." },
-];
+const EVENTS = PAGE_ABOUT.timeline.events;
 
-export default function Timeline() {
+export default function Timeline({ events = EVENTS }: { events?: typeof EVENTS }) {
   return (
     <Stagger className="relative mt-12">
       <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-ochre via-sage to-forest opacity-20 -translate-x-1/2" />
-      {EVENTS.map((e, i) => (
-        <StaggerItem key={e.year} className={`relative flex flex-col md:flex-row gap-4 md:gap-0 md:items-center py-6 ${i % 2 === 0 ? "md:flex-row-reverse" : ""}`}>
+      {events.map((e, i) => (
+        <StaggerItem key={i} className={`relative flex flex-col md:flex-row gap-4 md:gap-0 md:items-center py-6 ${i % 2 === 0 ? "md:flex-row-reverse" : ""}`}>
           <div className="flex-1 md:px-8">
             <div className={`rounded-[1.5rem] bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 p-6 shadow-card md:max-w-[420px] ${i % 2 === 0 ? "md:ml-auto" : ""}`}>
               <div className="text-xs tracking-[0.16em] uppercase text-ochre">{e.year}</div>

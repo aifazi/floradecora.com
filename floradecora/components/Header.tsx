@@ -8,15 +8,15 @@ import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
 import { useLanguage } from "@/components/LanguageProvider";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { dictionaries } from "@/lib/i18n";
 import { CDN_ASSETS } from "@/lib/cdn";
 import Button from "@/components/Button";
+import { SITE_HEADER } from "@/lib/content-defaults";
 
 function SunIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.42 1.42M17.66 17.66l1.42 1.42M4.93 19.07l1.42-1.42M17.66 6.34l1.42-1.42" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.42 1.42M17.66 17.66l1.42 1.42M4.93 19.07l-1.42-1.42M17.66 6.34l1.42-1.42" />
     </svg>
   );
 }
@@ -28,7 +28,7 @@ function MoonIcon() {
   );
 }
 
-export default function Header() {
+export default function Header({ nav = SITE_HEADER.nav, cta = SITE_HEADER.cta }: { nav?: typeof SITE_HEADER.nav; cta?: typeof SITE_HEADER.cta }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -36,13 +36,9 @@ export default function Header() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 20 });
   const { theme, toggle, mounted } = useTheme();
   const { locale } = useLanguage();
-  const NAV = [
-    { href: "/about", label: dictionaries[locale].nav.about },
-    { href: "/services", label: dictionaries[locale].nav.services },
-    { href: "/projects", label: dictionaries[locale].nav.projects },
-    { href: "/blog", label: "Blog" },
-    { href: "/contact", label: dictionaries[locale].nav.contact },
-  ];
+  const pick = (item: { label: string; labelAr?: string }) => (locale === "ar" && item.labelAr ? item.labelAr : item.label);
+  const NAV = nav.map((item) => ({ href: item.href, label: pick(item) }));
+  const ctaLabel = pick(cta);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -144,7 +140,7 @@ export default function Header() {
               size="sm"
               className="ml-2"
             >
-              {dictionaries[locale].nav.start}
+              {ctaLabel}
               <motion.span whileHover={{ rotate: 45, scale: 1.08 }} className="w-6 h-6 rounded-full bg-ochre text-white grid place-items-center text-xs">↗</motion.span>
             </Button>
           </nav>
@@ -207,7 +203,7 @@ export default function Header() {
                 ))}
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="p-2 mt-2">
                   <Link href="/contact" onClick={() => setOpen(false)} className="flex items-center justify-center gap-2 bg-ochre text-white rounded-2xl py-4 text-sm tracking-[0.14em] uppercase font-semibold">
-                    Start a project
+                    {ctaLabel}
                   </Link>
                 </motion.div>
               </nav>

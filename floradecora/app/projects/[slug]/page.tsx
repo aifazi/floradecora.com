@@ -6,16 +6,11 @@ import { Reveal } from "@/components/Reveal";
 import { getProjects, getProject } from "@/lib/api";
 import Button from "@/components/Button";
 
-export async function generateStaticParams() {
-  const projects = await getProjects();
-  return projects.map((p: { slug: string }) => ({ slug: p.slug }));
-}
-
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const p = await getProject(params.slug);
   if (!p) return {};
   return {
-    title: `${p.title} | Flora Decora`,
+    title: p.title,
     description: p.description,
     alternates: { canonical: `/projects/${p.slug}` },
     openGraph: { images: [{ url: p.img }] },

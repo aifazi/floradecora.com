@@ -6,7 +6,7 @@ const BACKEND = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL?.repl
 async function fetchWithFallback<T>(path: string, fallback: T): Promise<T> {
   try {
     const url = `${BACKEND.replace(/\/$/, "")}/api${path}`;
-    const res = await fetch(url, { next: { revalidate: 60 }, headers: {} });
+    const res = await fetch(url, { cache: "no-store", headers: {} });
     if (!res.ok) return fallback;
     const data = await res.json();
     if (Array.isArray(data) && data.length === 0) return fallback;
@@ -23,7 +23,7 @@ export async function getProjects() {
 export async function getProject(slug: string) {
   try {
     const url = `${BACKEND.replace(/\/$/, "")}/api/projects/${slug}`;
-    const res = await fetch(url, { next: { revalidate: 60 } });
+    const res = await fetch(url, { cache: "no-store" });
     if (res.ok) return res.json();
   } catch {}
   return STATIC_PROJECTS.find((p) => p.slug === slug) || null;
@@ -36,7 +36,7 @@ export async function getPosts() {
 export async function getPost(slug: string) {
   try {
     const url = `${BACKEND.replace(/\/$/, "")}/api/posts/${slug}`;
-    const res = await fetch(url, { next: { revalidate: 60 } });
+    const res = await fetch(url, { cache: "no-store" });
     if (res.ok) return res.json();
   } catch {}
   return STATIC_POSTS.find((p) => p.slug === slug) || null;
@@ -61,7 +61,7 @@ export async function getServices() {
 export async function getSiteSetting<T>(key: string, fallback: T): Promise<T> {
   try {
     const url = `${BACKEND.replace(/\/$/, "")}/api/settings/${key}`;
-    const res = await fetch(url, { next: { revalidate: 60 } });
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return fallback;
     const data = await res.json();
     return (data.value as T) ?? fallback;

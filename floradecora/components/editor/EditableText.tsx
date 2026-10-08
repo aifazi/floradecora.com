@@ -1,17 +1,20 @@
 "use client";
 import { useEditMode } from "./EditModeContext";
 import { useEffect, useRef, useState } from "react";
+import { queueChange } from "./pending";
 
 type Props = {
   field: string; // e.g. "hero.title"
+  settingsKey?: string; // override the page's settings key (e.g. "site_footer")
   as?: "h1" | "h2" | "h3" | "p" | "span" | "div";
   className?: string;
   children: string;
   multiline?: boolean;
 };
 
-export default function EditableText({ field, as: Tag = "div", className, children, multiline }: Props) {
+export default function EditableText({ field, settingsKey, as: Tag = "div", className, children, multiline }: Props) {
   const { isEditing, pageKey } = useEditMode();
+  const key = settingsKey || pageKey;
   const ref = useRef<HTMLElement>(null);
   const [value, setValue] = useState(children);
 
@@ -19,33 +22,16 @@ export default function EditableText({ field, as: Tag = "div", className, childr
 
   useEffect(() => {
     if (!isEditing) return;
-    const handler = async () => {
+    const handler = () => {
       const el = ref.current;
       const newValue = el?.innerText ?? value;
       if (newValue === children) return;
-      try {
-        // Load existing page JSON, merge field, save via SiteSetting
-        const res = await fetch(`/api/settings/${pageKey}`, { cache: "no-store" });
-        const existing = res.ok ? (await res.json()).value : {};
-        const keys = field.split(".");
-        let obj = { ...existing };
-        let cur: any = obj;
-        for (let i = 0; i < keys.length - 1; i++) {
-          cur[keys[i]] = cur[keys[i]] || {};
-          cur = cur[keys[i]];
-        }
-        cur[keys[keys.length - 1]] = newValue;
-        await fetch(`/api/settings/${pageKey}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ value: obj }),
-        });
-        setValue(newValue);
-      } catch {}
+      queueChange(key, field, newValue);
+      setValue(newValue);
     };
     window.addEventListener("flora:save", handler as EventListener);
     return () => window.removeEventListener("flora:save", handler as EventListener);
-  }, [isEditing, field, pageKey, children, value]);
+  }, [isEditing, field, key, children, value]);
 
   if (!isEditing) {
     // @ts-ignore

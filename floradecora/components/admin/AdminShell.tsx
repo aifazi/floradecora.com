@@ -6,6 +6,7 @@ import AdminLogout from "@/components/AdminLogout";
 
 const nav = [
   { href: "/admin", label: "Dashboard", icon: "▦", exact: true },
+  { href: "/admin/content", label: "Site Content", icon: "◉" },
   { href: "/admin/projects", label: "Projects", icon: "◈" },
   { href: "/admin/pages", label: "Pages", icon: "▤" },
   { href: "/admin/blog", label: "Blog", icon: "✎" },

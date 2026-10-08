@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import EditableText from "@/components/editor/EditableText";
 
 export default function SectionHeading({
   eyebrow,
@@ -7,13 +8,44 @@ export default function SectionHeading({
   align = "left",
   dark = false,
   withLine = false,
+  field,
+  settingsKey,
 }: {
   eyebrow: string;
   title: string;
   align?: "left" | "center";
   dark?: boolean;
   withLine?: boolean;
+  field?: string;
+  settingsKey?: string;
 }) {
+  const eyebrowNode = field ? (
+    <EditableText field={`${field}.eyebrow`} settingsKey={settingsKey} as="p" className={`eyebrow ${dark ? "text-ochre-light" : "text-ochre-dark dark:text-ochre-light"}`}>
+      {eyebrow}
+    </EditableText>
+  ) : (
+    <p className={`eyebrow ${dark ? "text-ochre-light" : "text-ochre-dark dark:text-ochre-light"}`}>{eyebrow}</p>
+  );
+  const titleNode = field ? (
+    <EditableText
+      field={`${field}.title`}
+      settingsKey={settingsKey}
+      as="h2"
+      className={`font-display font-[500] leading-[0.95] tracking-tightDisplay text-balance text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] xl:text-[3.6rem] 2xl:text-[4rem] ${
+        dark ? "text-white" : "text-ink dark:text-white"
+      }`}
+    >
+      {title}
+    </EditableText>
+  ) : (
+    <h2
+      className={`font-display font-[500] leading-[0.95] tracking-tightDisplay text-balance text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] xl:text-[3.6rem] 2xl:text-[4rem] ${
+        dark ? "text-white" : "text-ink dark:text-white"
+      }`}
+    >
+      {title}
+    </h2>
+  );
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,15 +56,9 @@ export default function SectionHeading({
     >
       <div className={`inline-flex items-center gap-3 mb-5 ${align === "center" ? "justify-center" : ""}`}>
         {withLine && <span className={`h-px w-10 ${dark ? "bg-white/20" : "bg-ochre/30 dark:bg-white/20"}`} />}
-        <p className={`eyebrow ${dark ? "text-ochre-light" : "text-ochre-dark dark:text-ochre-light"}`}>{eyebrow}</p>
+        {eyebrowNode}
       </div>
-      <h2
-        className={`font-display font-[500] leading-[0.95] tracking-tightDisplay text-balance text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] xl:text-[3.6rem] 2xl:text-[4rem] ${
-          dark ? "text-white" : "text-ink dark:text-white"
-        }`}
-      >
-        {title}
-      </h2>
+      {titleNode}
     </motion.div>
   );
 }

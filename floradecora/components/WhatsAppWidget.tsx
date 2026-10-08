@@ -1,7 +1,8 @@
 "use client";
-export default function WhatsAppWidget() {
-  const phone = "97137344243";
-  const msg = encodeURIComponent("Hi Flora Decora, I have a project to discuss.");
+import { SITE_WHATSAPP } from "@/lib/content-defaults";
+
+export default function WhatsAppWidget({ phone = SITE_WHATSAPP.phone, message = SITE_WHATSAPP.message }: { phone?: string; message?: string }) {
+  const msg = encodeURIComponent(message);
   return (
     <a
       href={`https://wa.me/${phone}?text=${msg}`}

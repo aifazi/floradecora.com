@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPosts, getPost } from "@/lib/api";
+import { getPost } from "@/lib/api";
 import { Reveal } from "@/components/Reveal";
 import Button from "@/components/Button";
 
-export async function generateStaticParams() { const posts = await getPosts(); return posts.map((p: { slug: string }) => ({ slug: p.slug })); }
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const p = await getPost(params.slug); if (!p) return {}; return { title: `${p.title} | Flora Decora`, description: p.excerpt, alternates: { canonical: `/blog/${p.slug}` } };
+  const p = await getPost(params.slug); if (!p) return {}; return { title: p.title, description: p.excerpt, alternates: { canonical: `/blog/${p.slug}` } };
 }
 export default async function PostPage({ params }: { params: { slug: string } }) {
   const p = await getPost(params.slug); if (!p) notFound();

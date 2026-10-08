@@ -1,22 +1,24 @@
 "use client";
 import { useEditMode } from "./EditModeContext";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { flushChanges } from "./pending";
 
 export default function EditBar() {
   const { isEditing, setIsEditing, isAdmin } = useEditMode();
   const [saving, setSaving] = useState(false);
+  const router = useRouter();
 
   if (!isAdmin) return null;
 
   const handleSave = async () => {
     setSaving(true);
-    // Dispatch save event for Editable components to persist
+    // Sync listeners queue their changes per settings key
     window.dispatchEvent(new CustomEvent("flora:save"));
-    // Give components 800ms to save, then exit edit mode
-    setTimeout(() => {
-      setSaving(false);
-      setIsEditing(false);
-    }, 900);
+    await flushChanges();
+    router.refresh();
+    setSaving(false);
+    setIsEditing(false);
   };
 
   return (

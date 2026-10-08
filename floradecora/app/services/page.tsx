@@ -2,25 +2,43 @@ import type { Metadata } from "next";
 import SectionHeading from "@/components/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
 import Button from "@/components/Button";
+import EditableText from "@/components/editor/EditableText";
 import { getServices } from "@/lib/api";
+import { getContent } from "@/lib/content";
+import { PAGE_SERVICES } from "@/lib/content-defaults";
 
-export const metadata: Metadata = {
-  title: "Services | Flora Decora",
-  description: "Landscaping design, themed gardens, development, nurseries, irrigation, pest control and maintenance.",
-  alternates: { canonical: "/services" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent("page_services", PAGE_SERVICES);
+  return {
+    title: c.meta.title,
+    description: c.meta.description,
+    alternates: { canonical: "/services" },
+  };
+}
 
 export default async function ServicesPage() {
-  const SERVICES = await getServices();
+  const [SERVICES, c] = await Promise.all([getServices(), getContent("page_services", PAGE_SERVICES)]);
   return (
     <>
       <section className="relative bg-forest-dim overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-forest via-forest-dim to-black" />
         <div className="absolute -top-24 -right-24 w-[520px] h-[520px] bg-ochre/15 rounded-full blur-[80px]" />
         <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 pt-32 pb-14 md:pt-44 md:pb-20">
-          <Reveal><span className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">Services</span></Reveal>
-          <Reveal delay={0.06}><h1 className="mt-4 font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tightDisplay text-white max-w-3xl">Nine disciplines, one in-house team.</h1></Reveal>
-          <Reveal delay={0.1}><p className="mt-4 max-w-xl text-white/60 leading-relaxed">Every stage of a landscape&apos;s life — design, build, plant, irrigate, protect and maintain — handled by our own technicians.</p></Reveal>
+          <Reveal>
+            <EditableText field="hero.badge" as="span" className="inline-flex rounded-full bg-white/10 backdrop-blur border border-white/10 px-3 py-1 text-xs tracking-[0.14em] uppercase text-white/80">
+              {c.hero.badge}
+            </EditableText>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <EditableText field="hero.title" as="h1" className="mt-4 font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tightDisplay text-white max-w-3xl">
+              {c.hero.title}
+            </EditableText>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <EditableText field="hero.subtitle" as="p" className="mt-4 max-w-xl text-white/60 leading-relaxed">
+              {c.hero.subtitle}
+            </EditableText>
+          </Reveal>
         </div>
       </section>
 
@@ -44,11 +62,15 @@ export default async function ServicesPage() {
       <section className="bg-white dark:bg-forest border-y border-black/5 dark:border-white/10">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 3xl:px-24 py-14 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="font-display text-2xl dark:text-white">Not sure where to start?</h3>
-            <p className="text-ink/60 dark:text-white/60 mt-1">Tell us what you&apos;re building — we&apos;ll scope it in 24h.</p>
+            <EditableText field="cta.title" as="h3" className="font-display text-2xl dark:text-white">
+              {c.cta.title}
+            </EditableText>
+            <EditableText field="cta.subtitle" as="p" className="text-ink/60 dark:text-white/60 mt-1">
+              {c.cta.subtitle}
+            </EditableText>
           </div>
           <Button href="/contact" variant="secondary" size="md">
-            Send an inquiry →
+            {c.cta.button}
           </Button>
         </div>
       </section>

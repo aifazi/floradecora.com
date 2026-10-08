@@ -2,9 +2,11 @@
 import { useEditMode } from "./EditModeContext";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { queueChange } from "./pending";
 
 type Props = {
   field: string;
+  settingsKey?: string;
   src: string;
   alt: string;
   width?: number;
@@ -14,8 +16,9 @@ type Props = {
   sizes?: string;
 };
 
-export default function EditableImage({ field, src, alt, width, height, fill, className, sizes }: Props) {
+export default function EditableImage({ field, settingsKey, src, alt, width, height, fill, className, sizes }: Props) {
   const { isEditing, pageKey } = useEditMode();
+  const key = settingsKey || pageKey;
   const [url, setUrl] = useState(src);
   const [showPicker, setShowPicker] = useState(false);
   const [newUrl, setNewUrl] = useState("");
@@ -24,29 +27,13 @@ export default function EditableImage({ field, src, alt, width, height, fill, cl
 
   useEffect(() => {
     if (!isEditing) return;
-    const handler = async () => {
+    const handler = () => {
       if (url === src) return;
-      try {
-        const res = await fetch(`/api/settings/${pageKey}`, { cache: "no-store" });
-        const existing = res.ok ? (await res.json()).value : {};
-        const keys = field.split(".");
-        let obj = { ...existing };
-        let cur: any = obj;
-        for (let i = 0; i < keys.length - 1; i++) {
-          cur[keys[i]] = cur[keys[i]] || {};
-          cur = cur[keys[i]];
-        }
-        cur[keys[keys.length - 1]] = url;
-        await fetch(`/api/settings/${pageKey}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ value: obj }),
-        });
-      } catch {}
+      queueChange(key, field, url);
     };
     window.addEventListener("flora:save", handler as EventListener);
     return () => window.removeEventListener("flora:save", handler as EventListener);
-  }, [isEditing, field, pageKey, src, url]);
+  }, [isEditing, field, key, src, url]);
 
   if (!isEditing) {
     if (fill) return <Image src={url} alt={alt} fill className={className} sizes={sizes} />;

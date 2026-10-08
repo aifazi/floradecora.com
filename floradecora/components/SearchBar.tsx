@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PROJECTS } from "@/lib/projects";
 import { POSTS } from "@/lib/blog";
 
-export default function SearchBar() {
+export default function SearchBar({ placeholder = "Search projects, posts..." }: { placeholder?: string }) {
   const [q, setQ] = useState("");
   const [active, setActive] = useState(-1);
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ export default function SearchBar() {
 
   return (
     <div ref={ref} className="relative max-w-md w-full">
-      <input ref={inputRef} value={q} onChange={(e) => { setQ(e.target.value); setOpen(true); }} onFocus={() => { if (results.length > 0) setOpen(true); }} onKeyDown={onKeyDown} placeholder="Search projects, posts..." role="combobox" aria-expanded={open && results.length > 0} aria-controls="search-results" aria-activedescendant={active >= 0 ? `search-option-${active}` : undefined} className="w-full rounded-full bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-5 py-3 text-sm outline-none focus:border-ochre" />
+      <input ref={inputRef} value={q} onChange={(e) => { setQ(e.target.value); setOpen(true); }} onFocus={() => { if (results.length > 0) setOpen(true); }} onKeyDown={onKeyDown} placeholder={placeholder} role="combobox" aria-expanded={open && results.length > 0} aria-controls="search-results" aria-activedescendant={active >= 0 ? `search-option-${active}` : undefined} className="w-full rounded-full bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-5 py-3 text-sm outline-none focus:border-ochre" />
       {open && results.length > 0 && (
         <div id="search-results" role="listbox" className="absolute top-full mt-2 w-full rounded-2xl bg-white dark:bg-forest border border-black/10 dark:border-white/10 shadow-soft p-2 z-20">
           {results.map((r, i) => (
