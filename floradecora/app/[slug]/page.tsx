@@ -1,13 +1,16 @@
 import { notFound } from "next/navigation";
 import EditableText from "@/components/editor/EditableText";
 import { getContent } from "@/lib/content";
+import { cachedJson, CONTENT_TTL_MS } from "@/lib/server-cache";
 
 async function getPage(slug: string) {
   const backend = process.env.BACKEND_URL || "http://localhost:3002";
   try {
-    const res = await fetch(`${backend}/api/pages/${slug}`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return res.json();
+    return await cachedJson<any>(`page:${slug}`, CONTENT_TTL_MS, async () => {
+      const res = await fetch(`${backend}/api/pages/${slug}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`bad status ${res.status}`);
+      return res.json();
+    });
   } catch {
     return null;
   }

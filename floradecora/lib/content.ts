@@ -1,3 +1,5 @@
+import { cachedJson, CONTENT_TTL_MS } from "./server-cache";
+
 const BACKEND = (process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/?$/, "") || "http://localhost:3002").replace(/\/$/, "");
 
 export function deepMerge<T>(base: T, saved: unknown): T {
@@ -45,12 +47,13 @@ export function setByPath(obj: any, path: string, value: any): any {
 
 export async function getContent<T>(key: string, defaults: T): Promise<T> {
   try {
-    const res = await fetch(`${BACKEND}/api/settings/${key}`, { cache: "no-store" });
-    if (res.ok) {
+    const value = await cachedJson<unknown>(`set:${key}`, CONTENT_TTL_MS, async () => {
+      const res = await fetch(`${BACKEND}/api/settings/${key}`, { cache: "no-store" });
+      if (!res.ok) return null;
       const data = await res.json();
-      const value = data?.value;
-      if (value && typeof value === "object") return deepMerge(defaults, value);
-    }
+      return data?.value ?? null;
+    });
+    if (value && typeof value === "object") return deepMerge(defaults, value);
   } catch {}
   return defaults;
 }

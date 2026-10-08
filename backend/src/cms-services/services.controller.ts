@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, HttpException, HttpStatus, Query } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { CmsServicesService } from './services.service';
 import { JwtOrApiKeyGuard } from '../auth/guards/jwt-or-apikey.guard';
 import { createServiceSchema, updateServiceSchema } from './services.dto';
@@ -7,12 +8,14 @@ import { createServiceSchema, updateServiceSchema } from './services.dto';
 export class CmsServicesController {
   constructor(private readonly service: CmsServicesService) {}
 
+  @Throttle({ default: { limit: 120, ttl: 60000 } })
   @Get()
   async findAll(@Query('all') all?: string) {
     const enabledOnly = all !== 'true';
     return this.service.findAll(enabledOnly);
   }
 
+  @Throttle({ default: { limit: 120, ttl: 60000 } })
   @Get(':slug')
   async findOne(@Param('slug') slug: string) {
     const s = await this.service.findOne(slug);

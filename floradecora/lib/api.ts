@@ -1,14 +1,17 @@
 import { PROJECTS as STATIC_PROJECTS } from "./projects";
 import { POSTS as STATIC_POSTS } from "./blog";
+import { cachedJson, CONTENT_TTL_MS } from "./server-cache";
 
 const BACKEND = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/?$/, "") || "http://localhost:3002";
 
 async function fetchWithFallback<T>(path: string, fallback: T): Promise<T> {
   try {
     const url = `${BACKEND.replace(/\/$/, "")}/api${path}`;
-    const res = await fetch(url, { cache: "no-store", headers: {} });
-    if (!res.ok) return fallback;
-    const data = await res.json();
+    const data = await cachedJson<unknown>(`api:${path}`, CONTENT_TTL_MS, async () => {
+      const res = await fetch(url, { cache: "no-store", headers: {} });
+      if (!res.ok) throw new Error(`bad status ${res.status}`);
+      return res.json();
+    });
     if (Array.isArray(data) && data.length === 0) return fallback;
     return data as T;
   } catch {
@@ -23,10 +26,14 @@ export async function getProjects() {
 export async function getProject(slug: string) {
   try {
     const url = `${BACKEND.replace(/\/$/, "")}/api/projects/${slug}`;
-    const res = await fetch(url, { cache: "no-store" });
-    if (res.ok) return res.json();
-  } catch {}
-  return STATIC_PROJECTS.find((p) => p.slug === slug) || null;
+    return await cachedJson<any>(`api:project:${slug}`, CONTENT_TTL_MS, async () => {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`bad status ${res.status}`);
+      return res.json();
+    });
+  } catch {
+    return STATIC_PROJECTS.find((p) => p.slug === slug) || null;
+  }
 }
 
 export async function getPosts() {
@@ -36,10 +43,14 @@ export async function getPosts() {
 export async function getPost(slug: string) {
   try {
     const url = `${BACKEND.replace(/\/$/, "")}/api/posts/${slug}`;
-    const res = await fetch(url, { cache: "no-store" });
-    if (res.ok) return res.json();
-  } catch {}
-  return STATIC_POSTS.find((p) => p.slug === slug) || null;
+    return await cachedJson<any>(`api:post:${slug}`, CONTENT_TTL_MS, async () => {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`bad status ${res.status}`);
+      return res.json();
+    });
+  } catch {
+    return STATIC_POSTS.find((p) => p.slug === slug) || null;
+  }
 }
 
 export async function getServices() {
@@ -60,11 +71,13 @@ export async function getServices() {
 
 export async function getSiteSetting<T>(key: string, fallback: T): Promise<T> {
   try {
-    const url = `${BACKEND.replace(/\/$/, "")}/api/settings/${key}`;
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) return fallback;
-    const data = await res.json();
-    return (data.value as T) ?? fallback;
+    const value = await cachedJson<unknown>(`set:${key}`, CONTENT_TTL_MS, async () => {
+      const res = await fetch(`${BACKEND.replace(/\/$/, "")}/api/settings/${key}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`bad status ${res.status}`);
+      const data = await res.json();
+      return data?.value ?? null;
+    });
+    return (value as T) ?? fallback;
   } catch {
     return fallback;
   }

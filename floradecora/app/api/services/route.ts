@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { invalidateContent } from "@/lib/server-cache";
 const BACKEND = process.env.BACKEND_URL || "http://localhost:3002";
 export async function GET(req: NextRequest) {
   const cookie = req.headers.get("cookie") || "";
@@ -12,6 +13,7 @@ export async function POST(req: NextRequest) {
   const auth = req.headers.get("authorization") || "";
   const text = await req.text();
   const res = await fetch(`${BACKEND}/api/services`, { method: "POST", headers: { cookie, authorization: auth, "content-type": "application/json" }, body: text });
+  if (res.ok) invalidateContent();
   const data = await res.json().catch(() => ({}));
   return NextResponse.json(data, { status: res.status });
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { invalidateContent } from "@/lib/server-cache";
 
 const BACKEND = process.env.BACKEND_URL || "http://localhost:3002";
 
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
     headers: { cookie, authorization: auth, "content-type": "application/json" },
     body: text,
   });
+  if (res.ok) invalidateContent();
   const data = await res.json().catch(() => ({}));
   return NextResponse.json(data, { status: res.status });
 }

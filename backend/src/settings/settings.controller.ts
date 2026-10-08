@@ -1,4 +1,5 @@
 import { Controller, Get, Put, Delete, Param, Body, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { SettingsService } from './settings.service';
 import { JwtOrApiKeyGuard } from '../auth/guards/jwt-or-apikey.guard';
 import { upsertSettingSchema } from './settings.dto';
@@ -19,7 +20,9 @@ export class SettingsController {
     return this.service.findAll();
   }
 
-  // Single-key reads: public for non-sensitive keys (site config), blocked for sensitive
+  // Single-key reads: public for non-sensitive keys (site config), blocked for sensitive.
+  // High limit: every frontend page render reads several keys from a single egress IP.
+  @Throttle({ default: { limit: 600, ttl: 60000 } })
   @Get(':key')
   async findOne(@Param('key') key: string) {
     if (SENSITIVE_KEY.test(key)) {

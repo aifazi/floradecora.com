@@ -7,6 +7,7 @@ import { createProjectSchema } from './project.dto';
 @Controller('projects')
 export class ProjectController {
   constructor(private readonly service: ProjectService) {}
+  @Throttle({ default: { limit: 120, ttl: 60000 } })
   @Get() findAll(@Query('take') take?: string, @Query('skip') skip?: string, @Query('featured') featured?: string) {
     return this.service.findAll({
       take: take ? parseInt(take, 10) : undefined,
@@ -14,6 +15,7 @@ export class ProjectController {
       featured: featured ? featured === 'true' : undefined,
     });
   }
+  @Throttle({ default: { limit: 120, ttl: 60000 } })
   @Get(':slug') findOne(@Param('slug') slug: string) { return this.service.findOne(slug); }
   @UseGuards(JwtOrApiKeyGuard)
   @Throttle({ default: { limit: 20, ttl: 60000 } })

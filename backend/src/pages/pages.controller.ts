@@ -8,6 +8,7 @@ import { Throttle } from "@nestjs/throttler";
 export class PagesController {
   constructor(private readonly service: PagesService) {}
 
+  @Throttle({ default: { limit: 120, ttl: 60000 } })
   @Get()
   async findAll(@Query("all") all?: string, @Query("take") take?: string, @Query("skip") skip?: string) {
     const publishedOnly = all !== "true";
@@ -17,6 +18,7 @@ export class PagesController {
     });
   }
 
+  @Throttle({ default: { limit: 120, ttl: 60000 } })
   @Get(":slug")
   async findOne(@Param("slug") slug: string) {
     const page = await this.service.findOne(slug);
